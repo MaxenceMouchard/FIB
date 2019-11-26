@@ -261,15 +261,24 @@
         color: #9B9B9B;
     }
 
-    .allData {
-        display: none;
-        transition: opacity 1s ease-out;
-        opacity: 0;
+    .allData, .active {
+        visibility: hidden;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
     }
 
     .active {
-        opacity: 1;
-        display: block;
+        visibility: visible;
+    }
+
+    #contactAllData {
+        max-height: 0px;
+    }
+
+    #contactAllData.active{
+        max-height: 400px;
     }
 </style>
 
@@ -351,7 +360,7 @@
                 </div>
                 <i class="fas fa-plus iconTitle openDiv"></i>
             </div>
-            <div class="allData">
+            <div class="allData" id="contactAllData">
                 <div id="contactsReferenced">
                     <div>
                         <div class="squareContact">
@@ -375,7 +384,7 @@
                 </div>
                 <i class="fas fa-plus iconTitle openDiv"></i>
             </div>
-            <div class="allData" style="height: 200px; display: none;"></div>
+            <div class="allData"></div>
         </div>
 
         <div id="complianceContainer"></div>
