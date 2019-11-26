@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FIB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+    <link rel="stylesheet" href="./horizontalTreePlugin/src/jquery.hortree.css">
 </head>
 <style>
 /* FontSize for different screen size */
@@ -234,7 +235,7 @@
         white-space: pre-wrap;
     }
 
-/* Contact section */
+/* Sections */
     .sectionContainer {
         margin: 20px 35px 0 35px;
         padding: 25px;
@@ -248,7 +249,6 @@
 
     .sectionContainer > .primaryInfos > .mainData {
         display: inline-block;
-        width: calc(100% - 74px); /* 100% - padding - inconSize */
         vertical-align: middle;
         padding-left: 20px;
     }
@@ -259,6 +259,7 @@
 
     .sectionContainer > .primaryInfos > .mainData > .mainDataSubTitle {
         color: #9B9B9B;
+        /* white-space: pre; */
     }
 
     .allData, .active {
@@ -272,6 +273,24 @@
     .active {
         visibility: visible;
     }
+
+/* SPECIFICS CONTAINER PROPERTIES */
+    #contactMainData {
+        width: calc(100% - 74px); /* 100% - padding - inconSize */
+    }
+    
+    #legalMainData {
+        width: calc(100% - 80px); /* 100% - padding - inconSize */
+    }
+
+    #legalAllData {
+        height: 600px;
+    }
+
+    .hortree-entry {
+        height: 10px !important;
+    }
+
 
     #contactAllData {
         max-height: 0px;
@@ -351,10 +370,11 @@
             </div>
         </div>
 
+        <!-- CONTACT SECTION -->
         <div class="sectionContainer">
             <div class="primaryInfos">
                 <i class="fas fa-user-alt iconInTitle"></i>
-                <div class="mainData">
+                <div class="mainData" id="contactMainData">
                     <div class="mainDataTitle smallTitle">Contact</div>
                     <div class="mainDataSubTitle simpleText">4 contacts référencés</div>
                 </div>
@@ -375,16 +395,18 @@
             </div>
         </div>
 
+        <!-- LEGAL SECTION -->
         <div class="sectionContainer">
             <div class="primaryInfos">
-                <i class="fas fa-user-alt iconInTitle"></i>
-                <div class="mainData">
-                    <div class="mainDataTitle smallTitle">Contact</div>
-                    <div class="mainDataSubTitle simpleText">4 contacts référencés</div>
+                <i class="fas fa-balance-scale iconInTitle"></i>
+                <div class="mainData" id="legalMainData">
+                    <div class="mainDataTitle smallTitle">Juridique</div>
+                    <div class="mainDataSubTitle simpleText">1 titre de propriété &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 2 baux internes &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 baux externes &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 sous-baux</div>
                 </div>
                 <i class="fas fa-plus iconTitle openDiv"></i>
             </div>
-            <div class="allData"></div>
+            <div class="allData" id="legalAllData">
+            </div>
         </div>
 
         <div id="complianceContainer"></div>
@@ -399,6 +421,13 @@
 </body>
 
 </html>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous">
+</script>
+<script src="./horizontalTreePlugin/dist/jquery.hortree.min.js"></script>
+<script src="./horizontalTreePlugin/demo/jquery.line.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -417,4 +446,144 @@
             });
         });
     });
+
+    
+    var jsonLegalData = [
+            {
+                description: "Element ROOT",
+                children: [
+                    {
+                        description: "Element 1",
+                        children: [
+                            {
+                                description: "Element 1.1",
+                                children: []
+                            },
+                            {
+                                description: "Element 1.2",
+                                children: [
+                                    {
+                                        description: "Element 1.2.1",
+                                        children: []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        description: "Element 2",
+                        children: [
+                            {
+                                description: "Element 2.1 with tooltip",
+                                tooltip: "Hey I'm a tooltip",
+                                children: []
+                            },
+                            {
+                                description: "Element 2.2",
+                                children: []
+                            }
+                        ]
+                    },
+                    {
+                        description: "Element 3",
+                        children: [
+                            {
+                                description: "Element 3.1",
+                                children: []
+                            },
+                            {
+                                description: "Element 3.2",
+                                children: []
+                            },
+                            {
+                                description: "Element 3.3",
+                                children: [
+                                    {
+                                        description: "Element 3.3.1",
+                                        children: []
+                                    },
+                                    {
+                                        description: "Element 3.3.2",
+                                        children: []
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+    // let jsonLegalData =
+    // [
+    //     {
+    //         "description": "Element ROOT",
+    //         "children": [
+    //         {
+    //             "description": "Element 1",
+    //             "children": [
+    //             {
+    //                 "description": "Element 1.1",
+    //                 "children": []
+    //             },
+    //             {
+    //                 "description": "Element 1.2",
+    //                 "children": [
+    //                 {
+    //                     "description": "Element 1.2.1",
+    //                     "children": []
+    //                 }
+    //                 ]
+    //             }
+    //             ]
+    //         },
+    //         {
+    //             "description": "Element 2",
+    //             "children": [
+    //             {
+    //                 "description": "Element 2.1",
+    //                 "children": []
+    //             },
+    //             {
+    //                 "description": "Element 2.2",
+    //                 "children": []
+    //             }
+    //             ]
+    //         },
+    //         {
+    //             "description": "Element 3",
+    //             "children": [
+    //             {
+    //                 "description": "Element 3.1",
+    //                 "children": []
+    //             },
+    //             {
+    //                 "description": "Element 3.2",
+    //                 "children": []
+    //             },
+    //             {
+    //                 "description": "Element 3.3",
+    //                 "children": [
+    //                 {
+    //                     "description": "Element 3.3.1",
+    //                     "children": []
+    //                 },
+    //                 {
+    //                     "description": "Element 3.3.2",
+    //                     "children": []
+    //                 }
+    //                 ]
+    //             }
+    //             ]
+    //         }
+    //         ]
+    //     }
+    // ];
+    console.log(jsonLegalData)
+    $("#legalAllData").hortree({
+        lineStrokeWidth: 2,
+        lineZindex: 8,
+        lineColor:'#4b86b7',
+        data: jsonLegalData
+    });
+
 </script>
