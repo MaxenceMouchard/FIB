@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FIB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+</head>
+<style>
+/* FontSize for different screen size */
+    @media only screen and (max-width: 1150px) {
+        /* styles for browsers larger max 1150px; */
+        #identityContainer {
+            height: 235px;
+        }
+
+        #identityContainer > #allIdentityInfos {
+            width: calc(100% - 275px); /* width= 100% - padding - pictures size */
+        }
+
+        #identityContainer > #identityPicture {
+            width: 235px;
+        }
+
+        .smallText {
+            font-size: 8px;
+        }
+
+        .simpleText {
+            font-size: 10px;
+        }
+
+        .smallTitle {
+            font-size: 14px;
+        }
+
+        .title {
+            font-size: 22px;
+        }
+
+        .iconInTitle {
+            font-size: 22px;
+        }
+    }
+
+    @media only screen and (min-width: 1150px) {
+        /* styles for browsers larger min 1150px; */
+        #identityContainer {
+            height: 285px;
+        }
+
+        
+        #identityContainer > #allIdentityInfos {
+            width: calc(100% - 325px); /* width= 100% - padding - pictures size */
+        }
+
+        #identityContainer > #identityPicture {
+            width: 285px;
+        }
+
+        .smallText {
+            font-size: 10px;
+        }
+
+        .simpleText {
+            font-size: 12px;
+        }
+
+        .smallTitle {
+            font-size: 16px;
+        }
+
+        .simpleTitle {
+            font-size: 24px;
+        }
+
+        .iconInTitle {
+            font-size: 24px;
+        }
+    }
+
+/* Some generic class or element */
+    body {
+        background-color: #E9EEF3;
+        font-family: 'Open Sans';
+        margin: auto;
+    }
+
+    .inline {
+        display: inline-block;
+    }
+
+    .iconInTitle {
+        vertical-align: middle;
+    }
+
+    .openDiv:hover, .closeDiv:hover {
+        cursor: pointer;
+    }
+
+/* References section */
+    #referencesContainer {
+        min-height: 45px;
+        background-color: #00A4BF;
+        color: #FFFFFF;
+    }
+
+    #referencesContainer > .referencesText {
+        padding: 15px 0 0 30px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+/* Filters section */
+    #filtersContainer {
+        min-height: 80px;
+        background-color: #FEFEFE;
+        color: #333333;
+    }
+
+    #filtersContainer > .allFilters {
+        padding: 20px 0 0 30px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    #filtersContainer > .allFilters .selector {
+        height: 35px;
+        border-radius: 5px;
+        margin-left: 10px;
+        margin-right: 40px;
+        margin-bottom: 10px;
+    }
+
+    #searchFilterButton, #rebootFilterButton {
+        font-family: 'Open Sans';
+        font-size: 12px;
+        height: 35px;
+        padding: 0 15px 0 15px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border: 1px;
+        border-radius: 5px;
+    }
+
+    #searchFilterButton:hover, #rebootFilterButton:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+    }
+
+    #searchFilterButton:active, #rebootFilterButton:active {
+        opacity: 0.8;
+    }
+
+    #searchFilterButton {
+        background-color: #00A4BF;
+        border-color: #00A4BF;
+        color: #FFFFFF;
+    }
+
+    #rebootFilterButton {
+        background-color: #f2f2f2;
+        border-color: #f2f2f2;
+    }
+
+/* Identity section */
+    #identityContainer {
+        margin: 20px 35px 0 35px;
+        background-color: #FFFFFF;
+        border-radius: 5px;
+    }
+
+    #identityContainer > #identityPicture {
+        float: left;
+        height: 100%;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    #identityContainer > #allIdentityInfos {
+        display: inline-block;
+        height: calc(100% - 40px);
+        padding: 20px;
+        color: #333333;
+    }
+
+    #identityContainer > #allIdentityInfos > #identityTitle {
+        display: inline;
+        margin-left: 10px;
+        font-weight: bold;
+    }
+
+    #identityContainer > #allIdentityInfos > #identityInfosDetails {
+        margin-left: 22px;
+    }
+
+    #identityContainer > #allIdentityInfos > #identityInfosDetails > #identityLocation {
+        margin-top: 20px;
+    }
+
+    #identityContainer > #allIdentityInfos > #identityInfosDetails > #identityProperties {
+        margin-top: 20px;
+        height: 80px;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    #identityFloorsNumber, #identityTotalSurface, #identityDaysNumberBeforeDueDate, #identityNumberPersonOnThisSite, #identityOccupationPercent {
+        display: inline-block;
+        height: calc(85% - 10px);
+        padding-top: 5px;
+        padding-bottom: 5px;
+        vertical-align: top;
+    }
+
+    #identityFloorsNumber, #identityTotalSurface, #identityDaysNumberBeforeDueDate, #identityNumberPersonOnThisSite {
+        border-right: 1px solid #979797;
+        padding-right: 30px; 
+    }
+
+    #identityTotalSurface, #identityDaysNumberBeforeDueDate, #identityNumberPersonOnThisSite, #identityOccupationPercent {
+        padding-left: 30px; 
+    }
+
+    #identityDaysNumberBeforeDueDate {
+        width: 115px;
+        white-space: pre-wrap;
+    }
+
+    #identityNumberPersonOnThisSite {
+        width: 80px;
+        white-space: pre-wrap;
+    }
+
+/* Contact section */
+    #contactContainer {
+        margin: 20px 35px 0 35px;
+        padding: 25px;
+        background-color: #FFFFFF;
+        border-radius: 5px;
+    }
+
+    #contactContainer > #primaryContactInfos {
+        color: #333333;
+    }
+
+    #contactContainer > #primaryContactInfos > #contactFirstData {
+        display: inline-block;
+        width: calc(100% - 74px); /* 100% - padding - inconSize */
+        vertical-align: middle;
+        padding-left: 20px;
+    }
+
+    #contactContainer > #primaryContactInfos > #contactFirstData > #contactTitle {
+        font-weight: bold;
+    }
+
+    #contactContainer > #primaryContactInfos > #contactFirstData > #contactSubTitle {
+        color: #9B9B9B;
+    }
+</style>
+
+<body>
+    <div id="containerFIB">
+
+        <div id="referencesContainer">
+            <div class="referencesText">Fiche d'identité du bâtiment > FR33.00001 - CMA CGM Agences France - Bordeaux</div>
+        </div>
+
+        <div id="filtersContainer">
+            <div class="allFilters">
+                <div class="inline">
+                    <label>Pays
+                        <select name="country" id="countrySelector" class="selector">
+                            <option value="">--Choisissez un pays--</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="inline">
+                    <label>Région
+                        <select name="region" id="regionSelector" class="selector">
+                            <option value="">--Choisissez une région--</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="inline">
+                    <label>Ville
+                        <select name="city" id="citySelector" class="selector">
+                            <option value="">--Choisissez une ville--</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="inline">
+                    <label>Site
+                        <select name="site" id="siteSelector" class="selector">
+                            <option value="">--Choisissez un site--</option>
+                        </select>
+                    </label>
+                </div>
+
+                <button id="searchFilterButton">Rechercher</button>
+                <button id="rebootFilterButton">Réinitialiser</button>
+            </div>
+        </div>
+
+        <div id="identityContainer">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSr96vtD0rFIx4JnDPjMZ1Iv3guFaeaEqpxXRtqifUG7bJ58bWd" id="identityPicture"/>
+            <div id="allIdentityInfos">
+                <i class="fas fa-map-marker-alt"></i><div id="identityTitle" class="smallTitle">FR33.00001 - CMA CGM Agences France - Bordeaux</div>
+                <div id="identityInfosDetails">
+                    <div id="identityType" class="simpleText">Bureaux</div>
+                    <div id="identityLocation" class="simpleText">
+                        <div id="identityStreetLocation">12 rue Henri Delattre</div>
+                        <div id="identityPostCodeLocation">33520 Bruges</div>
+                        <div id="identityRegionLocation">Nouvelle-Aquitaine</div>
+                        <div id="identityCountryLocation">France</div>
+                    </div>
+                    <div id="identityProperties">
+                        <div id="identityFloorsNumber" class="simpleTitle">9<div class="simpleText">étages</div></div>
+                        <div id="identityTotalSurface" class="simpleTitle">900m²<div class="simpleText">surface totale</div></div>
+                        <div id="identityDaysNumberBeforeDueDate" class="simpleTitle">631<div class="simpleText">jours avant échéance du bail</div></div>
+                        <div id="identityNumberPersonOnThisSite" class="simpleTitle">55<div class="simpleText">personnes sur site</div></div>
+                        <div id="identityOccupationPercent" class="simpleTitle">72%<div class="simpleText">d'occupation</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contactContainer">
+            <div id="primaryContactInfos">
+                <i class="fas fa-user-alt iconInTitle"></i>
+                <div id="contactFirstData">
+                    <div id="contactTitle" class="smallTitle">Contact</div>
+                    <div id="contactSubTitle" class="simpleText">4 contacts référencés</div>
+                </div>
+                <i class="fas fa-plus iconTitle openDiv"></i>
+            </div>
+            <div id="contactSecondData" style="height: 200px; display: none;"></div>
+        </div>
+
+        <div id="judicialContainer"></div>
+        <div id="complianceContainer"></div>
+        <div id="auditContainer"></div>
+        <div id="equipmentsContainer"></div>
+        <div id="documentsContainer"></div>
+        <div id="dataCollectionContainer"></div>
+        <div id="incidentsContainer"></div>
+        <div id="schemaDirectoryContainer"></div>
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Add event when user click on openDiv/CloseDiv element 
+        let iconOpenContainer = document.querySelectorAll(".openDiv, .openClose");
+        iconOpenContainer.forEach(element => {
+            element.addEventListener("click", () => {
+                let nextPartContainer = element.parentNode.nextElementSibling;
+                if (nextPartContainer.style.display === "block" ) {
+                    nextPartContainer.style.display = "none";
+                    element.classList.replace('fa-window-minimize', 'fa-plus');
+                } else {
+                    nextPartContainer.style.display = "block";
+                    element.classList.replace('fa-plus', 'fa-window-minimize');
+                }
+            })
+        });
+    })
+</script>
