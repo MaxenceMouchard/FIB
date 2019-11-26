@@ -141,6 +141,7 @@
         margin-bottom: 10px;
         border: 1px;
         border-radius: 5px;
+        transition: 0.5s;
     }
 
     #searchFilterButton:hover, #rebootFilterButton:hover {
@@ -156,6 +157,7 @@
         background-color: #00A4BF;
         border-color: #00A4BF;
         color: #FFFFFF;
+        transition: 0.5s;
     }
 
     #rebootFilterButton {
@@ -233,29 +235,29 @@
     }
 
 /* Contact section */
-    #contactContainer {
+    .sectionContainer {
         margin: 20px 35px 0 35px;
         padding: 25px;
         background-color: #FFFFFF;
         border-radius: 5px;
     }
 
-    #contactContainer > #primaryContactInfos {
+    .sectionContainer > .primaryInfos {
         color: #333333;
     }
 
-    #contactContainer > #primaryContactInfos > #contactFirstData {
+    .sectionContainer > .primaryInfos > .mainData {
         display: inline-block;
         width: calc(100% - 74px); /* 100% - padding - inconSize */
         vertical-align: middle;
         padding-left: 20px;
     }
 
-    #contactContainer > #primaryContactInfos > #contactFirstData > #contactTitle {
+    .sectionContainer > .primaryInfos > .mainData > .mainDataTitle {
         font-weight: bold;
     }
 
-    #contactContainer > #primaryContactInfos > #contactFirstData > #contactSubTitle {
+    .sectionContainer > .primaryInfos > .mainData > .mainDataSubTitle {
         color: #9B9B9B;
     }
 
@@ -340,12 +342,12 @@
             </div>
         </div>
 
-        <div id="contactContainer">
-            <div id="primaryContactInfos">
+        <div class="sectionContainer">
+            <div class="primaryInfos">
                 <i class="fas fa-user-alt iconInTitle"></i>
-                <div id="contactFirstData">
-                    <div id="contactTitle" class="smallTitle">Contact</div>
-                    <div id="contactSubTitle" class="simpleText">4 contacts référencés</div>
+                <div class="mainData">
+                    <div class="mainDataTitle smallTitle">Contact</div>
+                    <div class="mainDataSubTitle simpleText">4 contacts référencés</div>
                 </div>
                 <i class="fas fa-plus iconTitle openDiv"></i>
             </div>
@@ -364,7 +366,18 @@
             </div>
         </div>
 
-        <div id="judicialContainer"></div>
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-user-alt iconInTitle"></i>
+                <div class="mainData">
+                    <div class="mainDataTitle smallTitle">Contact</div>
+                    <div class="mainDataSubTitle simpleText">4 contacts référencés</div>
+                </div>
+                <i class="fas fa-plus iconTitle openDiv"></i>
+            </div>
+            <div class="allData" style="height: 200px; display: none;"></div>
+        </div>
+
         <div id="complianceContainer"></div>
         <div id="auditContainer"></div>
         <div id="equipmentsContainer"></div>
