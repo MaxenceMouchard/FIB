@@ -258,6 +258,17 @@
     #contactContainer > #primaryContactInfos > #contactFirstData > #contactSubTitle {
         color: #9B9B9B;
     }
+
+    .allData {
+        display: none;
+        transition: opacity 1s ease-out;
+        opacity: 0;
+    }
+
+    .active {
+        opacity: 1;
+        display: block;
+    }
 </style>
 
 <body>
@@ -338,7 +349,19 @@
                 </div>
                 <i class="fas fa-plus iconTitle openDiv"></i>
             </div>
-            <div id="contactSecondData" style="height: 200px; display: none;"></div>
+            <div class="allData">
+                <div id="contactsReferenced">
+                    <div>
+                        <div class="squareContact">
+                            OA
+                        </div>
+                        <div class="contactNameAndFunction">
+                            <div class="contactName"></div>
+                            <div class="contactFunction"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="judicialContainer"></div>
@@ -362,14 +385,14 @@
         iconOpenContainer.forEach(element => {
             element.addEventListener("click", () => {
                 let nextPartContainer = element.parentNode.nextElementSibling;
-                if (nextPartContainer.style.display === "block" ) {
-                    nextPartContainer.style.display = "none";
+                if (nextPartContainer.classList.contains("active")) {
+                    nextPartContainer.classList.remove("active");
                     element.classList.replace('fa-window-minimize', 'fa-plus');
                 } else {
-                    nextPartContainer.style.display = "block";
+                    nextPartContainer.classList.add("active");
                     element.classList.replace('fa-plus', 'fa-window-minimize');
                 }
-            })
+            });
         });
-    })
+    });
 </script>
