@@ -46,7 +46,6 @@
         position: absolute;
         left: 0;
         z-index: 10;
-        background-color: #76BA74;
         color: white;
     }
 
@@ -88,7 +87,7 @@
     }
 
     .line {
-        margin-top: 656px;
+        margin-top: 694px;
         border-bottom: 1px solid #979797 !important;
         border-top-color: #979797 !important;
         border-right-color: #979797 !important;
@@ -767,9 +766,17 @@
 <script>
 
     document.addEventListener("DOMContentLoaded", () => {
-        // Add event when user click on openCloseIcon element 
+        // Add event when user click on openCloseIcon element :
         handleOpenCloseContainer();
+    
+        // Horizontal tree creation in Legal Section :
+        createLegalHortree();
+
+        $('.allData').each(function () {
+            $(this).addClass('active');
+        });
     });
+
     function handleOpenCloseContainer() {
         let iconOpenContainer = document.querySelectorAll(".openCloseIcon");
         iconOpenContainer.forEach(element => {
@@ -785,13 +792,7 @@
                 }
             });
         });
-    
-        createLegalHortree();
-
-        $('.allData').each(function () {
-            $(this).addClass('active');
-        });
-    });
+    }
 
     function createLegalHortree() {
         let jsonLegalData = [
@@ -849,17 +850,24 @@
             data: jsonLegalData
         });
 
-        $('.hortree-label').each(function () {
-            $(this).addClass('simpleText');
+        Array.from(document.getElementsByClassName("hortree-label")).forEach((elem) => {
+            elem.classList.add("simpleText");
         });
 
-        $('.hortree-branch').each(function (index) {
-            if (index === 0)
-                $(this).children('.hortree-entry').children('.hortree-label').css('background-color', '#79D6CB');
-            if (index === 1)
-                $(this).children('.hortree-entry').children('.hortree-label').css('background-color', '#76BA74');
-            if (index > 1)
-                $(this).children('.hortree-entry').children('.hortree-label').css('background-color', '#548852');
+        Array.from(document.getElementsByClassName("hortree-branch")).forEach((elem, index) => {
+            if (index === 0) {
+                elem.querySelectorAll('.hortree-entry > .hortree-label').forEach((element) => {
+                    element.style.backgroundColor = "#79D6CB";
+                })
+            } else if (index === 1) {
+                elem.querySelectorAll('.hortree-entry > .hortree-label').forEach((element) => {
+                    element.style.backgroundColor = "#76BA74";
+                })
+            } else if (index > 1) {
+                elem.querySelectorAll('.hortree-entry > .hortree-label').forEach((element) => {
+                    element.style.backgroundColor = "#548852";
+                })
+            }
         });
     }
 
