@@ -6,10 +6,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FIB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
-    <link rel="stylesheet" href="./horizontalTreePlugin/src/jquery.hortree.css">
 </head>
 
 <style>
+/* CSS for HorTree plugin (for Legal section) */
+    .hortree-wrapper *,
+    .hortree-wrapper *:before,
+    .hortree-wrapper *:after {
+        box-sizing: border-box;
+    }
+
+    .hortree-wrapper {
+        position: relative;
+        font-family: sans-serif, Verdana, Arial;
+        font-size: 0.9em;
+    }
+
+    .hortree-branch {
+        position: relative;
+        margin-left: 320px;
+    }
+
+    .hortree-branch:first-child {
+        margin-left: 53px;
+    }
+
+    .hortree-entry {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    .hortree-label {
+        display: block;
+        width: 150px;
+        padding: 2px 5px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 3px;
+        position: absolute;
+        left: 0;
+        z-index: 10;
+        background-color: #76BA74;
+        color: white;
+    }
+
+    .hortree-tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    .hortree-tooltip .hortree-tooltip-text {
+        visibility: hidden;
+        background-color: #484848;
+        color: #fff;
+        text-align: center;
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-size: 0.9em;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    .hortree-tooltip .hortree-tooltip-text::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border: 5px solid transparent;
+        border-top-color: #484848;
+    }
+
+    .hortree-tooltip:hover .hortree-tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .line {
+        margin-top: 656px;
+        border-bottom: 1px solid #979797 !important;
+        border-top-color: #979797 !important;
+        border-right-color: #979797 !important;
+        border-left-color: #979797 !important;
+    }
 
 /* FontSize for different screen size */
     @media only screen and (max-width: 1150px) {
@@ -238,7 +322,7 @@
         white-space: pre-wrap;
     }
 
-/* SECTIONS */
+/* General Sections Properties */
     .sectionContainer {
         margin: 20px 35px 0 35px;
         padding: 25px;
@@ -264,6 +348,10 @@
         color: #9B9B9B;
     }
 
+    .redTextColor {
+        color: red;
+    }
+
     .allData, .active {
         visibility: hidden;
         -webkit-transition: all 0.5s;
@@ -276,9 +364,10 @@
         visibility: visible;
     }
 
-/* CONTACT */
+/* CONTACT Section Properties */
+
     #contactMainData {
-        width: calc(100% - 74px); /* 100% - padding - inconSize */
+        width: calc(100% - 74px); /* 100% - (padding + inconSize) */
     }
 
     #contactAllData {
@@ -350,10 +439,10 @@
         margin-right: 10px;
     }
 
-/* LEGAL */
+/* LEGAL Section Properties */
 
     #legalMainData {
-        width: calc(100% - 80px); /* 100% - padding - inconSize */
+        width: calc(100% - 80px); /* 100% - (padding + inconSize) */
     }
 
     #legalAllData {
@@ -367,7 +456,6 @@
     #legalLegend {
         display: flex;
         width: auto;
-        margin-left: 50px;
         margin-top: 18px;
     }
 
@@ -375,25 +463,60 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+        margin-left: 53px;
+    }
+
+    .legalLegendSquares {
+        width: 14px;
+        height: 14px;
+        margin-right: 8px;
+        border-radius: 5px;
     }
 
     #legalLegendSquareIntern {
-        width: 14px;
-        height: 14px;
         background: #7BD679;
-        border-radius: 5px;
     }
 
     #legalLegendSquareExtern {
-        width: 14px;
-        height: 14px;
         background: #79D6CB;
-        border-radius: 5px;
     }
 
-    .line {
-        margin-top: 407px;
+/* COMPLIANCE Section Properties */
+
+    #complianceMainData {
+        width: calc(100% - 74px); /* 100% - (padding + inconSize) */
     }
+
+/* AUDIT Section Properties */
+
+    #auditMainData {
+        width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+    }
+
+/* EQUIPMENTS Section Properties */
+
+    #equipmentsMainData {
+        width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+    }
+
+/* DATA COLLECTION Section Properties */
+
+    #dataCollectionMainData {
+        width: calc(100% - 68px); /* 100% - (padding + inconSize) */
+    }
+
+/* INCIDENTS Section Properties */
+
+    #incidentsMainData {
+        width: calc(100% - 77px); /* 100% - (padding + inconSize) */
+    }
+
+/* SCHEMA DIRECTORY Section Properties */
+
+    #schemaDirectoryMainData {
+        width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+    }
+
 </style>
 
 <body>
@@ -539,19 +662,95 @@
             </div>
             <div class="allData" id="legalAllData">
                 <div id="legalLegend">
-                    <div class="simpleText"><div id="legalLegendSquareIntern"></div>Titres de propriété internes</div>
-                    <div class="simpleText"><div id="legalLegendSquareExtern"></div>Titres de propriété externes</div>
+                    <div class="simpleText"><div id="legalLegendSquareIntern" class="legalLegendSquares"></div>Titres de propriété internes</div>
+                    <div class="simpleText"><div id="legalLegendSquareExtern" class="legalLegendSquares"></div>Titres de propriété externes</div>
                 </div>
+                <div id="legalHorTreeContainer"></div>
             </div>
         </div>
 
-        <div id="complianceContainer"></div>
-        <div id="auditContainer"></div>
-        <div id="equipmentsContainer"></div>
-        <div id="documentsContainer"></div>
-        <div id="dataCollectionContainer"></div>
-        <div id="incidentsContainer"></div>
-        <div id="schemaDirectoryContainer"></div>
+        <!-- COMPLIANCE SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-check iconInTitle"></i>
+                <div class="mainData" id="complianceMainData">
+                    <div class="mainDataTitle smallTitle">Conformité</div>
+                    <div class="mainDataSubTitle simpleText">80 obligations suivies &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp <span class="redTextColor">4 visites en retard</span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp <span class="redTextColor">2 NC critiques à lever</span></div>
+                </div>
+                <i class="fas fa-plus iconTitle openDiv"></i>
+            </div>
+            <div class="allData" id="complianceAllData">
+            </div>
+        </div>
+
+        <!-- AUDIT SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-chart-area iconInTitle"></i>
+                <div class="mainData" id="auditMainData">
+                    <div class="mainDataTitle smallTitle">Audit</div>
+                    <div class="mainDataSubTitle simpleText">3 audits en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 6 NC à lever</div>
+                </div>
+                <i class="fas fa-plus iconTitle openDiv"></i>
+            </div>
+            <div class="allData" id="auditAllData">
+            </div>
+        </div>
+
+        <!-- EQUIPMENTS SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-wrench iconInTitle"></i>
+                <div class="mainData" id="equipmentsMainData">
+                    <div class="mainDataTitle smallTitle">Equipements</div>
+                </div>
+                <i class="fas fa-plus iconTitle openDiv"></i>
+            </div>
+            <div class="allData" id="equipmentsAllData">
+            </div>
+        </div>
+
+        <!-- DATA COLLECTION SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-sd-card iconInTitle"></i>
+                <div class="mainData" id="dataCollectionMainData">
+                    <div class="mainDataTitle smallTitle">Collecte de données</div>
+                    <div class="mainDataSubTitle simpleText">4 campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp  <span class="redTextColor">23% de complétion</span></div>
+                </div>
+                <i class="fas fa-plus iconTitle openDiv"></i>
+            </div>
+            <div class="allData" id="dataCollectionAllData">
+            </div>
+        </div>
+
+        <!-- INCIDENTS SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-exclamation-triangle iconInTitle"></i>
+                <div class="mainData" id="incidentsMainData">
+                    <div class="mainDataTitle smallTitle">Incidents</div>
+                    <div class="mainDataSubTitle simpleText">23 incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 11 presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 accidents</div>
+                </div>
+                <i class="fas fa-plus iconTitle openDiv"></i>
+            </div>
+            <div class="allData" id="incidentsAllData">
+            </div>
+        </div>
+
+        <!-- SCHEMA DIRECTORY SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-rocket iconInTitle"></i>
+                <div class="mainData" id="schemaDirectoryMainData">
+                    <div class="mainDataTitle smallTitle">Schéma directeur</div>
+                    <div class="mainDataSubTitle simpleText">4 plans quinquénnaux &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 12 actions en retard</div>
+                </div>
+                <i class="fas fa-plus iconTitle openDiv"></i>
+            </div>
+            <div class="allData" id="schemaDirectoryAllData">
+            </div>
+        </div>
 
     </div>
 </body>
@@ -571,12 +770,12 @@
         // Add event when user click on openCloseIcon element 
         handleOpenCloseContainer();
     });
-
     function handleOpenCloseContainer() {
         let iconOpenContainer = document.querySelectorAll(".openCloseIcon");
         iconOpenContainer.forEach(element => {
             element.addEventListener("click", () => {
                 let nextPartContainer = element.parentNode.nextElementSibling;
+
                 if (nextPartContainer.classList.contains("active")) {
                     nextPartContainer.classList.remove("active");
                     element.classList.replace('fa-window-minimize', 'fa-plus');
@@ -586,83 +785,82 @@
                 }
             });
         });
-    }
-
-    // $('.allData').each(function(){
-    //     $(this).addClass('active');
-    // });
-
     
-    var jsonLegalData = [
-        {
-            description: "Element ROOT",
-            children: [
-                {
-                    description: "Element 1",
-                    children: [
-                        {
-                            description: "Element 1.1",
-                            children: []
-                        },
-                        {
-                            description: "Element 1.2",
-                            children: [
-                                {
-                                    description: "Element 1.2.1",
-                                    children: []
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    description: "Element 2",
-                    children: [
-                        {
-                            description: "Element 2.1 with tooltip",
-                            tooltip: "Hey I'm a tooltip",
-                            children: []
-                        },
-                        {
-                            description: "Element 2.2",
-                            children: []
-                        }
-                    ]
-                },
-                {
-                    description: "Element 3",
-                    children: [
-                        {
-                            description: "Element 3.1",
-                            children: []
-                        },
-                        {
-                            description: "Element 3.2",
-                            children: []
-                        },
-                        {
-                            description: "Element 3.3",
-                            children: [
-                                {
-                                    description: "Element 3.3.1",
-                                    children: []
-                                },
-                                {
-                                    description: "Element 3.3.2",
-                                    children: []
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    ];
-    // $("#legalAllData").hortree({
-    //     lineStrokeWidth: 2,
-    //     lineZindex: 8,
-    //     lineColor:'#4b86b7',
-    //     data: jsonLegalData
-    // });
+        createLegalHortree();
+
+        $('.allData').each(function () {
+            $(this).addClass('active');
+        });
+    });
+
+    function createLegalHortree() {
+        let jsonLegalData = [
+            {
+                description: "Element ROOT",
+                children: [
+                    {
+                        description: "Element 1",
+                        children: [
+                            {
+                                description: "Element 1.1",
+                                children: []
+                            },
+                            {
+                                description: "Element 1.2",
+                                children: []
+                            }
+                        ]
+                    },
+                    {
+                        description: "Element 2",
+                        children: [
+                            {
+                                description: "Element 2.1",
+                                children: []
+                            },
+                            {
+                                description: "Element 2.2",
+                                children: []
+                            }
+                        ]
+                    },
+                    {
+                        description: "Element 3",
+                        children: [
+                            {
+                                description: "Element 3.1",
+                                children: []
+                            },
+                            {
+                                description: "Element 3.2",
+                                children: []
+                            },
+                            {
+                                description: "Element 3.3",
+                                children: []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+        
+        $("#legalHorTreeContainer").hortree({
+            data: jsonLegalData
+        });
+
+        $('.hortree-label').each(function () {
+            $(this).addClass('simpleText');
+        });
+
+        $('.hortree-branch').each(function (index) {
+            if (index === 0)
+                $(this).children('.hortree-entry').children('.hortree-label').css('background-color', '#79D6CB');
+            if (index === 1)
+                $(this).children('.hortree-entry').children('.hortree-label').css('background-color', '#76BA74');
+            if (index > 1)
+                $(this).children('.hortree-entry').children('.hortree-label').css('background-color', '#548852');
+        });
+    }
 
 </script>
