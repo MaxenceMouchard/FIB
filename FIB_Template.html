@@ -86,14 +86,6 @@
         opacity: 1;
     }
 
-    .line {
-        margin-top: 694px;
-        border-bottom: 1px solid #979797 !important;
-        border-top-color: #979797 !important;
-        border-right-color: #979797 !important;
-        border-left-color: #979797 !important;
-    }
-
 /* FontSize for different screen size */
     @media only screen and (max-width: 1150px) {
         /* styles for browsers larger max 1150px; */
@@ -458,13 +450,17 @@
         display: flex;
         width: auto;
         margin-top: 18px;
+        margin-left: 53px;
+    }
+
+    #legalLegend > :not(:first-child) {
+        margin-left: 70px;
     }
 
     #legalLegend > div {
         display: flex;
         justify-content: space-around;
         align-items: center;
-        margin-left: 53px;
     }
 
     .legalLegendSquares {
@@ -480,6 +476,41 @@
 
     #legalLegendSquareExtern {
         background: #79D6CB;
+    }
+
+    #legalHorTreeTitles {
+        display: flex;
+        font-weight: bold;
+        margin-top: 22px;
+        margin-left: 70px;
+    }
+    
+    #legalHorTreeTitles > :nth-child(2) {
+        margin-left: 251px;
+    }
+    
+    #legalHorTreeTitles > :nth-child(3) {
+        margin-left: 275px;
+    }
+
+    .legalHorTreeContainer {
+        margin-top: 18px;
+    }
+
+    .line {
+        border-bottom: 1px solid #979797 !important;
+        border-top-color: #979797 !important;
+        border-right-color: #979797 !important;
+        border-left-color: #979797 !important;
+    }
+    
+    #legalHorTreeOne .line {
+        margin-top: 751px;
+    }
+    
+    #legalHorTreeTwo .line {
+        /* + taille d'au dessus (ici 300px) + 18px de margin */
+        /* margin-top: 1069px; */
     }
 
 /* COMPLIANCE Section Properties */
@@ -717,7 +748,13 @@
                     <div class="simpleText"><div id="legalLegendSquareIntern" class="legalLegendSquares"></div>Titres de propriété internes</div>
                     <div class="simpleText"><div id="legalLegendSquareExtern" class="legalLegendSquares"></div>Titres de propriété externes</div>
                 </div>
-                <div id="legalHorTreeContainer"></div>
+                <div id="legalHorTreeTitles">
+                    <div class="simpleText">Titres de propriété</div>
+                    <div class="simpleText">Baux</div>
+                    <div class="simpleText">Sous-Baux</div>
+                </div>
+                <div class="legalHorTreeContainer" id="legalHorTreeOne"></div>
+                <div class="legalHorTreeContainer" id="legalHorTreeTwo"></div>
             </div>
         </div>
 
@@ -848,12 +885,12 @@
     }
 
     function createLegalHortree() {
-        let jsonLegalData = [
+        let jsonLegalDataOne = [
             {
                 description: "Element ROOT",
                 children: [
                     {
-                        description: "Element 1",
+                        description: "TEST TEST TEST TEST TEST ok",
                         children: [
                             {
                                 description: "Element 1.1",
@@ -882,7 +919,7 @@
                         description: "Element 3",
                         children: [
                             {
-                                description: "Element 3.1",
+                                description: "TEST TEST TEST TEST TEST ok",
                                 children: []
                             },
                             {
@@ -899,9 +936,67 @@
             }
         ];
         
-        $("#legalHorTreeContainer").hortree({
-            data: jsonLegalData
+        let jsonLegalDataTwo = [
+            {
+                description: "Element ROOT 2",
+                children: [
+                    {
+                        description: "TEST TEST TEST TEST TEST ok 2",
+                        children: []
+                    },
+                    {
+                        description: "Element 2",
+                        children: []
+                    }
+                ]
+            }
+        ];
+
+        $("#legalHorTreeOne").hortree({
+            data: jsonLegalDataOne
         });
+
+        $("#legalHorTreeTwo").hortree({
+            data: jsonLegalDataTwo
+        });
+
+        // console.log(document.getElementById("legalHorTreeOne").previousElementSibling)
+        // console.log(document.getElementById("legalHorTreeTwo").previousElementSibling)
+
+        // console.log(document.getElementsByClassName("legalHorTreeContainer"))
+        // Array.from(document.getElementsByClassName("legalHorTreeContainer")).forEach((elem) =>
+
+        let allContainer = document.getElementsByClassName("legalHorTreeContainer");
+        Array.from(allContainer).forEach((elem, index) => {
+            if (index < allContainer.length && index > 0) {
+                /* The marginTop of the lines of the new HorTree == marginTop of lines of previous HorTree +
+                height of previous HorTree + marginTop of previous HorTree */
+                let horTreeLineMarginTop = parseInt(getComputedStyle(document.querySelector("#" + elem.id +" .line")).marginTop);
+                let horTreeHeight = parseInt(getComputedStyle(elem).height);
+                let horTreeMarginTop = parseInt(getComputedStyle(elem).marginTop);
+                let nextHorTreeLineMarginTop = horTreeLineMarginTop + horTreeHeight + horTreeMarginTop;
+                console.log(elem)
+                console.log(horTreeLineMarginTop)
+                console.log(horTreeHeight)
+                console.log(horTreeMarginTop)
+                console.log(nextHorTreeLineMarginTop)
+                Array.from(document.querySelectorAll("#" + allContainer[index].id + " .line")).forEach((elem) => {
+                    elem.style.marginTop = nextHorTreeLineMarginTop.toString() + "px";
+                });
+            }
+
+        });
+
+        /* The marginTop of the lines of the new HorTree == marginTop of lines of previous HorTree +
+        height of previous HorTree + marginTop of previous HorTree */
+        // let prevHorTreeLineMarginTop = parseInt(getComputedStyle(document.querySelector("#legalHorTreeOne .line")).marginTop);
+        // let prevHorTreeHeight = parseInt(getComputedStyle(document.getElementById("legalHorTreeOne")).height);
+        // let prevHorTreeMarginTop = parseInt(getComputedStyle(document.getElementById("legalHorTreeOne")).marginTop);
+        // let newHorTreeLineMarginTop = prevHorTreeLineMarginTop + prevHorTreeHeight + prevHorTreeMarginTop;
+
+        // Array.from(document.querySelectorAll("#legalHorTreeTwo .line")).forEach((elem) => {
+        //     elem.style.marginTop = newHorTreeLineMarginTop.toString() + "px";
+        // });
 
         Array.from(document.getElementsByClassName("hortree-label")).forEach((elem) => {
             elem.classList.add("simpleText");
