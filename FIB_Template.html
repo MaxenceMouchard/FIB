@@ -98,7 +98,7 @@
         vertical-align: middle;
     }
 
-    .openDiv:hover, .closeDiv:hover {
+    .openCloseIcon:hover{
         cursor: pointer;
     }
 
@@ -266,10 +266,10 @@
 
     .allData, .active {
         visibility: hidden;
-        -webkit-transition: all 0.5s ease-in-out;
-        -moz-transition: all 0.5s ease-in-out;
-        -o-transition: all 0.5s ease-in-out;
-        transition: all 0.5s ease-in-out;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
     }
 
     .active {
@@ -283,10 +283,71 @@
 
     #contactAllData {
         max-height: 0px;
+        width: calc(100% - 80px) !important;
+        width: max-content;
+        font-weight: bold;
+        padding: 20px 40px 20px 40px;
     }
 
     #contactAllData.active{
         max-height: 400px;
+    }
+
+    #contactsReferenced {
+        padding-top: 20px;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .squareContact {
+        display: inline-table;
+        vertical-align: middle;
+        height: 40px;
+        width: 40px;
+        background-color: #00A4BF;
+        border-radius: 5px;
+        color: #FFFFFF;
+    }
+
+    .contactInitial {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .contactNameAndFunction {
+        display: inline-block;
+        vertical-align: middle;
+        padding-left: 10px;
+    }
+
+    .contactFunction {
+        font-weight: normal;
+    }
+    
+    .contactPhonesNumbers, .contactEmail {
+        display: inline-block;
+        vertical-align: middle;
+        font-weight: normal;
+        padding-left: 80px;
+    }
+
+    .contactLog {
+        display: inline-block;
+        vertical-align: middle;
+        font-weight: normal;
+        padding-left: 80px;
+        opacity: 0.35;
+        max-width: 195px;
+    }
+
+    .contactSeparator {
+        border-color: #e9eef32b;;
+        margin: 15px;
+    }
+
+    .fa-phone, .fa-envelope {
+        margin-right: 10px;
     }
 
 /* LEGAL */
@@ -320,20 +381,19 @@
         width: 14px;
         height: 14px;
         background: #7BD679;
-        border-radius: 4px;
+        border-radius: 5px;
     }
 
     #legalLegendSquareExtern {
         width: 14px;
         height: 14px;
         background: #79D6CB;
-        border-radius: 4px;
+        border-radius: 5px;
     }
 
     .line {
         margin-top: 407px;
     }
-
 </style>
 
 <body>
@@ -413,19 +473,56 @@
                     <div class="mainDataTitle smallTitle">Contact</div>
                     <div class="mainDataSubTitle simpleText">4 contacts référencés</div>
                 </div>
-                <i class="fas fa-plus iconTitle openDiv"></i>
+                <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
-            <div class="allData" id="contactAllData">
+            <div class="allData simpleText" id="contactAllData">
+                Contacts Référencés
                 <div id="contactsReferenced">
-                    <div>
+                    <!-- ONE CONTACT -->
+                    <div class="contactRow">
                         <div class="squareContact">
-                            OA
+                            <div class="contactInitial">OA</div>
                         </div>
                         <div class="contactNameAndFunction">
-                            <div class="contactName"></div>
-                            <div class="contactFunction"></div>
+                            <div class="contactName">Otis Ascenseurs</div>
+                            <div class="contactFunction">Manager Technique</div>
+                        </div>
+                        <div class="contactPhonesNumbers">
+                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+                        </div>
+                        <div class="contactEmail">
+                            <i class="fas fa-envelope"></i>admin@otis.com
+                        </div>
+                        <div class="contactLog">
+                            <div>Dernière connexion le 28/10/2019</div>
+                            <div>5 connexions au total</div>
                         </div>
                     </div>
+
+                    <hr class="contactSeparator"></hr>
+
+                    <!-- ONE CONTACT -->
+                    <div class="contactRow">
+                            <div class="squareContact">
+                                <div class="contactInitial">OA</div>
+                            </div>
+                            <div class="contactNameAndFunction">
+                                <div class="contactName">Otis Ascenseurs</div>
+                                <div class="contactFunction">Manager Technique</div>
+                            </div>
+                            <div class="contactPhonesNumbers">
+                                <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+                                <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+                            </div>
+                            <div class="contactEmail">
+                                <i class="fas fa-envelope"></i>admin@otis.com
+                            </div>
+                            <div class="contactLog">
+                                <div>Dernière connexion le 28/10/2019</div>
+                                <div>5 connexions au total</div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -438,7 +535,7 @@
                     <div class="mainDataTitle smallTitle">Juridique</div>
                     <div class="mainDataSubTitle simpleText">1 titre de propriété &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 2 baux internes &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 baux externes &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 sous-baux</div>
                 </div>
-                <i class="fas fa-plus iconTitle openDiv"></i>
+                <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
             <div class="allData" id="legalAllData">
                 <div id="legalLegend">
@@ -471,8 +568,12 @@
 <script>
 
     document.addEventListener("DOMContentLoaded", () => {
-        // Add event when user click on openDiv/CloseDiv element 
-        let iconOpenContainer = document.querySelectorAll(".openDiv, .openClose");
+        // Add event when user click on openCloseIcon element 
+        handleOpenCloseContainer();
+    });
+
+    function handleOpenCloseContainer() {
+        let iconOpenContainer = document.querySelectorAll(".openCloseIcon");
         iconOpenContainer.forEach(element => {
             element.addEventListener("click", () => {
                 let nextPartContainer = element.parentNode.nextElementSibling;
@@ -485,7 +586,7 @@
                 }
             });
         });
-    });
+    }
 
     // $('.allData').each(function(){
     //     $(this).addClass('active');
