@@ -5,11 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FIB</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous" />
 </head>
 
 <style>
+
 /* CSS for HorTree plugin (for Legal section) */
+
     .hortree-wrapper *,
     .hortree-wrapper *:before,
     .hortree-wrapper *:after {
@@ -87,17 +92,19 @@
     }
 
 /* FontSize for different screen size */
+
     @media only screen and (max-width: 1150px) {
+
         /* styles for browsers larger max 1150px; */
         #identityContainer {
             height: 235px;
         }
 
-        #identityContainer > #allIdentityInfos {
+        #identityContainer>#allIdentityInfos {
             width: calc(100% - 275px); /* width= 100% - padding - pictures size */
         }
 
-        #identityContainer > #identityPicture {
+        #identityContainer>#identityPicture {
             width: 235px;
         }
 
@@ -119,17 +126,18 @@
     }
 
     @media only screen and (min-width: 1150px) {
+
         /* styles for browsers larger min 1150px; */
         #identityContainer {
             height: 285px;
         }
 
-        
-        #identityContainer > #allIdentityInfos {
-            width: calc(100% - 325px); /* width= 100% - padding - pictures size */
+
+        #identityContainer>#allIdentityInfos {
+            width: calc(100% - 325px); /* 100% - padding - pictures size */
         }
 
-        #identityContainer > #identityPicture {
+        #identityContainer>#identityPicture {
             width: 285px;
         }
 
@@ -151,9 +159,10 @@
     }
 
 /* Some generic class or element */
+
     body {
         background-color: #E9EEF3;
-        font-family: 'Open Sans';
+        font-family: "Open Sans";
         margin: auto;
     }
 
@@ -165,37 +174,39 @@
         vertical-align: middle;
     }
 
-    .openCloseIcon:hover{
+    .openCloseIcon:hover {
         cursor: pointer;
     }
 
 /* References section */
+
     #referencesContainer {
         min-height: 45px;
         background-color: #00A4BF;
         color: #FFFFFF;
     }
 
-    #referencesContainer > .referencesText {
+    #referencesContainer>.referencesText {
         padding: 15px 0 0 30px;
         font-size: 12px;
         font-weight: bold;
     }
 
 /* Filters section */
+
     #filtersContainer {
         min-height: 80px;
         background-color: #FEFEFE;
         color: #333333;
     }
 
-    #filtersContainer > .allFilters {
+    #filtersContainer>.allFilters {
         padding: 20px 0 0 30px;
         font-size: 12px;
         font-weight: bold;
     }
 
-    #filtersContainer > .allFilters .selector {
+    #filtersContainer>.allFilters .selector {
         height: 35px;
         border-radius: 5px;
         margin-left: 10px;
@@ -203,8 +214,9 @@
         margin-bottom: 10px;
     }
 
-    #searchFilterButton, #rebootFilterButton {
-        font-family: 'Open Sans';
+    #searchFilterButton,
+    #rebootFilterButton {
+        font-family: "Open Sans";
         font-size: 12px;
         height: 35px;
         padding: 0 15px 0 15px;
@@ -215,12 +227,14 @@
         transition: 0.5s;
     }
 
-    #searchFilterButton:hover, #rebootFilterButton:hover {
+    #searchFilterButton:hover,
+    #rebootFilterButton:hover {
         cursor: pointer;
         transform: scale(1.1);
     }
 
-    #searchFilterButton:active, #rebootFilterButton:active {
+    #searchFilterButton:active,
+    #rebootFilterButton:active {
         opacity: 0.8;
     }
 
@@ -237,48 +251,53 @@
     }
 
 /* Identity section */
+
     #identityContainer {
         margin: 20px 35px 0 35px;
         background-color: #FFFFFF;
         border-radius: 5px;
     }
 
-    #identityContainer > #identityPicture {
+    #identityContainer>#identityPicture {
         float: left;
         height: 100%;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
     }
 
-    #identityContainer > #allIdentityInfos {
+    #identityContainer>#allIdentityInfos {
         display: inline-block;
         height: calc(100% - 40px);
         padding: 20px;
         color: #333333;
     }
 
-    #identityContainer > #allIdentityInfos > #identityTitle {
+    #identityContainer>#allIdentityInfos>#identityTitle {
         display: inline;
         margin-left: 10px;
         font-weight: bold;
     }
 
-    #identityContainer > #allIdentityInfos > #identityInfosDetails {
+    #identityContainer>#allIdentityInfos>#identityInfosDetails {
         margin-left: 22px;
     }
 
-    #identityContainer > #allIdentityInfos > #identityInfosDetails > #identityLocation {
+    #identityContainer>#allIdentityInfos>#identityInfosDetails>#identityLocation {
         margin-top: 20px;
     }
 
-    #identityContainer > #allIdentityInfos > #identityInfosDetails > #identityProperties {
+    #identityContainer>#allIdentityInfos>#identityInfosDetails>#identityProperties {
         margin-top: 20px;
         height: 80px;
         overflow-x: auto;
         white-space: nowrap;
     }
 
-    #identityFloorsNumber, #identityTotalSurface, #identityDaysNumberBeforeDueDate, #identityNumberPersonOnThisSite, #identityOccupationPercent {
+    #identityFloorsNumber,
+    #identityTotalSurface,
+    #identityDaysNumberBeforeDueDate,
+    #identityNumberPersonOnThisSite,
+    #identityOccupationPercent {
         display: inline-block;
         height: calc(85% - 10px);
         padding-top: 5px;
@@ -286,13 +305,19 @@
         vertical-align: top;
     }
 
-    #identityFloorsNumber, #identityTotalSurface, #identityDaysNumberBeforeDueDate, #identityNumberPersonOnThisSite {
+    #identityFloorsNumber,
+    #identityTotalSurface,
+    #identityDaysNumberBeforeDueDate,
+    #identityNumberPersonOnThisSite {
         border-right: 1px solid #979797;
-        padding-right: 30px; 
+        padding-right: 30px;
     }
 
-    #identityTotalSurface, #identityDaysNumberBeforeDueDate, #identityNumberPersonOnThisSite, #identityOccupationPercent {
-        padding-left: 30px; 
+    #identityTotalSurface,
+    #identityDaysNumberBeforeDueDate,
+    #identityNumberPersonOnThisSite,
+    #identityOccupationPercent {
+        padding-left: 30px;
     }
 
     #identityDaysNumberBeforeDueDate {
@@ -306,6 +331,7 @@
     }
 
 /* General Sections Properties */
+
     .sectionContainer {
         margin: 20px 35px 0 35px;
         padding: 25px;
@@ -313,21 +339,21 @@
         border-radius: 5px;
     }
 
-    .sectionContainer > .primaryInfos {
+    .sectionContainer>.primaryInfos {
         color: #333333;
     }
 
-    .sectionContainer > .primaryInfos > .mainData {
+    .sectionContainer>.primaryInfos>.mainData {
         display: inline-block;
         vertical-align: middle;
         padding-left: 20px;
     }
 
-    .sectionContainer > .primaryInfos > .mainData > .mainDataTitle {
+    .sectionContainer>.primaryInfos>.mainData>.mainDataTitle {
         font-weight: bold;
     }
 
-    .sectionContainer > .primaryInfos > .mainData > .mainDataSubTitle {
+    .sectionContainer>.primaryInfos>.mainData>.mainDataSubTitle {
         color: #9B9B9B;
     }
 
@@ -335,7 +361,8 @@
         color: red;
     }
 
-    .allData, .active {
+    .allData,
+    .active {
         visibility: hidden;
         opacity: 0;
         -webkit-transition: all 0.5s;
@@ -347,6 +374,20 @@
     .active {
         visibility: visible;
         opacity: 1;
+    }
+
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    .tooltip-inner {
+        max-width: 100%;
+        text-align: left;
+        padding: 12px;
     }
 
 /* CONTACT Section Properties */
@@ -363,11 +404,12 @@
         padding: 20px 45px 20px 45px;
     }
 
-    #contactAllData.active{
+    #contactAllData.active {
         max-height: 400px;
     }
 
-    #contactsReferenced, #contactsIntervenant {
+    #contactsReferenced,
+    #contactsIntervenant {
         padding-top: 20px;
         overflow-x: auto;
         white-space: nowrap;
@@ -400,8 +442,9 @@
     .contactFunction {
         font-weight: normal;
     }
-    
-    .contactPhonesNumbers, .contactEmail {
+
+    .contactPhonesNumbers,
+    .contactEmail {
         display: inline-block;
         vertical-align: middle;
         font-weight: normal;
@@ -422,7 +465,8 @@
         margin: 15px;
     }
 
-    .fa-phone, .fa-envelope {
+    .fa-phone,
+    .fa-envelope {
         margin-right: 10px;
     }
 
@@ -436,22 +480,22 @@
         max-height: 0px;
     }
 
-    #legalAllData.active{
+    #legalAllData.active {
         max-height: 1000px;
     }
 
     #legalLegend {
         display: flex;
         width: auto;
-        margin-top: 18px;
+        margin-top: 24px;
         margin-left: 53px;
     }
 
-    #legalLegend > :not(:first-child) {
+    #legalLegend> :not(:first-child) {
         margin-left: 70px;
     }
 
-    #legalLegend > div {
+    #legalLegend>div {
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -478,12 +522,12 @@
         margin-top: 22px;
         margin-left: 70px;
     }
-    
-    #legalHorTreeTitles > :nth-child(2) {
+
+    #legalHorTreeTitles> :nth-child(2) {
         margin-left: 251px;
     }
-    
-    #legalHorTreeTitles > :nth-child(3) {
+
+    #legalHorTreeTitles> :nth-child(3) {
         margin-left: 275px;
     }
 
@@ -497,15 +541,11 @@
         border-right-color: #979797 !important;
         border-left-color: #979797 !important;
     }
-    
+
     #legalHorTreeOne .line {
         margin-top: 751px;
     }
-    
-    #legalHorTreeTwo .line {
-        /* + taille d'au dessus (ici 300px) + 18px de margin */
-        /* margin-top: 1069px; */
-    }
+}
 
 /* COMPLIANCE Section Properties */
 
@@ -596,7 +636,7 @@
         vertical-align: middle;
     }
 
-    .switchEquipmentFilter input { 
+    .switchEquipmentFilter input {
         opacity: 0;
         width: 0;
         height: 0;
@@ -626,7 +666,7 @@
         transition: .4s;
     }
 
-    input:checked + .slider {
+    input:checked+.slider {
         background-color: #00A4BF;
     }
 
@@ -640,7 +680,6 @@
         transform: translateX(26px);
     }
 
-    /* Rounded sliders */
     .slider.round {
     border-radius: 34px;
     }
@@ -674,14 +713,14 @@
     #schemaDirectoryMainData {
         width: calc(100% - 74px); /* 100% - (padding + inconSize) */
     }
-
 </style>
 
 <body>
     <div id="containerFIB">
 
         <div id="referencesContainer">
-            <div class="referencesText">Fiche d'identité du bâtiment > FR33.00001 - CMA CGM Agences France - Bordeaux</div>
+            <div class="referencesText">Fiche d'identité du bâtiment > FR33.00001 - CMA CGM Agences France - Bordeaux
+            </div>
         </div>
 
         <div id="filtersContainer">
@@ -724,9 +763,11 @@
         </div>
 
         <div id="identityContainer">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSr96vtD0rFIx4JnDPjMZ1Iv3guFaeaEqpxXRtqifUG7bJ58bWd" id="identityPicture"/>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSr96vtD0rFIx4JnDPjMZ1Iv3guFaeaEqpxXRtqifUG7bJ58bWd"
+                id="identityPicture" />
             <div id="allIdentityInfos">
-                <i class="fas fa-map-marker-alt"></i><div id="identityTitle" class="smallTitle">FR33.00001 - CMA CGM Agences France - Bordeaux</div>
+                <i class="fas fa-map-marker-alt"></i>
+                <div id="identityTitle" class="smallTitle">FR33.00001 - CMA CGM Agences France - Bordeaux</div>
                 <div id="identityInfosDetails">
                     <div id="identityType" class="simpleText">Bureaux</div>
                     <div id="identityLocation" class="simpleText">
@@ -781,29 +822,30 @@
                         </div>
                     </div>
 
-                    <hr class="contactSeparator"></hr>
+                    <hr class="contactSeparator">
+                    </hr>
 
                     <!-- ONE CONTACT -->
                     <div class="contactRow">
-                            <div class="squareContact">
-                                <div class="contactInitial">OA</div>
-                            </div>
-                            <div class="contactNameAndFunction">
-                                <div class="contactName">Otis Ascenseurs</div>
-                                <div class="contactFunction">Manager Technique</div>
-                            </div>
-                            <div class="contactPhonesNumbers">
-                                <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
-                                <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
-                            </div>
-                            <div class="contactEmail">
-                                <i class="fas fa-envelope"></i>admin@otis.com
-                            </div>
-                            <div class="contactLog">
-                                <div>Dernière connexion le 28/10/2019</div>
-                                <div>5 connexions au total</div>
-                            </div>
+                        <div class="squareContact">
+                            <div class="contactInitial">OA</div>
                         </div>
+                        <div class="contactNameAndFunction">
+                            <div class="contactName">Otis Ascenseurs</div>
+                            <div class="contactFunction">Manager Technique</div>
+                        </div>
+                        <div class="contactPhonesNumbers">
+                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+                        </div>
+                        <div class="contactEmail">
+                            <i class="fas fa-envelope"></i>admin@otis.com
+                        </div>
+                        <div class="contactLog">
+                            <div>Dernière connexion le 28/10/2019</div>
+                            <div>5 connexions au total</div>
+                        </div>
+                    </div>
                 </div>
 
                 <br><br><br>
@@ -832,29 +874,30 @@
                         </div>
                     </div>
 
-                    <hr class="contactSeparator"></hr>
+                    <hr class="contactSeparator">
+                    </hr>
 
                     <!-- ONE CONTACT -->
                     <div class="contactRow">
-                            <div class="squareContact">
-                                <div class="contactInitial">OA</div>
-                            </div>
-                            <div class="contactNameAndFunction">
-                                <div class="contactName">Otis Ascenseurs</div>
-                                <div class="contactFunction">Manager Technique</div>
-                            </div>
-                            <div class="contactPhonesNumbers">
-                                <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
-                                <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
-                            </div>
-                            <div class="contactEmail">
-                                <i class="fas fa-envelope"></i>admin@otis.com
-                            </div>
-                            <div class="contactLog">
-                                <div>Dernière connexion le 28/10/2019</div>
-                                <div>5 connexions au total</div>
-                            </div>
+                        <div class="squareContact">
+                            <div class="contactInitial">OA</div>
                         </div>
+                        <div class="contactNameAndFunction">
+                            <div class="contactName">Otis Ascenseurs</div>
+                            <div class="contactFunction">Manager Technique</div>
+                        </div>
+                        <div class="contactPhonesNumbers">
+                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+                        </div>
+                        <div class="contactEmail">
+                            <i class="fas fa-envelope"></i>admin@otis.com
+                        </div>
+                        <div class="contactLog">
+                            <div>Dernière connexion le 28/10/2019</div>
+                            <div>5 connexions au total</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -865,14 +908,20 @@
                 <i class="fas fa-balance-scale simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="legalMainData">
                     <div class="mainDataTitle smallTitle">Juridique</div>
-                    <div class="mainDataSubTitle simpleText">1 titre de propriété &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 2 baux internes &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 baux externes &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 sous-baux</div>
+                    <div class="mainDataSubTitle simpleText">1 titre de propriété &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 2
+                        baux internes &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 baux externes &nbsp&nbsp&nbsp /
+                        &nbsp&nbsp&nbsp 4 sous-baux</div>
                 </div>
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
             <div class="allData" id="legalAllData">
                 <div id="legalLegend">
-                    <div class="simpleText"><div id="legalLegendSquareIntern" class="legalLegendSquares"></div>Titres de propriété internes</div>
-                    <div class="simpleText"><div id="legalLegendSquareExtern" class="legalLegendSquares"></div>Titres de propriété externes</div>
+                    <div class="simpleText">
+                        <div id="legalLegendSquareIntern" class="legalLegendSquares"></div>Titres de propriété internes
+                    </div>
+                    <div class="simpleText">
+                        <div id="legalLegendSquareExtern" class="legalLegendSquares"></div>Titres de propriété externes
+                    </div>
                 </div>
                 <div id="legalHorTreeTitles">
                     <div class="simpleText">Titres de propriété</div>
@@ -890,7 +939,9 @@
                 <i class="fas fa-check simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="complianceMainData">
                     <div class="mainDataTitle smallTitle">Conformité</div>
-                    <div class="mainDataSubTitle simpleText">80 obligations suivies &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp <span class="redTextColor">4 visites en retard</span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp <span class="redTextColor">2 NC critiques à lever</span></div>
+                    <div class="mainDataSubTitle simpleText">80 obligations suivies &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
+                        <span class="redTextColor">4 visites en retard</span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp <span
+                            class="redTextColor">2 NC critiques à lever</span></div>
                 </div>
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
@@ -904,7 +955,8 @@
                 <i class="fas fa-chart-area simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="auditMainData">
                     <div class="mainDataTitle smallTitle">Audit</div>
-                    <div class="mainDataSubTitle simpleText">3 audits en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 6 NC à lever</div>
+                    <div class="mainDataSubTitle simpleText">3 audits en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 6 NC à
+                        lever</div>
                 </div>
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
@@ -1017,7 +1069,8 @@
                 <i class="fas fa-sd-card simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="dataCollectionMainData">
                     <div class="mainDataTitle smallTitle">Collecte de données</div>
-                    <div class="mainDataSubTitle simpleText">4 campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp  <span class="redTextColor">23% de complétion</span></div>
+                    <div class="mainDataSubTitle simpleText">4 campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
+                        <span class="redTextColor">23% de complétion</span></div>
                 </div>
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
@@ -1031,7 +1084,8 @@
                 <i class="fas fa-exclamation-triangle simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="incidentsMainData">
                     <div class="mainDataTitle smallTitle">Incidents</div>
-                    <div class="mainDataSubTitle simpleText">23 incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 11 presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 accidents</div>
+                    <div class="mainDataSubTitle simpleText">23 incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 11
+                        presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 accidents</div>
                 </div>
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
@@ -1045,7 +1099,8 @@
                 <i class="fas fa-rocket simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="schemaDirectoryMainData">
                     <div class="mainDataTitle smallTitle">Schéma directeur</div>
-                    <div class="mainDataSubTitle simpleText">4 plans quinquénnaux &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 12 actions en retard</div>
+                    <div class="mainDataSubTitle simpleText">4 plans quinquénnaux &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 12
+                        actions en retard</div>
                 </div>
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
@@ -1058,21 +1113,100 @@
 
 </html>
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-  crossorigin="anonymous">
+<!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous">
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script> -->
+
+    
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous">
 </script>
 <script src="./horizontalTreePlugin/dist/jquery.hortree.min.js"></script>
 <script src="./horizontalTreePlugin/demo/jquery.line.js"></script>
 
 <script>
-
     document.addEventListener("DOMContentLoaded", () => {
         // Add event when user click on openCloseIcon element :
         handleOpenCloseContainer();
-    
+
+        let jsonLegalDataOne = [
+            {
+                description: "Propriété de Veolia",
+                children: [
+                    {
+                        description: "Locataire n°1",
+                        children: [
+                            {
+                                description: "Bale 123",
+                                children: []
+                            },
+                            {
+                                description: "Sous-Location n°2",
+                                children: []
+                            }
+                        ]
+                    },
+                    {
+                        description: "Altran Services SA",
+                        children: [
+                            {
+                                description: "Bale 123",
+                                children: []
+                            },
+                            {
+                                description: "Bale 99",
+                                children: []
+                            }
+                        ]
+                    },
+                    {
+                        description: "Altran Services SA",
+                        children: []
+                    },
+                    {
+                        description: "Altran Services SA",
+                        children: []
+                    }
+                ]
+            }
+        ];
+        let jsonLegalDataTwo = [
+            {
+                description: "FR69.P01 FR33.00001 - CMA CGM",
+                children: [
+                    {
+                        description: "Altran Services SA",
+                        children: []
+                    },
+                    {
+                        description: "Altran Services SA",
+                        children: []
+                    }
+                ]
+            }
+        ];
+        
         // Horizontal tree creation in Legal Section :
-        createLegalHortree();
+        createLegalHortree([{
+            horTreeId: "#legalHorTreeOne",
+            horTreeData: jsonLegalDataOne
+        }, {
+            horTreeId: "#legalHorTreeTwo",
+            horTreeData: jsonLegalDataTwo
+        }]);
+
 
         $('.allData').each(function () {
             $(this).addClass('active');
@@ -1096,138 +1230,67 @@
         });
     }
 
-    function createLegalHortree() {
-        let jsonLegalDataOne = [
-            {
-                description: "Element ROOT",
-                children: [
-                    {
-                        description: "TEST TEST TEST TEST TEST ok",
-                        children: [
-                            {
-                                description: "Element 1.1",
-                                children: []
-                            },
-                            {
-                                description: "Element 1.2",
-                                children: []
-                            }
-                        ]
-                    },
-                    {
-                        description: "Element 2",
-                        children: [
-                            {
-                                description: "Element 2.1",
-                                children: []
-                            },
-                            {
-                                description: "Element 2.2",
-                                children: []
-                            }
-                        ]
-                    },
-                    {
-                        description: "Element 3",
-                        children: [
-                            {
-                                description: "TEST TEST TEST TEST TEST ok",
-                                children: []
-                            },
-                            {
-                                description: "Element 3.2",
-                                children: []
-                            },
-                            {
-                                description: "Element 3.3",
-                                children: []
-                            }
-                        ]
-                    }
-                ]
-            }
-        ];
-        
-        let jsonLegalDataTwo = [
-            {
-                description: "Element ROOT 2",
-                children: [
-                    {
-                        description: "TEST TEST TEST TEST TEST ok 2",
-                        children: []
-                    },
-                    {
-                        description: "Element 2",
-                        children: []
-                    }
-                ]
-            }
-        ];
-
-        $("#legalHorTreeOne").hortree({
-            data: jsonLegalDataOne
+    function createLegalHortree(arrayHorTreeObjects) {
+        // Creation of the HorTrees
+        arrayHorTreeObjects.forEach((object) => {
+            $(object.horTreeId).hortree({
+                data: object.horTreeData
+            });
         });
 
-        $("#legalHorTreeTwo").hortree({
-            data: jsonLegalDataTwo
-        });
+        let horTreeContainers = document.getElementsByClassName("legalHorTreeContainer");
 
-        // console.log(document.getElementById("legalHorTreeOne").previousElementSibling)
-        // console.log(document.getElementById("legalHorTreeTwo").previousElementSibling)
-
-        // console.log(document.getElementsByClassName("legalHorTreeContainer"))
-        // Array.from(document.getElementsByClassName("legalHorTreeContainer")).forEach((elem) =>
-
-        let allContainer = document.getElementsByClassName("legalHorTreeContainer");
-        Array.from(allContainer).forEach((elem, index) => {
-            if (index < allContainer.length && index > 0) {
-                /* The marginTop of the lines of the new HorTree == marginTop of lines of previous HorTree +
-                height of previous HorTree + marginTop of previous HorTree */
-                let horTreeLineMarginTop = parseInt(getComputedStyle(document.querySelector("#" + elem.id +" .line")).marginTop);
-                let horTreeHeight = parseInt(getComputedStyle(elem).height);
-                let horTreeMarginTop = parseInt(getComputedStyle(elem).marginTop);
+        // The marginTop of the lines of the new HorTree == marginTop of lines of previous HorTree +
+        // height of previous HorTree + marginTop of previous HorTree
+        Array.from(horTreeContainers).forEach((container, index) => {
+            if (index < horTreeContainers.length - 1) {
+                let horTreeLineMarginTop = parseInt(getComputedStyle(document.querySelector("#" + container.id + " .line")).marginTop);
+                let horTreeHeight = parseInt(getComputedStyle(container).height);
+                let horTreeMarginTop = parseInt(getComputedStyle(container).marginTop);
                 let nextHorTreeLineMarginTop = horTreeLineMarginTop + horTreeHeight + horTreeMarginTop;
-                console.log(elem)
-                console.log(horTreeLineMarginTop)
-                console.log(horTreeHeight)
-                console.log(horTreeMarginTop)
-                console.log(nextHorTreeLineMarginTop)
-                Array.from(document.querySelectorAll("#" + allContainer[index].id + " .line")).forEach((elem) => {
-                    elem.style.marginTop = nextHorTreeLineMarginTop.toString() + "px";
+
+                Array.from(document.querySelectorAll("#" + horTreeContainers[index + 1].id + " .line")).forEach((line) => {
+                    line.style.marginTop = nextHorTreeLineMarginTop.toString() + "px";
                 });
             }
-
         });
 
-        /* The marginTop of the lines of the new HorTree == marginTop of lines of previous HorTree +
-        height of previous HorTree + marginTop of previous HorTree */
-        // let prevHorTreeLineMarginTop = parseInt(getComputedStyle(document.querySelector("#legalHorTreeOne .line")).marginTop);
-        // let prevHorTreeHeight = parseInt(getComputedStyle(document.getElementById("legalHorTreeOne")).height);
-        // let prevHorTreeMarginTop = parseInt(getComputedStyle(document.getElementById("legalHorTreeOne")).marginTop);
-        // let newHorTreeLineMarginTop = prevHorTreeLineMarginTop + prevHorTreeHeight + prevHorTreeMarginTop;
-
-        // Array.from(document.querySelectorAll("#legalHorTreeTwo .line")).forEach((elem) => {
-        //     elem.style.marginTop = newHorTreeLineMarginTop.toString() + "px";
-        // });
-
-        Array.from(document.getElementsByClassName("hortree-label")).forEach((elem) => {
-            elem.classList.add("simpleText");
+        // Text format of the labels
+        Array.from(document.getElementsByClassName("hortree-label")).forEach((label) => {
+            label.classList.add("simpleText");
         });
 
-        Array.from(document.getElementsByClassName("hortree-branch")).forEach((elem, index) => {
-            if (index === 0) {
-                elem.querySelectorAll('.hortree-entry > .hortree-label').forEach((element) => {
-                    element.style.backgroundColor = "#79D6CB";
-                })
-            } else if (index === 1) {
-                elem.querySelectorAll('.hortree-entry > .hortree-label').forEach((element) => {
-                    element.style.backgroundColor = "#76BA74";
-                })
-            } else if (index > 1) {
-                elem.querySelectorAll('.hortree-entry > .hortree-label').forEach((element) => {
-                    element.style.backgroundColor = "#548852";
-                })
-            }
+        // Managing background color of the labels (depending of their section) + the tooltips only for the first section
+        $(".hortree-label").tooltip({
+            html: true,
+            title: "<div class='simpleText'>" +
+                "Surface totale Propriétaire : <strong>1 000 m²</strong><br />" +
+                "Montant d'acquisition : <strong>12 000 000 €</strong><br />" +
+                "Date d'acquisition : <strong>07/05/2001</strong></div>",
+            placement: "top",
+            container: "body"
+        })
+        Array.from(horTreeContainers).forEach((container, index) => {
+            container.querySelectorAll(".hortree-branch").forEach((branch, indexBis) => {
+                if (indexBis === 0) {
+                    branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
+                        if (index === 0)
+                            label.style.backgroundColor = "#79D6CB";
+                        else if (index === 1)
+                            label.style.backgroundColor = "#7BD679";
+                    })
+                } else if (indexBis === 1) {
+                    branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
+                        $(label).tooltip("disable");
+                        label.style.backgroundColor = "#76BA74";
+                    })
+                } else if (indexBis > 1) {
+                    branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
+                        $(label).tooltip("disable");
+                        label.style.backgroundColor = "#548852";
+                    })
+                }
+            });
         });
     }
 
