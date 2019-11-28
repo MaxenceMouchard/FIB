@@ -337,6 +337,7 @@
 
     .allData, .active {
         visibility: hidden;
+        opacity: 0;
         -webkit-transition: all 0.5s;
         -moz-transition: all 0.5s;
         -o-transition: all 0.5s;
@@ -345,6 +346,7 @@
 
     .active {
         visibility: visible;
+        opacity: 1;
     }
 
 /* CONTACT Section Properties */
@@ -369,7 +371,8 @@
         padding-top: 20px;
         overflow-x: auto;
         white-space: nowrap;
-        width: min-content;
+        width: 100%;
+        max-width: max-content;
     }
 
     .squareContact {
@@ -416,7 +419,6 @@
 
     .contactSeparator {
         border-color: #e9eef32b;
-        width: calc(100% - );
         margin: 15px;
     }
 
@@ -555,6 +557,7 @@
     .squareTextEquipment {
         width: 119px;
         display: inline-block;
+        white-space: normal;
     }
 
     #addEquipment {
