@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FIB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous" />
 </head>
 
 <style>
@@ -33,7 +33,7 @@
     }
 
     .hortree-branch:first-child {
-        margin-left: 53px;
+        margin-left: 0;
     }
 
     .hortree-entry {
@@ -44,7 +44,7 @@
     .hortree-label {
         display: block;
         width: 150px;
-        padding: 2px 5px;
+        padding: 2px;
         line-height: 30px;
         text-align: center;
         border-radius: 3px;
@@ -52,6 +52,7 @@
         left: 0;
         z-index: 10;
         color: white;
+        white-space: normal;
     }
 
     .hortree-tooltip {
@@ -123,6 +124,19 @@
         .title {
             font-size: 22px;
         }
+
+        /* Legal Hortree */
+        #legalHorTreeTitles {
+            margin-left: 29px;
+        }
+
+        #legalHorTreeTitles> :nth-child(2) {
+            margin-left: 260px;
+        }
+
+        #legalHorTreeTitles> :nth-child(3) {
+            margin-left: 281px;
+        }
     }
 
     @media only screen and (min-width: 1150px) {
@@ -155,6 +169,19 @@
 
         .simpleTitle {
             font-size: 24px;
+        }
+
+        /* Legal Hortree */
+        #legalHorTreeTitles {
+            margin-left: 18px;
+        }
+
+        #legalHorTreeTitles> :nth-child(2) {
+            margin-left: 248px;
+        }
+
+        #legalHorTreeTitles> :nth-child(3) {
+            margin-left: 276px;
         }
     }
 
@@ -376,14 +403,6 @@
         opacity: 1;
     }
 
-    .slider.round {
-        border-radius: 34px;
-    }
-
-    .slider.round:before {
-        border-radius: 50%;
-    }
-
     .tooltip-inner {
         max-width: 100%;
         text-align: left;
@@ -393,6 +412,10 @@
 /* Override */
     *, ::after, ::before {
         box-sizing: unset;
+    }
+
+    .fa-window-minimize {
+        transform: translateY(-5px);
     }
 
 /* CONTACT Section Properties */
@@ -405,11 +428,11 @@
         max-height: 0px;
         width: calc(100% - 90px); /* 100% - (padding) */
         font-weight: bold;
-        padding: 20px 45px 20px 45px;
     }
 
     #contactAllData.active {
         max-height: 400px;
+        margin: 20px 43px 20px 43px;
     }
 
     #contactsReferenced,
@@ -486,20 +509,22 @@
 
     #legalAllData.active {
         max-height: 1000px;
+        margin-top: 20px;
+        margin-left: 53px;
+        white-space: nowrap;
+        overflow-x: auto;
     }
 
     #legalLegend {
         display: flex;
         width: auto;
-        margin-top: 24px;
-        margin-left: 53px;
     }
 
-    #legalLegend> :not(:first-child) {
+    #legalLegend > :not(:first-child) {
         margin-left: 70px;
     }
 
-    #legalLegend>div {
+    #legalLegend > div {
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -524,15 +549,6 @@
         display: flex;
         font-weight: bold;
         margin-top: 22px;
-        margin-left: 70px;
-    }
-
-    #legalHorTreeTitles> :nth-child(2) {
-        margin-left: 251px;
-    }
-
-    #legalHorTreeTitles> :nth-child(3) {
-        margin-left: 275px;
     }
 
     .legalHorTreeContainer {
@@ -547,7 +563,7 @@
     }
 
     #legalHorTreeOne .line {
-        margin-top: 751px;
+        margin-top: 702px;
     }
 
 /* COMPLIANCE Section Properties */
@@ -577,19 +593,18 @@
         max-height: 1000px;
     }
 
-    .allSquaresEquipments {
+    .equipmentAllSquares {
         display: inline-block;
         width: calc(100% - 165px); /* 100% - buttonWidth*/
         overflow-x: auto;
         white-space: nowrap;
     }
 
-    .squareEquipment {
+    .equipmentSquare {
         display: inline-table;
         background-color: #00A4BF;
         border-radius: 5px;
         color: #FFFFFF;
-        font-weight: bold;
         text-align: center;
         width: 150px;
         height: 85px;
@@ -597,18 +612,22 @@
         margin-right: 15px;
     }
 
-    .squareEquipmentNumberAndText {
+    .equipmentSquareNumberAndText {
         display: table-cell;
         vertical-align: middle;
     }
 
-    .squareTextEquipment {
+    .equipmentSquareNumber {
+        font-weight: bold;
+    }
+
+    .equipmentSquareText {
         width: 119px;
         display: inline-block;
         white-space: normal;
     }
 
-    #addEquipment {
+    #equipmentAddOne {
         display: inline-block;
         background-color: #333333;
         color: #FFFFFF;
@@ -618,7 +637,7 @@
         vertical-align: top;
     }
 
-    #addEquipment:hover {
+    #equipmentAddOne:hover {
         cursor: pointer;
         transform: scale(1.1);
     }
@@ -636,15 +655,15 @@
         margin-right: 60px;
     }
 
-    .switchEquipmentFilter {
+    .equipmentSwitchFilter {
         position: relative;
         display: inline-block;
-        width: 60px;
-        height: 34px;
+        width: 30px;
+        height: 18px;
         vertical-align: middle;
     }
 
-    .switchEquipmentFilter input {
+    .equipmentSwitchFilter input {
         opacity: 0;
         width: 0;
         height: 0;
@@ -665,16 +684,16 @@
     .slider:before {
         position: absolute;
         content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
+        height: 16px;
+        width: 16px;
+        left: 1px;
+        bottom: 1px;
         background-color: #FFFFFF;
         -webkit-transition: .4s;
         transition: .4s;
     }
 
-    input:checked+.slider {
+    input:checked + .slider {
         background-color: #00A4BF;
     }
 
@@ -685,15 +704,19 @@
     input:checked + .slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
-        transform: translateX(26px);
+        transform: translateX(12px);
     }
 
     .slider.round {
-    border-radius: 34px;
+        border-radius: 34px;
     }
 
     .slider.round:before {
         border-radius: 50%;
+    }
+
+    #equipmentSliderLabel {
+        margin-left: 36px;
     }
 
     #equipmentTableWrapper {
@@ -1001,33 +1024,33 @@
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
             <div class="allData" id="equipmentsAllData">
-                <div class="allSquaresEquipments">
-                    <div class="squareEquipment simpleText">
-                        <div class="squareEquipmentNumberAndText">
-                            <div class="squareNumberEquipment">80</div>
-                            <div class="squareTextEquipment">équipements</div>
+                <div class="equipmentAllSquares">
+                    <div class="equipmentSquare">
+                        <div class="equipmentSquareNumberAndText">
+                            <div class="equipmentSquareNumber simpleTitle">80</div>
+                            <div class="equipmentSquareText simpleText">équipements</div>
                         </div>
                     </div>
-                    <div class="squareEquipment simpleText">
-                        <div class="squareEquipmentNumberAndText">
-                            <div class="squareNumberEquipment">3%</div>
-                            <div class="squareTextEquipment">suivi</div>
+                    <div class="equipmentSquare">
+                        <div class="equipmentSquareNumberAndText">
+                            <div class="equipmentSquareNumber simpleTitle">3%</div>
+                            <div class="equipmentSquareText simpleText">suivi</div>
                         </div>
                     </div>
-                    <div class="squareEquipment simpleText">
-                        <div class="squareEquipmentNumberAndText">
-                            <div class="squareNumberEquipment">2</div>
-                            <div class="squareTextEquipment">Non-conformités en retard</div>
+                    <div class="equipmentSquare">
+                        <div class="equipmentSquareNumberAndText">
+                            <div class="equipmentSquareNumber simpleTitle">2</div>
+                            <div class="equipmentSquareText simpleText">Non-conformités en retard</div>
                         </div>
                     </div>
-                    <div class="squareEquipment simpleText">
-                        <div class="squareEquipmentNumberAndText">
-                            <div class="squareNumberEquipment">10</div>
-                            <div class="squareTextEquipment">Actions à faire</div>
+                    <div class="equipmentSquare">
+                        <div class="equipmentSquareNumberAndText">
+                            <div class="equipmentSquareNumber simpleTitle">10</div>
+                            <div class="equipmentSquareText simpleText">Actions à faire</div>
                         </div>
                     </div>
                 </div>
-                <div id="addEquipment" class="simpleText">Ajouter un équipement</div>
+                <div id="equipmentAddOne" class="simpleText">Ajouter un équipement</div>
 
                 <div id="equipmentFilters" class="simpleText">
                     <div class="inline verticalAlignMiddle">
@@ -1044,9 +1067,11 @@
                             </select>
                         </label>
                     </div>
-                    <label class="switchEquipmentFilter verticalAlignMiddle">
-                        <input type="checkbox" checked>
-                        <span class="slider round"></span>
+                    <label class="equipmentSwitchFilter verticalAlignMiddle">
+                        <label id="equipmentSliderLabel">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        Voir les non-conformités</label>
                     </label>
                 </div>
 
@@ -1141,17 +1166,9 @@
 </body>
 
 </html>
-
-<!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous">
-    </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script> -->
-
     
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
     crossorigin="anonymous">
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
