@@ -403,8 +403,7 @@
 
     #contactAllData {
         max-height: 0px;
-        width: calc(100% - 90px) !important; /* 100% - (padding) */
-        width: max-content;
+        width: calc(100% - 90px); /* 100% - (padding) */
         font-weight: bold;
         padding: 20px 45px 20px 45px;
     }
@@ -570,7 +569,12 @@
     }
 
     #equipmentsAllData {
+        max-height: 0px;
+    }
+
+    #equipmentsAllData.active {
         padding: 25px 45px 25px 45px;
+        max-height: 1000px;
     }
 
     .allSquaresEquipments {
@@ -692,12 +696,23 @@
         border-radius: 50%;
     }
 
+    #equipmentTableWrapper {
+        overflow-x: auto;
+    }
+
     #equipmentTable {
-        padding-top: 60px;
+        margin-top: 60px;
+        width: 100%;
+        min-width: 688px;
     }
 
     #equipmentTable > thead {
         font-weight: bold;
+        border-bottom: 1px solid;
+    }
+
+    #equipmentTable tr:nth-child(even) {
+        background-color: #F5F5F5;
     }
 
 /* DATA COLLECTION Section Properties */
@@ -1028,42 +1043,44 @@
                 </div>
 
                 <!-- TODO -->
-                <table id="equipmentTable" class="simpleText">
-                    <thead>
-                        <tr>
-                            <th>Thème</th>
-                            <th>Identifiant</th>
-                            <th>QR Code</th>
-                            <th>Marque</th>
-                            <th>Fin de garantie</th>
-                            <th>NC à lever</th>
-                            <th>Prochaine visite</th>
-                            <th>Actions en cours</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Ascenseur</td>
-                            <td>ASC01</td>
-                            <td>1789657</td>
-                            <td>Otis</td>
-                            <td>21/11/2020</td>
-                            <td>2</td>
-                            <td>23/12/2019</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>Ascenseur</td>
-                            <td>ASC01</td>
-                            <td>1789657</td>
-                            <td>Otis</td>
-                            <td>21/11/2020</td>
-                            <td>2</td>
-                            <td>23/12/2019</td>
-                            <td>3</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div id="equipmentTableWrapper">
+                    <table id="equipmentTable" class="simpleText">
+                        <thead>
+                            <tr>
+                                <th>Thème</th>
+                                <th>Identifiant</th>
+                                <th>QR Code</th>
+                                <th>Marque</th>
+                                <th>Fin de garantie</th>
+                                <th>NC à lever</th>
+                                <th>Prochaine visite</th>
+                                <th>Actions en cours</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ascenseur</td>
+                                <td>ASC01</td>
+                                <td>1789657</td>
+                                <td>Otis</td>
+                                <td>21/11/2020</td>
+                                <td>2</td>
+                                <td>23/12/2019</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>Ascenseur</td>
+                                <td>ASC01</td>
+                                <td>1789657</td>
+                                <td>Otis</td>
+                                <td>21/11/2020</td>
+                                <td>2</td>
+                                <td>23/12/2019</td>
+                                <td>3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
