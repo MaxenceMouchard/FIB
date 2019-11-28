@@ -649,6 +649,14 @@
         border-radius: 50%;
     }
 
+    #equipmentTable {
+        padding-top: 60px;
+    }
+
+    #equipmentTable > thead {
+        font-weight: bold;
+    }
+
 /* DATA COLLECTION Section Properties */
 
     #dataCollectionMainData {
@@ -884,7 +892,7 @@
                     <div class="mainDataTitle smallTitle">Conformité</div>
                     <div class="mainDataSubTitle simpleText">80 obligations suivies &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp <span class="redTextColor">4 visites en retard</span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp <span class="redTextColor">2 NC critiques à lever</span></div>
                 </div>
-                <i class="fas fa-plus iconTitle openDiv"></i>
+                <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
             <div class="allData" id="complianceAllData">
             </div>
@@ -898,7 +906,7 @@
                     <div class="mainDataTitle smallTitle">Audit</div>
                     <div class="mainDataSubTitle simpleText">3 audits en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 6 NC à lever</div>
                 </div>
-                <i class="fas fa-plus iconTitle openDiv"></i>
+                <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
             <div class="allData" id="auditAllData">
             </div>
@@ -911,7 +919,7 @@
                 <div class="mainData" id="equipmentsMainData">
                     <div class="mainDataTitle smallTitle">Equipements</div>
                 </div>
-                <i class="fas fa-plus iconTitle openDiv"></i>
+                <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
             <div class="allData" id="equipmentsAllData">
                 <div class="allSquaresEquipments">
@@ -964,7 +972,42 @@
                 </div>
 
                 <!-- TODO -->
-                <table id="equipmentTable"></table>
+                <table id="equipmentTable" class="simpleText">
+                    <thead>
+                        <tr>
+                            <th>Thème</th>
+                            <th>Identifiant</th>
+                            <th>QR Code</th>
+                            <th>Marque</th>
+                            <th>Fin de garantie</th>
+                            <th>NC à lever</th>
+                            <th>Prochaine visite</th>
+                            <th>Actions en cours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ascenseur</td>
+                            <td>ASC01</td>
+                            <td>1789657</td>
+                            <td>Otis</td>
+                            <td>21/11/2020</td>
+                            <td>2</td>
+                            <td>23/12/2019</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Ascenseur</td>
+                            <td>ASC01</td>
+                            <td>1789657</td>
+                            <td>Otis</td>
+                            <td>21/11/2020</td>
+                            <td>2</td>
+                            <td>23/12/2019</td>
+                            <td>3</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -976,7 +1019,7 @@
                     <div class="mainDataTitle smallTitle">Collecte de données</div>
                     <div class="mainDataSubTitle simpleText">4 campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp  <span class="redTextColor">23% de complétion</span></div>
                 </div>
-                <i class="fas fa-plus iconTitle openDiv"></i>
+                <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
             <div class="allData" id="dataCollectionAllData">
             </div>
@@ -990,7 +1033,7 @@
                     <div class="mainDataTitle smallTitle">Incidents</div>
                     <div class="mainDataSubTitle simpleText">23 incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 11 presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 accidents</div>
                 </div>
-                <i class="fas fa-plus iconTitle openDiv"></i>
+                <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
             <div class="allData" id="incidentsAllData">
             </div>
@@ -1004,7 +1047,7 @@
                     <div class="mainDataTitle smallTitle">Schéma directeur</div>
                     <div class="mainDataSubTitle simpleText">4 plans quinquénnaux &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 12 actions en retard</div>
                 </div>
-                <i class="fas fa-plus iconTitle openDiv"></i>
+                <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
             <div class="allData" id="schemaDirectoryAllData">
             </div>
