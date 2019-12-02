@@ -169,6 +169,10 @@ function loadDataContact(oSite) {
             counter++;
         };
     });
+
+    if (counter === 0) {
+        contactsReferenced.innerHTML = `<div style="font-weight: normal; padding-left: 50px;">Aucun contact n'est référencé</div>`;
+    }
 }
 
 function loadDataBatiment(oSite) {
