@@ -134,6 +134,10 @@
     #identityLocation {
         height: 54px;
     }
+
+    #identityLabel {
+        font-size: 11px;
+    }
 }
 
 @media only screen and (min-width: 1150px) {
@@ -190,6 +194,10 @@
     
     #identityLocation {
         height: 93px;
+    }
+
+    #identityLabel {
+        font-size: 13px;
     }
 }
 
@@ -353,6 +361,8 @@ body {
     border-right: 1px solid #979797;
     padding-top: 5px;
     padding-right: 30px;
+    white-space: normal;
+    max-width: 84px;
 }
 
 #identityFloorsNumber,

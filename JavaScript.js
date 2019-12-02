@@ -193,7 +193,7 @@ function loadDataBatiment(oSite) {
     document.getElementById("identityCountryLocation").innerHTML = oSite.CountryName;
 
     // Main summary data of building :
-    document.getElementById("identityLabelData").innerHTML = (oSite.ERPcategory !== null && oSite.ERPcategory !== undefined) ? oSite.ERPcategory : "0";
+    document.getElementById("identityLabel").innerHTML = (oSite.ERPTypesTypeName !== null && oSite.ERPTypesTypeName !== undefined) ? oSite.ERPTypesTypeName : "Inconnu";
     let nbOrgaLots = 0;
     for (let i = 0; i < jsonAllLots.length; i += 1) {
         if (oSite.Id == jsonAllLots[i].OrganizationId)
