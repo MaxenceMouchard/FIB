@@ -2,8 +2,9 @@
 @using Newtonsoft.Json
 
 @{    
-    var organizations = VP.GetEntitiesData("Organization", "Image.Id,Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ProfitCenter.FullName,M2,UrlBentley,Lat,Long", "EntityState=Active,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
+    var organizations = VP.GetEntitiesData("Organization", "Image.Id,Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ERPcategory,M2,UrlBentley,Lat,Long", "EntityState=Active,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
     var organizationsContact = VP.GetEntitiesData("OrganizationContact", "Organization,Contact", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
+    var organizationsLots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
 }
 <!-- Id,Name,Image.Id,Code,StaffCount,AddressLine1,City,PostCode,Country.Name,AuditDataWorkflowStatus,RPlusFloSurfaceSHONorCount,RMinusFloorCount,IsArchive,EntityState,SurfaceSHON,BuyingDate,VisitLate,ReserveCritTodo,M2,LastRepairDate,ActivitiesAndSector,ModifiedDate -->
 <!DOCTYPE html>
@@ -56,14 +57,16 @@
                 <div id="identityInfosDetails">
                     <div id="identityType" class="simpleText"></div>
                     <div id="identityLocation" class="simpleText">
-                        <div id="identityStreetLocation"></div>
+                        <div id="identityStreetLocation1"></div>
+                        <div id="identityStreetLocation2"></div>
+                        <div id="identityStreetLocation3"></div>
                         <div id="identityPostCodeLocation"></div><div id="identityCityLocation"></div>
-                        <div id="identityRegionLocation">TEST Région</div>
+                        <!-- <div id="identityRegionLocation">TEST Région</div> -->
                         <div id="identityCountryLocation"></div>
                     </div>
                     <div id="identityProperties">
-                        <div id="identityLabel" class="smallTitle">Centre<div class="smallTitle">de profit</div></div>
-                        <div id="identityFloorsNumber" class="simpleTitle">4<div class="simpleText">lots</div></div>
+                        <div id="identityLabel" class="simpleTitle"><div id="identityLabelData"></div><div class="simpleText">Catégorie d'ERP</div></div>
+                        <div id="identityFloorsNumber" class="simpleTitle"><div id="identityFloorsNumberData"></div><div class="simpleText">Lots</div></div>
                         <div id="identityTotalSurface" class="simpleTitle"><div id="identityTotalSurfaceData"></div><div class="simpleText">surface totale</div></div>
                         <div id="identityLink3D" class="blackButton simpleText">Lien 3D</div>
                     </div>
@@ -420,6 +423,7 @@
 <script>
 
 let jsonAllOrganizations = JSON.parse(('@JsonConvert.SerializeObject(organizations)').replace(/&quot;/g, '"'));
+let jsonAllLots = JSON.parse(('@JsonConvert.SerializeObject(organizationsLots)').replace(/&quot;/g, '"'));
   
 function initFIBGoogleMap() {
   // La map est crée grâce à l'API de Google Maps :
@@ -441,6 +445,7 @@ function initFIBGoogleMap() {
 
   return identityGoogleMap;
 }
+
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKL92_ats3EIcnsjjSjxp5UgZseR6lnIY&libraries=places&sensor=false&callback=initFIBGoogleMap"></script>
