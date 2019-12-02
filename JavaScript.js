@@ -127,29 +127,29 @@ function loadNewOrganization(siteId) {
 function loadDataBatiment(oSite) {
     // Add all identity section attributes :
     Array.from(document.getElementsByClassName("batimentName")).forEach((label) => {
-        label.innerHTML = selectedSite.Name;
+        label.innerHTML = oSite.Name;
     });
-    document.getElementById("identityType").innerHTML = selectedSite.CollectionsLocalizedName;
-    document.getElementById("identityStreetLocation").innerHTML = selectedSite.AddressLine1;
-    // document.getElementById("identityStreetLocation").innerHTML = selectedSite.AddressLine2;
-    // document.getElementById("identityStreetLocation").innerHTML = selectedSite.AddressLine3;
-    document.getElementById("identityPostCodeLocation").innerHTML = selectedSite.PostCode;
-    if (selectedSite.PostCode != null && selectedSite.PostCode != undefined)
+    document.getElementById("identityType").innerHTML = oSite.CollectionsLocalizedName;
+    document.getElementById("identityStreetLocation").innerHTML = oSite.AddressLine1;
+    // document.getElementById("identityStreetLocation").innerHTML = oSite.AddressLine2;
+    // document.getElementById("identityStreetLocation").innerHTML = oSite.AddressLine3;
+    document.getElementById("identityPostCodeLocation").innerHTML = oSite.PostCode;
+    if (oSite.PostCode != null && oSite.PostCode != undefined)
         document.getElementById("identityPostCodeLocation").innerHTML += "&nbsp";
-    document.getElementById("identityCityLocation").innerHTML = selectedSite.City;
-    document.getElementById("identityCountryLocation").innerHTML = selectedSite.CountryName;
-    if (selectedSite.M2 != null && selectedSite.M2 != undefined)
-        document.getElementById("identityTotalSurfaceData").innerHTML = selectedSite.M2 + "m²";
+    document.getElementById("identityCityLocation").innerHTML = oSite.City;
+    document.getElementById("identityCountryLocation").innerHTML = oSite.CountryName;
+    if (oSite.M2 != null && oSite.M2 != undefined)
+        document.getElementById("identityTotalSurfaceData").innerHTML = oSite.M2 + "m²";
     else
         document.getElementById("identityTotalSurfaceData").innerHTML = "0m²";
 
     // Add localisation marker on Google Map :
-    placeMarkerOnFIBGoogleMap(initFIBGoogleMap(), selectedSite);
+    placeMarkerOnFIBGoogleMap(initFIBGoogleMap(), oSite);
 }
 
-function placeMarkerOnFIBGoogleMap(identityGoogleMap, selectedSite) {
+function placeMarkerOnFIBGoogleMap(identityGoogleMap, oSite) {
     let marker = new google.maps.Marker({
-        position: new google.maps.LatLng(selectedSite.Lat, selectedSite.Long),
+        position: new google.maps.LatLng(oSite.Lat, oSite.Long),
         map: identityGoogleMap
     });
 
