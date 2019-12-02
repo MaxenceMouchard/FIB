@@ -70,9 +70,6 @@ let identityMapMarkers = [];
 
 document.addEventListener("DOMContentLoaded", () => {
     // Handle the site selection
-    console.log(jsonAllOrganizations);
-    console.log(jsonAllContacts);
-
     handleSiteSelectorFilter();
 
     // site paris pré-selectionné pour les tests : à supprimer
@@ -81,15 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add event when user click on openCloseIcon element :
     handleOpenCloseContainer();
-
-    // Horizontal tree creation in Legal Section :
-    createLegalHortree([{
-        horTreeId: "#legalHorTreeOne",
-        horTreeData: jsonLegalDataOne
-    }, {
-        horTreeId: "#legalHorTreeTwo",
-        horTreeData: jsonLegalDataTwo
-    }]);
 });
 
 function handleSiteSelectorFilter() {
@@ -127,7 +115,8 @@ function loadNewOrganization(siteId) {
     }
 
     loadDataBatiment(selectedSite);
-    loadDataContact(selectedSite);
+    loadDataContacts(selectedSite);
+    loadDataPropertyTitles(selectedSite);
 }
 
 function loadDataContact(oSite) {
@@ -186,25 +175,25 @@ function loadDataBatiment(oSite) {
 
     // Localisation of building :
     document.getElementById("identityStreetLocation1").innerHTML = oSite.AddressLine1;
-    if (oSite.AddressLine2 !== null && oSite.AddressLine2 !== undefined)
+    if (oSite.AddressLine2)
         document.getElementById("identityStreetLocation2").innerHTML = oSite.AddressLine2;
-    if (oSite.AddressLine3 !== null && oSite.AddressLine3 !== undefined)
+    if (oSite.AddressLine3)
         document.getElementById("identityStreetLocation3").innerHTML = oSite.AddressLine3;
     document.getElementById("identityPostCodeLocation").innerHTML = oSite.PostCode;
-    if (oSite.PostCode !== null && oSite.PostCode !== undefined)
+    if (oSite.PostCode)
         document.getElementById("identityPostCodeLocation").innerHTML += "&nbsp";
     document.getElementById("identityCityLocation").innerHTML = oSite.City;
     document.getElementById("identityCountryLocation").innerHTML = oSite.CountryName;
 
     // Main summary data of building :
-    document.getElementById("identityLabel").innerHTML = (oSite.ERPTypesTypeName !== null && oSite.ERPTypesTypeName !== undefined) ? oSite.ERPTypesTypeName : "Inconnu";
+    document.getElementById("identityLabel").innerHTML = (oSite.ERPTypesTypeName) ? oSite.ERPTypesTypeName : "Inconnu";
     let nbOrgaLots = 0;
     for (let i = 0; i < jsonAllLots.length; i += 1) {
         if (oSite.Id == jsonAllLots[i].OrganizationId)
             nbOrgaLots += 1;
     }
     document.getElementById("identityFloorsNumberData").innerHTML = nbOrgaLots;
-    document.getElementById("identityTotalSurfaceData").innerHTML = (oSite.M2 !== null && oSite.M2 !== undefined) ? oSite.M2 + "m²" : "0m²";
+    document.getElementById("identityTotalSurfaceData").innerHTML = (oSite.M2) ? oSite.M2 + "m²" : "0m²";
 
     // Add localisation marker on Google Map :
     placeMarkerOnFIBGoogleMap(oSite);
@@ -223,6 +212,84 @@ function placeMarkerOnFIBGoogleMap(oSite) {
     identityMapMarkers.push(marker);
     identityMap.panTo(marker.position);
     identityMap.setZoom(9);
+}
+
+function loadDataContacts(oSite) {
+    let contactsReferenced = document.getElementById("contactsReferenced");
+    let counter = 0;
+    Array.from(jsonAllContacts).forEach( (item, index) => {
+        if(item.OrganizationId === oSite.Id) {
+            let separator = (index < jsonAllContacts.length && counter > 0) ? '<hr class="contactSeparator"/>' : '';
+            let contactFullName = (item.ContactFullName) ? item.ContactFullName : '';
+            let contactInitial = (contactFullName).split(/\s/).reduce((response,word)=> response += word.slice(0,1), '');
+            let contactJob = (item.ContactJob) ? item.ContactJob : 'Inconnu';
+            let contactMobilePro = (item.ContactMobilePro) ? item.ContactMobilePro : 'Inconnu';
+            let contactLandlinePro = (item.ContactLandlinePro) ? item.ContactLandlinePro : 'Inconnu';
+            let contactEmail = (item.ContactEmail) ? item.ContactEmail : 'Inconnu';
+            let contactLastConnection = (item.ContactLastConnection) ? item.ContactLastConnection : 'Inconnu';
+            let contactConnectionsCounter = (item.ContactConnectionsCounter) ? item.ContactConnectionsCounter : 'Inconnu';
+            contactsReferenced.innerHTML +=
+            separator + '<div class="contactRow">' +
+                '<div class="squareContact">' +
+                    '<div class="contactInitial">' + contactInitial + '</div>' +
+                '</div>' +
+                '<div class="contactNameAndFunction">' +
+                    '<div class="contactName">' + contactFullName + '</div>' +
+                    '<div class="contactFunction">' + contactJob + '</div>' +
+                '</div>' +
+                '<div class="contactPhonesNumbers">' +
+                    '<div><i class="fas fa-phone"></i>' + contactMobilePro + '</div>' +
+                    '<div><i class="fas fa-phone"></i>' + contactLandlinePro + '</div>' +
+                '</div>' +
+                '<div class="contactEmail">' +
+                    '<i class="fas fa-envelope"></i>' + contactEmail +
+                '</div>' +
+                '<div class="contactLog">' +
+                    '<div>Dernière connexion le ' + contactLastConnection + '</div>' +
+                    '<div>' + contactConnectionsCounter + ' connexions au total</div>' +
+                '</div>' +
+            '</div>';
+            counter++;
+        };
+    });
+}
+
+function loadDataPropertyTitles(oSite) {
+    let propertyTitles = [];
+    let indexId = 1;
+
+    console.log(jsonAllPropertyTitles)
+
+    document.getElementById("legalHorTreeContainers").innerHTML = "";
+    for (let i = 0; i < jsonAllPropertyTitles.length; i += 1) {
+        if (oSite.Id == jsonAllPropertyTitles[i].OrganizationId) {
+            propertyTitles.push({
+                horTreeId: "#legalHorTree" + indexId,
+                horTreeData: [
+                    {
+                        description: jsonAllPropertyTitles[i].Reference,
+                        children: []
+                    }
+                ]
+            });
+            document.getElementById("legalHorTreeContainers").innerHTML += "<div class='legalHorTreeContainer' id='legalHorTree" + indexId + "'></div>"
+            indexId += 1;
+        }
+    }
+    // Si il n'y avait aucun titre de propriété pour ce site :
+    if (indexId === 1)
+        document.getElementById("legalHorTreeContainers").innerHTML = "<div class='simpleText' style='margin-top:18px;text-align:center;'>Aucune titre de propriété n'est référencé</div>"
+
+    
+    // Horizontal tree creation in Legal Section :
+    // createLegalHortree([{
+    //     horTreeId: "#legalHorTreeOne",
+    //     horTreeData: jsonLegalDataOne
+    // }, {
+    //     horTreeId: "#legalHorTreeTwo",
+    //     horTreeData: jsonLegalDataTwo
+    // }]);
+    createLegalHortree(propertyTitles);
 }
 
 function handleOpenCloseContainer() {
