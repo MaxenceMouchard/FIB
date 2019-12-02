@@ -65,14 +65,18 @@ let jsonLegalDataTwo = [
     }
 ];
 
+let identityMap = initFIBGoogleMap();
+let identityMapMarkers = [];
+
 document.addEventListener("DOMContentLoaded", () => {
     // Handle the site selection
     console.log(jsonAllOrganizations);
     console.log(jsonAllContacts);
-    handleSiteSelectorFilter(jsonAllOrganizations);
+
+    handleSiteSelectorFilter();
 
     // site paris pré-selectionné pour les tests : à supprimer
-    document.getElementById("siteSelector").selectedIndex = 46;
+    document.getElementById("siteSelector").selectedIndex = 47;
     $("#searchFilterButton").trigger("click");
 
     // Add event when user click on openCloseIcon element :
@@ -88,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }]);
 });
 
-function handleSiteSelectorFilter(jsonAllOrganizations) {
+function handleSiteSelectorFilter() {
     let siteSelector = document.getElementById("siteSelector");
 
     // Adding all the sites in the selector :
@@ -168,35 +172,52 @@ function loadDataContact(oSite) {
 
 function loadDataBatiment(oSite) {
     // Add all identity section attributes :
+
+    // Name and type of building :
     Array.from(document.getElementsByClassName("batimentName")).forEach((label) => {
         label.innerHTML = oSite.Name;
     });
     document.getElementById("identityType").innerHTML = oSite.CollectionsLocalizedName;
-    document.getElementById("identityStreetLocation").innerHTML = oSite.AddressLine1;
-    // document.getElementById("identityStreetLocation").innerHTML = oSite.AddressLine2;
-    // document.getElementById("identityStreetLocation").innerHTML = oSite.AddressLine3;
+
+    // Localisation of building :
+    document.getElementById("identityStreetLocation1").innerHTML = oSite.AddressLine1;
+    if (oSite.AddressLine2 !== null && oSite.AddressLine2 !== undefined)
+        document.getElementById("identityStreetLocation2").innerHTML = oSite.AddressLine2;
+    if (oSite.AddressLine3 !== null && oSite.AddressLine3 !== undefined)
+        document.getElementById("identityStreetLocation3").innerHTML = oSite.AddressLine3;
     document.getElementById("identityPostCodeLocation").innerHTML = oSite.PostCode;
-    if (oSite.PostCode != null && oSite.PostCode != undefined)
+    if (oSite.PostCode !== null && oSite.PostCode !== undefined)
         document.getElementById("identityPostCodeLocation").innerHTML += "&nbsp";
     document.getElementById("identityCityLocation").innerHTML = oSite.City;
     document.getElementById("identityCountryLocation").innerHTML = oSite.CountryName;
-    if (oSite.M2 != null && oSite.M2 != undefined)
-        document.getElementById("identityTotalSurfaceData").innerHTML = oSite.M2 + "m²";
-    else
-        document.getElementById("identityTotalSurfaceData").innerHTML = "0m²";
+
+    // Main summary data of building :
+    document.getElementById("identityLabelData").innerHTML = (oSite.ERPcategory !== null && oSite.ERPcategory !== undefined) ? oSite.ERPcategory : "0";
+    let nbOrgaLots = 0;
+    for (let i = 0; i < jsonAllLots.length; i += 1) {
+        if (oSite.Id == jsonAllLots[i].OrganizationId)
+            nbOrgaLots += 1;
+    }
+    document.getElementById("identityFloorsNumberData").innerHTML = nbOrgaLots;
+    document.getElementById("identityTotalSurfaceData").innerHTML = (oSite.M2 !== null && oSite.M2 !== undefined) ? oSite.M2 + "m²" : "0m²";
 
     // Add localisation marker on Google Map :
-    placeMarkerOnFIBGoogleMap(initFIBGoogleMap(), oSite);
+    placeMarkerOnFIBGoogleMap(oSite);
 }
 
-function placeMarkerOnFIBGoogleMap(identityGoogleMap, oSite) {
+function placeMarkerOnFIBGoogleMap(oSite) {
+    for (var i = 0; i < identityMapMarkers.length; i++) {
+        identityMapMarkers[i].setMap(null);
+    }
+
     let marker = new google.maps.Marker({
         position: new google.maps.LatLng(oSite.Lat, oSite.Long),
-        map: identityGoogleMap
+        map: identityMap
     });
 
-    identityGoogleMap.panTo(marker.position);
-    identityGoogleMap.setZoom(9);
+    identityMapMarkers.push(marker);
+    identityMap.panTo(marker.position);
+    identityMap.setZoom(9);
 }
 
 function handleOpenCloseContainer() {
