@@ -133,9 +133,10 @@ function loadNewOrganization(siteId) {
 function loadDataContact(oSite) {
     let contactsReferenced = document.getElementById("contactsReferenced");
     let counter = 0;
+    contactsReferenced.innerHTML = '';
     Array.from(jsonAllContacts).forEach( (item, index) => {
         if(item.OrganizationId === oSite.Id) {
-            let separator = (index < jsonAllContacts.length && counter > 0) ? '<hr class="contactSeparator"/>' : '';
+            let separator = (counter > 0) ? '<hr class="contactSeparator"/>' : '';
             let contactFullName = (item.ContactFullName !== null) ? item.ContactFullName : '';
             let contactInitial = (contactFullName).split(/\s/).reduce((response,word)=> response += word.slice(0,1), '');
             let contactJob = (item.ContactJob !== null) ? item.ContactJob : 'Inconnu';
