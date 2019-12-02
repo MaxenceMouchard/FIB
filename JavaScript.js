@@ -68,6 +68,7 @@ let jsonLegalDataTwo = [
 document.addEventListener("DOMContentLoaded", () => {
     // Handle the site selection
     console.log(jsonAllOrganizations);
+    console.log(jsonAllContacts);
     handleSiteSelectorFilter(jsonAllOrganizations);
 
     // site paris pré-selectionné pour les tests : à supprimer
@@ -122,6 +123,47 @@ function loadNewOrganization(siteId) {
     }
 
     loadDataBatiment(selectedSite);
+    loadDataContact(selectedSite);
+}
+
+function loadDataContact(oSite) {
+    let contactsReferenced = document.getElementById("contactsReferenced");
+    let counter = 0;
+    Array.from(jsonAllContacts).forEach( (item, index) => {
+        if(item.OrganizationId === oSite.Id) {
+            let separator = (index < jsonAllContacts.length && counter > 0) ? '<hr class="contactSeparator"/>' : '';
+            let contactFullName = (item.ContactFullName !== null) ? item.ContactFullName : '';
+            let contactInitial = (contactFullName).split(/\s/).reduce((response,word)=> response += word.slice(0,1), '');
+            let contactJob = (item.ContactJob !== null) ? item.ContactJob : 'Inconnu';
+            let contactMobilePro = (item.ContactMobilePro !== null) ? item.ContactMobilePro : 'Inconnu';
+            let contactLandlinePro = (item.ContactLandlinePro !== null) ? item.ContactLandlinePro : 'Inconnu';
+            let contactEmail = (item.ContactEmail !== null) ? item.ContactEmail : 'Inconnu';
+            let contactLastConnection = (item.ContactLastConnection !== null) ? item.ContactLastConnection : 'Inconnu';
+            let contactConnectionsCounter = (item.ContactConnectionsCounter !== null) ? item.ContactConnectionsCounter : 'Inconnu';
+            contactsReferenced.innerHTML +=
+            separator + '<div class="contactRow">' +
+                '<div class="squareContact">' +
+                    '<div class="contactInitial">' + contactInitial + '</div>' +
+                '</div>' +
+                '<div class="contactNameAndFunction">' +
+                    '<div class="contactName">' + contactFullName + '</div>' +
+                    '<div class="contactFunction">' + contactJob + '</div>' +
+                '</div>' +
+                '<div class="contactPhonesNumbers">' +
+                    '<div><i class="fas fa-phone"></i>' + contactMobilePro + '</div>' +
+                    '<div><i class="fas fa-phone"></i>' + contactLandlinePro + '</div>' +
+                '</div>' +
+                '<div class="contactEmail">' +
+                    '<i class="fas fa-envelope"></i>' + contactEmail +
+                '</div>' +
+                '<div class="contactLog">' +
+                    '<div>Dernière connexion le ' + contactLastConnection + '</div>' +
+                    '<div>' + contactConnectionsCounter + ' connexions au total</div>' +
+                '</div>' +
+            '</div>';
+            counter++;
+        };
+    });
 }
 
 function loadDataBatiment(oSite) {

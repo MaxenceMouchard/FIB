@@ -3,7 +3,7 @@
 
 @{    
     var organizations = VP.GetEntitiesData("Organization", "Image.Id,Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ProfitCenter.FullName,M2,UrlBentley,Lat,Long", "EntityState=Active,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
-    var organizationsContact = VP.GetEntitiesData("OrganizationContact", "Organization,Contact", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
+    var contacts = VP.GetEntitiesData("OrganizationContact", "Organization.Id,Contact.FullName,Contact.Email,Contact.Job,Contact.Denomination,Contact.LastConnection,Contact.ConnectionsCounter,Contact.MobilePro,Contact.LandlinePro,Contact.AllPhone", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
 }
 <!-- Id,Name,Image.Id,Code,StaffCount,AddressLine1,City,PostCode,Country.Name,AuditDataWorkflowStatus,RPlusFloSurfaceSHONorCount,RMinusFloorCount,IsArchive,EntityState,SurfaceSHON,BuyingDate,VisitLate,ReserveCritTodo,M2,LastRepairDate,ActivitiesAndSector,ModifiedDate -->
 <!DOCTYPE html>
@@ -85,55 +85,10 @@
             <div class="allData simpleText" id="contactAllData">
                 Contacts Référencés
                 <div id="contactsReferenced">
-                    <!-- ONE CONTACT -->
-                    <div class="contactRow">
-                        <div class="squareContact">
-                            <div class="contactInitial">OA</div>
-                        </div>
-                        <div class="contactNameAndFunction">
-                            <div class="contactName">Otis Ascenseurs</div>
-                            <div class="contactFunction">Manager Technique</div>
-                        </div>
-                        <div class="contactPhonesNumbers">
-                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
-                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
-                        </div>
-                        <div class="contactEmail">
-                            <i class="fas fa-envelope"></i>admin@otis.com
-                        </div>
-                        <div class="contactLog">
-                            <div>Dernière connexion le 28/10/2019</div>
-                            <div>5 connexions au total</div>
-                        </div>
-                    </div>
-
-                    <hr class="contactSeparator">
-                    </hr>
-
-                    <!-- ONE CONTACT -->
-                    <div class="contactRow">
-                        <div class="squareContact">
-                            <div class="contactInitial">OA</div>
-                        </div>
-                        <div class="contactNameAndFunction">
-                            <div class="contactName">Otis Ascenseurs</div>
-                            <div class="contactFunction">Manager Technique</div>
-                        </div>
-                        <div class="contactPhonesNumbers">
-                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
-                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
-                        </div>
-                        <div class="contactEmail">
-                            <i class="fas fa-envelope"></i>admin@otis.com
-                        </div>
-                        <div class="contactLog">
-                            <div>Dernière connexion le 28/10/2019</div>
-                            <div>5 connexions au total</div>
-                        </div>
-                    </div>
+                    
                 </div>
 
-                <br /><br /><br />
+                <br /><br /><br/>
 
                 Intervenants
                 <div id="contactsIntervenant">
@@ -159,8 +114,7 @@
                         </div>
                     </div>
 
-                    <hr class="contactSeparator">
-                    </hr>
+                    <hr class="contactSeparator"/>
 
                     <!-- ONE CONTACT -->
                     <div class="contactRow">
@@ -420,6 +374,7 @@
 <script>
 
 let jsonAllOrganizations = JSON.parse(('@JsonConvert.SerializeObject(organizations)').replace(/&quot;/g, '"'));
+let jsonAllContacts = JSON.parse(('@JsonConvert.SerializeObject(contacts)').replace(/&quot;/g, '"'));
   
 function initFIBGoogleMap() {
   // La map est crée grâce à l'API de Google Maps :
