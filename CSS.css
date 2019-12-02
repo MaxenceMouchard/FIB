@@ -1,0 +1,777 @@
+/* CSS for HorTree plugin (for Legal section) */
+
+.hortree-wrapper *,
+.hortree-wrapper *:before,
+.hortree-wrapper *:after {
+    box-sizing: border-box;
+}
+
+.hortree-wrapper {
+    position: relative;
+    font-family: sans-serif, Verdana, Arial;
+    font-size: 0.9em;
+}
+
+.hortree-branch {
+    position: relative;
+    margin-left: 320px;
+}
+
+.hortree-branch:first-child {
+    margin-left: 0;
+}
+
+.hortree-entry {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.hortree-label {
+    display: block;
+    width: 150px;
+    padding: 2px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 3px;
+    position: absolute;
+    left: 0;
+    z-index: 10;
+    color: white;
+    white-space: normal;
+}
+
+.hortree-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.hortree-tooltip .hortree-tooltip-text {
+    visibility: hidden;
+    background-color: #484848;
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.hortree-tooltip .hortree-tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border: 5px solid transparent;
+    border-top-color: #484848;
+}
+
+.hortree-tooltip:hover .hortree-tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* FontSize for different screen size */
+
+@media only screen and (max-width: 1150px) {
+
+    /* styles for screens smaller than 1150px; */
+    #identityContainer {
+        height: 235px;
+    }
+
+    #allIdentityInfos {
+        width: calc(100% - 275px); /* width = 100% - padding - pictures size */
+    }
+
+    #identityPicture {
+        width: 235px;
+    }
+
+    .smallText {
+        font-size: 8px;
+    }
+
+    .simpleText {
+        font-size: 10px;
+    }
+
+    .smallTitle {
+        font-size: 14px;
+    }
+
+    .title {
+        font-size: 22px;
+    }
+
+    /* Legal Hortree */
+    #legalHorTreeTitles {
+        margin-left: 29px;
+    }
+
+    #legalHorTreeTitles > :nth-child(2) {
+        margin-left: 260px;
+    }
+
+    #legalHorTreeTitles > :nth-child(3) {
+        margin-left: 281px;
+    }
+
+    #identityGoogleMap {
+        height: 160px;
+    }
+}
+
+@media only screen and (min-width: 1150px) {
+
+    /* styles for screens larger than 1150px; */
+    #identityContainer {
+        height: 285px;
+    }
+
+    #allIdentityInfos {
+        width: calc(100% - 325px); /* width = 100% - padding - pictures size */
+    }
+
+    #identityPicture {
+        width: 285px;
+    }
+
+    .smallText {
+        font-size: 10px;
+    }
+
+    .simpleText {
+        font-size: 12px;
+    }
+
+    .smallTitle {
+        font-size: 16px;
+    }
+
+    .simpleTitle {
+        font-size: 24px;
+    }
+
+    /* Legal Hortree */
+    #legalHorTreeTitles {
+        margin-left: 18px;
+    }
+
+    #legalHorTreeTitles > :nth-child(2) {
+        margin-left: 248px;
+    }
+
+    #legalHorTreeTitles > :nth-child(3) {
+        margin-left: 276px;
+    }
+
+    #identityGoogleMap {
+        height: 200px;
+    }
+}
+
+/* Some generic class or element */
+
+body {
+    background-color: #E9EEF3 !important;
+    font-family: "Open Sans" !important;
+    margin: auto !important;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.verticalAlignMiddle {
+    vertical-align: middle;
+}
+
+.openCloseIcon:hover {
+    cursor: pointer;
+}
+
+/* References section */
+
+#referencesContainer {
+    min-height: 45px;
+    background-color: #00A4BF;
+    color: #FFFFFF;
+}
+
+#referencesContainer>.referencesText {
+    padding: 15px 0 0 30px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Filters section */
+
+#filtersContainer {
+    min-height: 80px;
+    background-color: #FEFEFE;
+    color: #333333;
+}
+
+#filtersContainer>.allFilters {
+    padding: 20px 0 0 30px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#filtersContainer>.allFilters .selector {
+    height: 35px;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 40px;
+    margin-bottom: 10px;
+}
+
+#searchFilterButton,
+#rebootFilterButton {
+    font-family: "Open Sans";
+    font-size: 12px;
+    height: 35px;
+    padding: 0 15px 0 15px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+
+#searchFilterButton:hover,
+#rebootFilterButton:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+#searchFilterButton:active,
+#rebootFilterButton:active {
+    opacity: 0.8;
+}
+
+#searchFilterButton {
+    background-color: #00A4BF;
+    border-color: #00A4BF;
+    color: #FFFFFF;
+    transition: 0.5s;
+}
+
+#rebootFilterButton {
+    background-color: #f2f2f2;
+    border-color: #f2f2f2;
+}
+
+/* Identity section */
+
+#identityContainer {
+    margin: 20px 35px 0 35px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+}
+
+#identityPicture {
+    float: left;
+    height: 100%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#allIdentityInfos {
+    display: inline-block;
+    height: calc(100% - 40px);
+    padding: 20px;
+    color: #333333;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#identityIntroContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#identityTitle {
+    display: inline;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+#identityExport {
+    margin-left: 8px;
+}
+
+#identityInfosDetails {
+    display: inline-block;
+    margin-left: 22px;
+    vertical-align: top;
+}
+
+#identityLocation {
+    margin-top: 20px;
+}
+
+#identityPostCodeLocation, #identityCityLocation {
+    display: inline-block;
+}
+
+#identityProperties {
+    margin-top: 20px;
+    height: 80px;
+    white-space: nowrap;
+}
+
+#identityLabel,
+#identityFloorsNumber,
+#identityTotalSurface {
+    display: inline-block;
+    height: calc(85% - 10px);
+    vertical-align: top;
+    border-right: 1px solid #979797;
+    padding-top: 5px;
+    padding-right: 30px;
+}
+
+#identityLabel {
+    padding-top: 11px;
+}
+
+#identityFloorsNumber,
+#identityTotalSurface {
+    padding-left: 30px;
+}
+
+#identityLink3D {
+    border-right: 1px solid #979797;
+    margin-top: 14px;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+#identityGoogleMap {
+    width: 47%;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* General Sections Properties */
+
+.sectionContainer {
+    margin: 20px 35px 0 35px;
+    padding: 25px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+}
+
+.sectionContainer>.primaryInfos {
+    color: #333333;
+}
+
+.sectionContainer>.primaryInfos>.mainData {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 20px;
+}
+
+.sectionContainer>.primaryInfos>.mainData>.mainDataTitle {
+    font-weight: bold;
+}
+
+.sectionContainer>.primaryInfos>.mainData>.mainDataSubTitle {
+    color: #9B9B9B;
+}
+
+.redTextColor {
+    color: red;
+}
+
+.allData,
+.active {
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip-inner {
+    max-width: 100%;
+    text-align: left;
+    padding: 12px;
+}
+
+.blackButton {
+    display: inline-block;
+    background-color: #333333;
+    color: #FFFFFF;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: 0.5s;
+    vertical-align: top;
+}
+
+.blackButton:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+/* Override */
+*, ::after, ::before {
+    box-sizing: unset !important;
+}
+
+.fa-balance-scale {
+    transform: translateX(-3px);
+}
+
+.fa-sd-card {
+    transform: translateX(2px);
+}
+
+.fa-exclamation-triangle {
+    transform: translateX(-2px);
+}
+
+/* CONTACT Section Properties */
+
+#contactMainData {
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+}
+
+#contactAllData {
+    max-height: 0px;
+    font-weight: bold;
+}
+
+#contactAllData.active {
+    max-height: 400px;
+    margin: 20px 49px 20px 49px;
+}
+
+#contactsReferenced,
+#contactsIntervenant {
+    padding-top: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+    max-width: max-content;
+}
+
+.squareContact {
+    display: inline-table;
+    vertical-align: middle;
+    height: 40px;
+    width: 40px;
+    background-color: #00A4BF;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+.contactInitial {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.contactNameAndFunction {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+
+.contactFunction {
+    font-weight: normal;
+}
+
+.contactPhonesNumbers,
+.contactEmail {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: normal;
+    padding-left: 80px;
+}
+
+.contactLog {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: normal;
+    padding-left: 80px;
+    opacity: 0.35;
+    max-width: 195px;
+}
+
+.contactSeparator {
+    border-color: #E5E5E5;
+    margin: 15px;
+}
+
+.fa-phone,
+.fa-envelope {
+    margin-right: 10px;
+}
+
+/* LEGAL Section Properties */
+
+#legalMainData {
+    width: calc(100% - 80px); /* 100% - (padding + inconSize) */
+}
+
+#legalAllData {
+    max-height: 0px;
+}
+
+#legalAllData.active {
+    max-height: 1000px;
+    margin-top: 20px;
+    margin-left: 53px;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+#legalLegend {
+    display: flex;
+    width: auto;
+}
+
+#legalLegend > :not(:first-child) {
+    margin-left: 70px;
+}
+
+#legalLegend > div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.legalLegendSquares {
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+    border-radius: 5px;
+}
+
+#legalLegendSquareIntern {
+    background: #7BD679;
+}
+
+#legalLegendSquareExtern {
+    background: #79D6CB;
+}
+
+#legalHorTreeTitles {
+    display: flex;
+    font-weight: bold;
+    margin-top: 22px;
+}
+
+.legalHorTreeContainer {
+    margin-top: 18px;
+}
+
+.line {
+    border-bottom: 1px solid #979797 !important;
+    border-top-color: #979797 !important;
+    border-right-color: #979797 !important;
+    border-left-color: #979797 !important;
+}
+
+#legalHorTreeOne .line {
+    margin-top: 702px;
+}
+
+/* COMPLIANCE Section Properties */
+
+#complianceMainData {
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+}
+
+/* AUDIT Section Properties */
+
+#auditMainData {
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+}
+
+/* EQUIPMENTS Section Properties */
+
+#equipmentsMainData {
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+}
+
+#equipmentsAllData {
+    max-height: 0px;
+}
+
+#equipmentsAllData.active {
+    padding: 25px 45px 25px 45px;
+    max-height: 1000px;
+}
+
+.equipmentAllSquares {
+    display: inline-block;
+    width: calc(100% - 165px); /* 100% - buttonWidth*/
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.equipmentSquare {
+    display: inline-table;
+    background-color: #00A4BF;
+    border-radius: 5px;
+    color: #FFFFFF;
+    text-align: center;
+    width: 150px;
+    height: 85px;
+    vertical-align: middle;
+    margin-right: 15px;
+}
+
+.equipmentSquareNumberAndText {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.equipmentSquareNumber {
+    font-weight: bold;
+}
+
+.equipmentSquareText {
+    width: 119px;
+    display: inline-block;
+    white-space: normal;
+}
+
+#equipmentFilters {
+    padding-top: 60px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#equipmentFilters .selector {
+    height: 30px;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 60px;
+}
+
+.equipmentSwitchFilter {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 18px;
+    vertical-align: middle;
+}
+
+.equipmentSwitchFilter input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 1px;
+    bottom: 1px;
+    background-color: #FFFFFF;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #00A4BF;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #00A4BF;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(12px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+#equipmentSliderLabel {
+    margin-left: 36px;
+}
+
+#equipmentTableWrapper {
+    overflow-x: auto;
+}
+
+#equipmentTable {
+    margin-top: 60px;
+    width: 100%;
+    min-width: 688px;
+}
+
+#equipmentTable > thead {
+    font-weight: bold;
+    border-bottom: 1px solid;
+}
+
+#equipmentTable > thead > tr > th {
+    padding-bottom: 10px;
+}
+
+#equipmentTable tr:nth-child(even) {
+    background-color: #F5F5F5;
+}
+
+#equipmentTable > tbody > tr > td {
+    padding: 10px 0;
+}
+
+/* DATA COLLECTION Section Properties */
+
+#dataCollectionMainData {
+    width: calc(100% - 68px); /* 100% - (padding + inconSize) */
+}
+
+/* INCIDENTS Section Properties */
+
+#incidentsMainData {
+    width: calc(100% - 77px); /* 100% - (padding + inconSize) */
+}
+
+/* SCHEMA DIRECTORY Section Properties */
+
+#schemaDirectoryMainData {
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+}
