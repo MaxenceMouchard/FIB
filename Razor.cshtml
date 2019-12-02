@@ -1,0 +1,446 @@
+<!-- Part of Razor -->
+@using Newtonsoft.Json
+
+@{
+    var organizations = VP.GetEntitiesData("Organization", "Image.Id,Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ProfitCenter.FullName,M2,UrlBentley,Lat,Long", "EntityState=1,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
+}
+<!-- Id,Name,Image.Id,Code,StaffCount,AddressLine1,City,PostCode,Country.Name,AuditDataWorkflowStatus,RPlusFloSurfaceSHONorCount,RMinusFloorCount,IsArchive,EntityState,SurfaceSHON,BuyingDate,VisitLate,ReserveCritTodo,M2,LastRepairDate,ActivitiesAndSector,ModifiedDate -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FIB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="./style.css" /> -->
+</head>
+
+<body>
+    <div id="containerFIB">
+
+        <div id="referencesContainer">
+            <div class="referencesText">Fiche d'identité du bâtiment > <span class="batimentName"></span></div>
+        </div>
+
+        <div id="filtersContainer">
+            <div class="allFilters">
+                <div class="inline">
+                    <label>Site
+                        <select name="site" id="siteSelector" class="selector">
+                            <option value="default">-- Choisissez un site --</option>
+                        </select>
+                    </label>
+                </div>
+
+                <button id="searchFilterButton">Rechercher</button>
+                <button id="rebootFilterButton">Réinitialiser</button>
+            </div>
+        </div>
+
+        <div id="identityContainer">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSr96vtD0rFIx4JnDPjMZ1Iv3guFaeaEqpxXRtqifUG7bJ58bWd"
+                id="identityPicture" />
+            <div id="allIdentityInfos">
+                <div id="identityIntroContainer">
+                    <div>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div id="identityTitle" class="smallTitle"><span class="batimentName"></span></div>
+                    </div>
+                    <div id="identityExport" class="blackButton simpleText">Exporter en PDF</div>
+                </div>
+                <div id="identityInfosDetails">
+                    <div id="identityType" class="simpleText"></div>
+                    <div id="identityLocation" class="simpleText">
+                        <div id="identityStreetLocation"></div>
+                        <div id="identityPostCodeLocation"></div><div id="identityCityLocation"></div>
+                        <div id="identityRegionLocation">TEST Région</div>
+                        <div id="identityCountryLocation"></div>
+                    </div>
+                    <div id="identityProperties">
+                        <div id="identityLabel" class="smallTitle">Centre<div class="smallTitle">de profit</div></div>
+                        <div id="identityFloorsNumber" class="simpleTitle">4<div class="simpleText">lots</div></div>
+                        <div id="identityTotalSurface" class="simpleTitle"><div id="identityTotalSurfaceData"></div><div class="simpleText">surface totale</div></div>
+                        <div id="identityLink3D" class="blackButton simpleText">Lien 3D</div>
+                    </div>
+                </div>
+                <div id="identityGoogleMap"></div>
+            </div>
+        </div>
+
+        <!-- CONTACT SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-user-alt simpleTitle verticalAlignMiddle"></i>
+                <div class="mainData" id="contactMainData">
+                    <div class="mainDataTitle smallTitle">Contact</div>
+                    <div class="mainDataSubTitle simpleText">4 contacts référencés</div>
+                </div>
+                <i class="fas fa-plus openCloseIcon"></i>
+            </div>
+            <div class="allData simpleText" id="contactAllData">
+                Contacts Référencés
+                <div id="contactsReferenced">
+                    <!-- ONE CONTACT -->
+                    <div class="contactRow">
+                        <div class="squareContact">
+                            <div class="contactInitial">OA</div>
+                        </div>
+                        <div class="contactNameAndFunction">
+                            <div class="contactName">Otis Ascenseurs</div>
+                            <div class="contactFunction">Manager Technique</div>
+                        </div>
+                        <div class="contactPhonesNumbers">
+                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+                        </div>
+                        <div class="contactEmail">
+                            <i class="fas fa-envelope"></i>admin@otis.com
+                        </div>
+                        <div class="contactLog">
+                            <div>Dernière connexion le 28/10/2019</div>
+                            <div>5 connexions au total</div>
+                        </div>
+                    </div>
+
+                    <hr class="contactSeparator">
+                    </hr>
+
+                    <!-- ONE CONTACT -->
+                    <div class="contactRow">
+                        <div class="squareContact">
+                            <div class="contactInitial">OA</div>
+                        </div>
+                        <div class="contactNameAndFunction">
+                            <div class="contactName">Otis Ascenseurs</div>
+                            <div class="contactFunction">Manager Technique</div>
+                        </div>
+                        <div class="contactPhonesNumbers">
+                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+                        </div>
+                        <div class="contactEmail">
+                            <i class="fas fa-envelope"></i>admin@otis.com
+                        </div>
+                        <div class="contactLog">
+                            <div>Dernière connexion le 28/10/2019</div>
+                            <div>5 connexions au total</div>
+                        </div>
+                    </div>
+                </div>
+
+                <br /><br /><br />
+
+                Intervenants
+                <div id="contactsIntervenant">
+                    <!-- ONE CONTACT -->
+                    <div class="contactRow">
+                        <div class="squareContact">
+                            <div class="contactInitial">OA</div>
+                        </div>
+                        <div class="contactNameAndFunction">
+                            <div class="contactName">Otis Ascenseurs</div>
+                            <div class="contactFunction">Manager Technique</div>
+                        </div>
+                        <div class="contactPhonesNumbers">
+                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+                        </div>
+                        <div class="contactEmail">
+                            <i class="fas fa-envelope"></i>admin@otis.com
+                        </div>
+                        <div class="contactLog">
+                            <div>Dernière connexion le 28/10/2019</div>
+                            <div>5 connexions au total</div>
+                        </div>
+                    </div>
+
+                    <hr class="contactSeparator">
+                    </hr>
+
+                    <!-- ONE CONTACT -->
+                    <div class="contactRow">
+                        <div class="squareContact">
+                            <div class="contactInitial">OA</div>
+                        </div>
+                        <div class="contactNameAndFunction">
+                            <div class="contactName">Otis Ascenseurs</div>
+                            <div class="contactFunction">Manager Technique</div>
+                        </div>
+                        <div class="contactPhonesNumbers">
+                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+                        </div>
+                        <div class="contactEmail">
+                            <i class="fas fa-envelope"></i>admin@otis.com
+                        </div>
+                        <div class="contactLog">
+                            <div>Dernière connexion le 28/10/2019</div>
+                            <div>5 connexions au total</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEGAL SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-balance-scale simpleTitle verticalAlignMiddle"></i>
+                <div class="mainData" id="legalMainData">
+                    <div class="mainDataTitle smallTitle">Juridique</div>
+                    <div class="mainDataSubTitle simpleText">1 titre de propriété &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 2
+                        baux internes &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 baux externes &nbsp&nbsp&nbsp /
+                        &nbsp&nbsp&nbsp 4 sous-baux</div>
+                </div>
+                <i class="fas fa-plus openCloseIcon"></i>
+            </div>
+            <div class="allData" id="legalAllData">
+                <div id="legalLegend">
+                    <div class="simpleText">
+                        <div id="legalLegendSquareIntern" class="legalLegendSquares"></div>Titres de propriété internes
+                    </div>
+                    <div class="simpleText">
+                        <div id="legalLegendSquareExtern" class="legalLegendSquares"></div>Titres de propriété externes
+                    </div>
+                </div>
+                <div id="legalHorTreeTitles">
+                    <div class="simpleText">Titres de propriété</div>
+                    <div class="simpleText">Baux</div>
+                    <div class="simpleText">Sous-Baux</div>
+                </div>
+                <div class="legalHorTreeContainer" id="legalHorTreeOne"></div>
+                <div class="legalHorTreeContainer" id="legalHorTreeTwo"></div>
+            </div>
+        </div>
+
+        <!-- COMPLIANCE SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-check simpleTitle verticalAlignMiddle"></i>
+                <div class="mainData" id="complianceMainData">
+                    <div class="mainDataTitle smallTitle">Conformité</div>
+                    <div class="mainDataSubTitle simpleText">80 obligations suivies &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
+                        <span class="redTextColor">4 visites en retard</span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp <span
+                            class="redTextColor">2 NC critiques à lever</span></div>
+                </div>
+                <i class="fas fa-plus openCloseIcon"></i>
+            </div>
+            <div class="allData" id="complianceAllData">
+            </div>
+        </div>
+
+        <!-- AUDIT SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-chart-area simpleTitle verticalAlignMiddle"></i>
+                <div class="mainData" id="auditMainData">
+                    <div class="mainDataTitle smallTitle">Audit</div>
+                    <div class="mainDataSubTitle simpleText">3 audits en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 6 NC à
+                        lever</div>
+                </div>
+                <i class="fas fa-plus openCloseIcon"></i>
+            </div>
+            <div class="allData" id="auditAllData">
+            </div>
+        </div>
+
+        <!-- EQUIPMENTS SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-wrench simpleTitle verticalAlignMiddle"></i>
+                <div class="mainData" id="equipmentsMainData">
+                    <div class="mainDataTitle smallTitle">Equipements</div>
+                </div>
+                <i class="fas fa-plus openCloseIcon"></i>
+            </div>
+            <div class="allData" id="equipmentsAllData">
+                <div class="equipmentAllSquares">
+                    <div class="equipmentSquare">
+                        <div class="equipmentSquareNumberAndText">
+                            <div class="equipmentSquareNumber simpleTitle">80</div>
+                            <div class="equipmentSquareText simpleText">équipements</div>
+                        </div>
+                    </div>
+                    <div class="equipmentSquare">
+                        <div class="equipmentSquareNumberAndText">
+                            <div class="equipmentSquareNumber simpleTitle">3%</div>
+                            <div class="equipmentSquareText simpleText">suivi</div>
+                        </div>
+                    </div>
+                    <div class="equipmentSquare">
+                        <div class="equipmentSquareNumberAndText">
+                            <div class="equipmentSquareNumber simpleTitle">2</div>
+                            <div class="equipmentSquareText simpleText">Non-conformités en retard</div>
+                        </div>
+                    </div>
+                    <div class="equipmentSquare">
+                        <div class="equipmentSquareNumberAndText">
+                            <div class="equipmentSquareNumber simpleTitle">10</div>
+                            <div class="equipmentSquareText simpleText">Actions à faire</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blackButton simpleText">Ajouter un équipement</div>
+
+                <div id="equipmentFilters" class="simpleText">
+                    <div class="inline verticalAlignMiddle">
+                        <label>En fin de garantie dans
+                            <select name="garantie" id="garantieSelector" class="selector">
+                                <option value="">--Choisissez une valeur--</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="inline verticalAlignMiddle">
+                        <label>Visites prévues dans
+                            <select name="visite" id="visiteSelector" class="selector">
+                                <option value="">--Choisissez une valeur--</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="equipmentSwitchFilter verticalAlignMiddle">
+                        <label id="equipmentSliderLabel">
+                            <input type="checkbox" checked />
+                            <span class="slider round"></span>
+                        Voir les non-conformités</label>
+                    </div>
+                </div>
+
+                <!-- TODO -->
+                <div id="equipmentTableWrapper">
+                    <table id="equipmentTable" class="simpleText">
+                        <thead>
+                            <tr>
+                                <th>Thème</th>
+                                <th>Identifiant</th>
+                                <th>QR Code</th>
+                                <th>Marque</th>
+                                <th>Fin de garantie</th>
+                                <th>NC à lever</th>
+                                <th>Prochaine visite</th>
+                                <th>Actions en cours</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ascenseur</td>
+                                <td>ASC01</td>
+                                <td>1789657</td>
+                                <td>Otis</td>
+                                <td>21/11/2020</td>
+                                <td>2</td>
+                                <td>23/12/2019</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>Ascenseur</td>
+                                <td>ASC01</td>
+                                <td>1789657</td>
+                                <td>Otis</td>
+                                <td>21/11/2020</td>
+                                <td>2</td>
+                                <td>23/12/2019</td>
+                                <td>3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- DATA COLLECTION SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-sd-card simpleTitle verticalAlignMiddle"></i>
+                <div class="mainData" id="dataCollectionMainData">
+                    <div class="mainDataTitle smallTitle">Collecte de données</div>
+                    <div class="mainDataSubTitle simpleText">4 campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
+                        <span class="redTextColor">23% de complétion</span></div>
+                </div>
+                <i class="fas fa-plus openCloseIcon"></i>
+            </div>
+            <div class="allData" id="dataCollectionAllData">
+            </div>
+        </div>
+
+        <!-- INCIDENTS SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-exclamation-triangle simpleTitle verticalAlignMiddle"></i>
+                <div class="mainData" id="incidentsMainData">
+                    <div class="mainDataTitle smallTitle">Incidents</div>
+                    <div class="mainDataSubTitle simpleText">23 incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 11
+                        presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 accidents</div>
+                </div>
+                <i class="fas fa-plus openCloseIcon"></i>
+            </div>
+            <div class="allData" id="incidentsAllData">
+            </div>
+        </div>
+
+        <!-- SCHEMA DIRECTORY SECTION -->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-rocket simpleTitle verticalAlignMiddle"></i>
+                <div class="mainData" id="schemaDirectoryMainData">
+                    <div class="mainDataTitle smallTitle">Schéma directeur</div>
+                    <div class="mainDataSubTitle simpleText">4 plans quinquénnaux &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 12
+                        actions en retard</div>
+                </div>
+                <i class="fas fa-plus openCloseIcon"></i>
+            </div>
+            <div class="allData" id="schemaDirectoryAllData">
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
+    
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+    crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous">
+</script>
+<!-- <script src="./horizontalTreePlugin/dist/jquery.hortree.min.js"></script> -->
+<!-- <script src="./horizontalTreePlugin/demo/jquery.line.js"></script> -->
+
+<script>
+
+let jsonAllOrganizations = JSON.parse(('@JsonConvert.SerializeObject(organizations)').replace(/&quot;/g, '"'));
+  
+function initFIBGoogleMap() {
+  // La map est crée grâce à l'API de Google Maps :
+  var identityGoogleMap = new google.maps.Map(document.getElementById('identityGoogleMap'), {
+    center: new google.maps.LatLng(40, 0),
+    zoom: 2,
+    disableDefaultUI: true,
+  	styles: [
+  		{
+			"elementType": "geometry",
+  			"stylers": [
+          		{ "visibility": "simplified" },
+  		  		{ "hue": "#00aec7" },
+          		{ "saturation": -50 }
+        	]
+      	}
+    ]
+  });
+
+  return identityGoogleMap;
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKL92_ats3EIcnsjjSjxp5UgZseR6lnIY&libraries=places&sensor=false&callback=initFIBGoogleMap"></script>
+<!-- <script src="./script.js"></script> -->
