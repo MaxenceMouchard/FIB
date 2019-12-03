@@ -7,13 +7,14 @@
     <title>FIB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous" />
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
 </head>
 
 <style>
-/* CSS for all tabs filter */
-    .tab *, *:before, *:after {
+    /* CSS for all tabs filter */
+    .tab *,
+    .tab *:before,
+    .tab *:after {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -43,7 +44,7 @@
         font-weight: bold;
     }
 
-    .tab label {
+    .tab>label {
         display: inline-block;
         margin: 0 0 -1px;
         padding: 15px 25px;
@@ -52,34 +53,34 @@
         border: 1px solid transparent;
     }
 
-    /*.tab label:before {
-        font-family: fontawesome;
-        font-weight: normal;
-        margin-right: 10px;
-    }
+    /*.tab > label:before {
+    font-family: fontawesome;
+    font-weight: normal;
+    margin-right: 10px;
+}
 
-    .tab label[for*='1']:before {
-        content: '\f1cb';
-    }
+.tab > label[for*='1']:before {
+    content: '\f1cb';
+}
 
-    .tab label[for*='2']:before {
-        content: '\f17d';
-    }
+.tab > label[for*='2']:before {
+    content: '\f17d';
+}
 
-    .tab label[for*='3']:before {
-        content: '\f16b';
-    }
+.tab > label[for*='3']:before {
+    content: '\f16b';
+}
 
-    .tab label[for*='4']:before {
-        content: '\f1a9';
-    } */
+.tab > label[for*='4']:before {
+    content: '\f1a9';
+} */
 
-    .tab label:hover {
+    .tab>label:hover {
         color: #888;
         cursor: pointer;
     }
 
-    .tab input:checked + label {
+    .tab input:checked+label {
         color: #555;
         border: 1px solid #ddd;
         border-top: 5px solid #00A4BF;
@@ -88,30 +89,31 @@
         border-top-right-radius: 5px;
     }
 
-    #tab1:checked ~ #content1,
-    #tab2:checked ~ #content2,
-    #tab3:checked ~ #content3,
-    #tab4:checked ~ #content4 {
+    #tab1:checked~#content1,
+    #tab2:checked~#content2,
+    #tab3:checked~#content3,
+    #tab4:checked~#content4 {
         display: block;
     }
 
     @media screen and (max-width: 650px) {
-        .tab label {
+        .tab>label {
             font-size: 0;
         }
 
-        .tab label:before {
+        .tab>label:before {
             margin: 0;
             font-size: 18px;
         }
     }
+
     @media screen and (max-width: 400px) {
-        .tab label {
+        .tab>label {
             padding: 15px;
         }
     }
 
-/* CSS for HorTree plugin (for Legal section) */
+    /* CSS for HorTree plugin (for Legal section) */
 
     .hortree-wrapper *,
     .hortree-wrapper *:before,
@@ -190,20 +192,21 @@
         opacity: 1;
     }
 
-/* FontSize for different screen size */
+    /* FontSize for different screen size */
 
     @media only screen and (max-width: 1150px) {
 
-        /* styles for browsers larger max 1150px; */
+        /* styles for screens smaller than 1150px; */
         #identityContainer {
             height: 235px;
         }
 
-        #identityContainer>#allIdentityInfos {
-            width: calc(100% - 275px); /* width= 100% - padding - pictures size */
+        #allIdentityInfos {
+            width: calc(100% - 275px);
+            /* width = 100% - padding - pictures size */
         }
 
-        #identityContainer>#identityPicture {
+        #identityPicture {
             width: 235px;
         }
 
@@ -235,21 +238,37 @@
         #legalHorTreeTitles> :nth-child(3) {
             margin-left: 281px;
         }
+
+        #identityGoogleMap {
+            height: 160px;
+        }
+
+        #identityType {
+            height: 15px;
+        }
+
+        #identityLocation {
+            height: 54px;
+        }
+
+        #identityLabel {
+            font-size: 11px;
+        }
     }
 
     @media only screen and (min-width: 1150px) {
 
-        /* styles for browsers larger min 1150px; */
+        /* styles for screens larger than 1150px; */
         #identityContainer {
             height: 285px;
         }
 
-
-        #identityContainer>#allIdentityInfos {
-            width: calc(100% - 325px); /* 100% - padding - pictures size */
+        #allIdentityInfos {
+            width: calc(100% - 325px);
+            /* width = 100% - padding - pictures size */
         }
 
-        #identityContainer>#identityPicture {
+        #identityPicture {
             width: 285px;
         }
 
@@ -281,14 +300,30 @@
         #legalHorTreeTitles> :nth-child(3) {
             margin-left: 276px;
         }
+
+        #identityGoogleMap {
+            height: 200px;
+        }
+
+        #identityType {
+            height: 18px;
+        }
+
+        #identityLocation {
+            height: 93px;
+        }
+
+        #identityLabel {
+            font-size: 13px;
+        }
     }
 
-/* Some generic class or element */
+    /* Some generic class or element */
 
     body {
-        background-color: #E9EEF3;
-        font-family: "Open Sans";
-        margin: auto;
+        background-color: #E9EEF3 !important;
+        font-family: "Open Sans" !important;
+        margin: auto !important;
     }
 
     .inline {
@@ -303,7 +338,7 @@
         cursor: pointer;
     }
 
-/* References section */
+    /* References section */
 
     #referencesContainer {
         min-height: 45px;
@@ -317,7 +352,7 @@
         font-weight: bold;
     }
 
-/* Filters section */
+    /* Filters section */
 
     #filtersContainer {
         min-height: 80px;
@@ -375,7 +410,7 @@
         border-color: #f2f2f2;
     }
 
-/* Identity section */
+    /* Identity section */
 
     #identityContainer {
         margin: 20px 35px 0 35px;
@@ -383,79 +418,90 @@
         border-radius: 5px;
     }
 
-    #identityContainer>#identityPicture {
+    #identityPicture {
         float: left;
         height: 100%;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
     }
 
-    #identityContainer>#allIdentityInfos {
+    #allIdentityInfos {
         display: inline-block;
         height: calc(100% - 40px);
         padding: 20px;
         color: #333333;
-    }
-
-    #identityContainer>#allIdentityInfos>#identityTitle {
-        display: inline;
-        margin-left: 10px;
-        font-weight: bold;
-    }
-
-    #identityContainer>#allIdentityInfos>#identityInfosDetails {
-        margin-left: 22px;
-    }
-
-    #identityContainer>#allIdentityInfos>#identityInfosDetails>#identityLocation {
-        margin-top: 20px;
-    }
-
-    #identityContainer>#allIdentityInfos>#identityInfosDetails>#identityProperties {
-        margin-top: 20px;
-        height: 80px;
         overflow-x: auto;
         white-space: nowrap;
     }
 
-    #identityFloorsNumber,
-    #identityTotalSurface,
-    #identityDaysNumberBeforeDueDate,
-    #identityNumberPersonOnThisSite,
-    #identityOccupationPercent {
+    #identityIntroContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #identityTitle {
+        display: inline;
+        margin-left: 5px;
+        font-weight: bold;
+    }
+
+    #identityExport {
+        margin-left: 8px;
+    }
+
+    #identityInfosDetails {
         display: inline-block;
-        height: calc(85% - 10px);
-        padding-top: 5px;
-        padding-bottom: 5px;
+        margin-left: 22px;
         vertical-align: top;
     }
 
-    #identityFloorsNumber,
-    #identityTotalSurface,
-    #identityDaysNumberBeforeDueDate,
-    #identityNumberPersonOnThisSite {
-        border-right: 1px solid #979797;
-        padding-right: 30px;
+    #identityLocation {
+        margin-top: 20px;
     }
 
-    #identityTotalSurface,
-    #identityDaysNumberBeforeDueDate,
-    #identityNumberPersonOnThisSite,
-    #identityOccupationPercent {
+    #identityPostCodeLocation,
+    #identityCityLocation {
+        display: inline-block;
+    }
+
+    #identityProperties {
+        height: 80px;
+        white-space: nowrap;
+    }
+
+    #identityLabel,
+    #identityFloorsNumber,
+    #identityTotalSurface {
+        display: inline-block;
+        height: calc(85% - 10px);
+        vertical-align: top;
+        border-right: 1px solid #979797;
+        padding-top: 5px;
+        padding-right: 30px;
+        white-space: normal;
+        max-width: 84px;
+    }
+
+    #identityFloorsNumber,
+    #identityTotalSurface {
         padding-left: 30px;
     }
 
-    #identityDaysNumberBeforeDueDate {
-        width: 115px;
-        white-space: pre-wrap;
+    #identityLink3D {
+        border-right: 1px solid #979797;
+        margin-top: 14px;
+        margin-right: 30px;
+        margin-left: 30px;
     }
 
-    #identityNumberPersonOnThisSite {
-        width: 80px;
-        white-space: pre-wrap;
+    #identityGoogleMap {
+        width: 44%;
+        display: inline-block;
+        margin-top: 5px;
     }
 
-/* General Sections Properties */
+    /* General Sections Properties */
 
     .sectionContainer {
         margin: 20px 35px 0 35px;
@@ -507,19 +553,45 @@
         padding: 12px;
     }
 
-/* Override */
-    *, ::after, ::before {
-        box-sizing: unset;
+    .blackButton {
+        display: inline-block;
+        background-color: #333333;
+        color: #FFFFFF;
+        padding: 8px 15px;
+        border-radius: 5px;
+        transition: 0.5s;
+        vertical-align: top;
     }
 
-    /* .fa-window-minimize {
-        transform: translateY(-5px);
-    } */
+    .blackButton:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+    }
 
-/* CONTACT Section Properties */
+    /* Override */
+    *,
+    ::after,
+    ::before {
+        box-sizing: unset !important;
+    }
+
+    .fa-balance-scale {
+        transform: translateX(-3px);
+    }
+
+    .fa-sd-card {
+        transform: translateX(2px);
+    }
+
+    .fa-exclamation-triangle {
+        transform: translateX(-2px);
+    }
+
+    /* CONTACT Section Properties */
 
     #contactMainData {
-        width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+        width: calc(100% - 74px);
+        /* 100% - (padding + inconSize) */
     }
 
     #contactAllData {
@@ -594,10 +666,11 @@
         margin-right: 10px;
     }
 
-/* LEGAL Section Properties */
+    /* LEGAL Section Properties */
 
     #legalMainData {
-        width: calc(100% - 80px); /* 100% - (padding + inconSize) */
+        width: calc(100% - 80px);
+        /* 100% - (padding + inconSize) */
     }
 
     #legalAllData {
@@ -617,11 +690,11 @@
         width: auto;
     }
 
-    #legalLegend > :not(:first-child) {
+    #legalLegend> :not(:first-child) {
         margin-left: 70px;
     }
 
-    #legalLegend > div {
+    #legalLegend>div {
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -659,26 +732,29 @@
         border-left-color: #979797 !important;
     }
 
-    #legalHorTreeOne .line {
+    #legalHorTree1 .line {
         margin-top: 702px;
     }
 
-/* COMPLIANCE Section Properties */
+    /* COMPLIANCE Section Properties */
 
     #complianceMainData {
-        width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+        width: calc(100% - 74px);
+        /* 100% - (padding + inconSize) */
     }
 
-/* AUDIT Section Properties */
+    /* AUDIT Section Properties */
 
     #auditMainData {
-        width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+        width: calc(100% - 74px);
+        /* 100% - (padding + inconSize) */
     }
 
-/* EQUIPMENTS Section Properties */
+    /* EQUIPMENTS Section Properties */
 
     #equipmentsMainData {
-        width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+        width: calc(100% - 74px);
+        /* 100% - (padding + inconSize) */
     }
 
     #equipmentsAllData {
@@ -692,7 +768,8 @@
 
     .equipmentAllSquares {
         display: inline-block;
-        width: calc(100% - 165px); /* 100% - buttonWidth*/
+        width: calc(100% - 165px);
+        /* 100% - buttonWidth*/
         overflow-x: auto;
         white-space: nowrap;
     }
@@ -722,21 +799,6 @@
         width: 119px;
         display: inline-block;
         white-space: normal;
-    }
-
-    #equipmentAddOne {
-        display: inline-block;
-        background-color: #333333;
-        color: #FFFFFF;
-        padding: 10px 15px;
-        border-radius: 5px;
-        transition: 0.5s;
-        vertical-align: top;
-    }
-
-    #equipmentAddOne:hover {
-        cursor: pointer;
-        transform: scale(1.1);
     }
 
     #equipmentFilters {
@@ -790,15 +852,15 @@
         transition: .4s;
     }
 
-    input:checked + .slider {
+    input:checked+.slider {
         background-color: #00A4BF;
     }
 
-    input:focus + .slider {
+    input:focus+.slider {
         box-shadow: 0 0 1px #00A4BF;
     }
 
-    input:checked + .slider:before {
+    input:checked+.slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(12px);
@@ -826,12 +888,12 @@
         min-width: 688px;
     }
 
-    #equipmentTable > thead {
+    #equipmentTable>thead {
         font-weight: bold;
         border-bottom: 1px solid;
     }
 
-    #equipmentTable > thead > tr > th {
+    #equipmentTable>thead>tr>th {
         padding-bottom: 10px;
     }
 
@@ -839,26 +901,29 @@
         background-color: #F5F5F5;
     }
 
-    #equipmentTable > tbody > tr > td {
+    #equipmentTable>tbody>tr>td {
         padding: 10px 0;
     }
 
-/* DATA COLLECTION Section Properties */
+    /* DATA COLLECTION Section Properties */
 
     #dataCollectionMainData {
-        width: calc(100% - 68px); /* 100% - (padding + inconSize) */
+        width: calc(100% - 68px);
+        /* 100% - (padding + inconSize) */
     }
 
-/* INCIDENTS Section Properties */
+    /* INCIDENTS Section Properties */
 
     #incidentsMainData {
-        width: calc(100% - 77px); /* 100% - (padding + inconSize) */
+        width: calc(100% - 77px);
+        /* 100% - (padding + inconSize) */
     }
 
-/* SCHEMA DIRECTORY Section Properties */
+    /* SCHEMA DIRECTORY Section Properties */
 
     #schemaDirectoryMainData {
-        width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+        width: calc(100% - 74px);
+        /* 100% - (padding + inconSize) */
     }
 </style>
 
@@ -924,11 +989,20 @@
                         <div id="identityCountryLocation">France</div>
                     </div>
                     <div id="identityProperties">
-                        <div id="identityFloorsNumber" class="simpleTitle">9<div class="simpleText">étages</div></div>
-                        <div id="identityTotalSurface" class="simpleTitle">900m²<div class="simpleText">surface totale</div></div>
-                        <div id="identityDaysNumberBeforeDueDate" class="simpleTitle">631<div class="simpleText">jours avant échéance du bail</div></div>
-                        <div id="identityNumberPersonOnThisSite" class="simpleTitle">55<div class="simpleText">personnes sur site</div></div>
-                        <div id="identityOccupationPercent" class="simpleTitle">72%<div class="simpleText">d'occupation</div></div>
+                        <div id="identityFloorsNumber" class="simpleTitle">9<div class="simpleText">étages</div>
+                        </div>
+                        <div id="identityTotalSurface" class="simpleTitle">900m²<div class="simpleText">surface totale
+                            </div>
+                        </div>
+                        <div id="identityDaysNumberBeforeDueDate" class="simpleTitle">631<div class="simpleText">jours
+                                avant échéance du bail</div>
+                        </div>
+                        <div id="identityNumberPersonOnThisSite" class="simpleTitle">55<div class="simpleText">personnes
+                                sur site</div>
+                        </div>
+                        <div id="identityOccupationPercent" class="simpleTitle">72%<div class="simpleText">d'occupation
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1150,17 +1224,17 @@
 
                 <main class="tab">
                     <input id="tab1" type="radio" name="tabs" checked>
-                    <label for="tab1"><span>80</span> Equipements</label>
+                    <label for="tab1"><span id="nbEquipments">80</span>Equipements</label>
 
                     <input id="tab2" type="radio" name="tabs">
                     <label for="tab2"><span>3%</span>Suivi</label>
-                        
+
                     <input id="tab3" type="radio" name="tabs">
                     <label for="tab3"><span>2</span>Non-conformités en retard</label>
-                        
+
                     <input id="tab4" type="radio" name="tabs">
                     <label for="tab4"><span>10</span> actions à faire</label>
-                        
+
                     <section id="content1">
                         <div id="equipmentFilters" class="simpleText">
                             <div class="inline verticalAlignMiddle">
@@ -1181,10 +1255,9 @@
                                 <label id="equipmentSliderLabel">
                                     <input type="checkbox" checked>
                                     <span class="slider round"></span>
-                                Voir les non-conformités</label>
+                                    Voir les non-conformités</label>
                             </label>
                         </div>
-        
                         <!-- TODO -->
                         <div id="equipmentTableWrapper">
                             <table id="equipmentTable" class="simpleText">
@@ -1201,124 +1274,129 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Ascenseur</td>
-                                        <td>ASC01</td>
-                                        <td>1789657</td>
-                                        <td>Otis</td>
-                                        <td>21/11/2020</td>
-                                        <td>2</td>
-                                        <td>23/12/2019</td>
-                                        <td>3</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ascenseur</td>
-                                        <td>ASC01</td>
-                                        <td>1789657</td>
-                                        <td>Otis</td>
-                                        <td>21/11/2020</td>
-                                        <td>2</td>
-                                        <td>23/12/2019</td>
-                                        <td>3</td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
                     </section>
-                        
+
                     <section id="content2">
                         <p>
-                        Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback spare ribs salami beef ribs.
+                            Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball
+                            tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye
+                            shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump
+                            ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket
+                            tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye
+                            tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger
+                            flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback
+                            spare ribs salami beef ribs.
                         </p>
                         <p>
-                        Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
+                            Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas
+                            filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank
+                            kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta.
+                            Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip
+                            leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
                         </p>
                     </section>
-                        
+
                     <section id="content3">
                         <p>
-                        Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket meatloaf short ribs.
+                            Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone
+                            sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket
+                            meatloaf short ribs.
                         </p>
                         <p>
-                        Brisket meatball turkey short loin boudin leberkas meatloaf chuck andouille pork loin pastrami spare ribs pancetta rump. Frankfurter corned beef beef tenderloin short loin meatloaf swine ground round venison.
+                            Brisket meatball turkey short loin boudin leberkas meatloaf chuck andouille pork loin
+                            pastrami spare ribs pancetta rump. Frankfurter corned beef beef tenderloin short loin
+                            meatloaf swine ground round venison.
                         </p>
                     </section>
-                        
+
                     <section id="content4">
                         <p>
-                        Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback spare ribs salami beef ribs.
+                            Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball
+                            tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye
+                            shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump
+                            ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket
+                            tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye
+                            tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger
+                            flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback
+                            spare ribs salami beef ribs.
                         </p>
                         <p>
-                        Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
+                            Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas
+                            filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank
+                            kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta.
+                            Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip
+                            leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
                         </p>
-                    </section>                     
+                    </section>
                 </main>
+            </div>
 
-                <div id="equipmentAddOne" class="simpleText">Ajouter un équipement</div>
-            </div>
+            <div id="equipmentAddOne" class="simpleText">Ajouter un équipement</div>
         </div>
+    </div>
 
-        <!-- DATA COLLECTION SECTION -->
-        <div class="sectionContainer">
-            <div class="primaryInfos">
-                <i class="fas fa-sd-card simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="dataCollectionMainData">
-                    <div class="mainDataTitle smallTitle">Collecte de données</div>
-                    <div class="mainDataSubTitle simpleText">4 campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
-                        <span class="redTextColor">23% de complétion</span></div>
-                </div>
-                <i class="fas fa-plus iconTitle openCloseIcon"></i>
+    <!-- DATA COLLECTION SECTION -->
+    <div class="sectionContainer">
+        <div class="primaryInfos">
+            <i class="fas fa-sd-card simpleTitle verticalAlignMiddle"></i>
+            <div class="mainData" id="dataCollectionMainData">
+                <div class="mainDataTitle smallTitle">Collecte de données</div>
+                <div class="mainDataSubTitle simpleText">4 campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
+                    <span class="redTextColor">23% de complétion</span></div>
             </div>
-            <div class="allData" id="dataCollectionAllData">
-            </div>
+            <i class="fas fa-plus iconTitle openCloseIcon"></i>
         </div>
+        <div class="allData" id="dataCollectionAllData">
+        </div>
+    </div>
 
-        <!-- INCIDENTS SECTION -->
-        <div class="sectionContainer">
-            <div class="primaryInfos">
-                <i class="fas fa-exclamation-triangle simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="incidentsMainData">
-                    <div class="mainDataTitle smallTitle">Incidents</div>
-                    <div class="mainDataSubTitle simpleText">23 incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 11
-                        presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 accidents</div>
-                </div>
-                <i class="fas fa-plus iconTitle openCloseIcon"></i>
+    <!-- INCIDENTS SECTION -->
+    <div class="sectionContainer">
+        <div class="primaryInfos">
+            <i class="fas fa-exclamation-triangle simpleTitle verticalAlignMiddle"></i>
+            <div class="mainData" id="incidentsMainData">
+                <div class="mainDataTitle smallTitle">Incidents</div>
+                <div class="mainDataSubTitle simpleText">23 incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 11
+                    presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 accidents</div>
             </div>
-            <div class="allData" id="incidentsAllData">
-            </div>
+            <i class="fas fa-plus iconTitle openCloseIcon"></i>
         </div>
+        <div class="allData" id="incidentsAllData">
+        </div>
+    </div>
 
-        <!-- SCHEMA DIRECTORY SECTION -->
-        <div class="sectionContainer">
-            <div class="primaryInfos">
-                <i class="fas fa-rocket simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="schemaDirectoryMainData">
-                    <div class="mainDataTitle smallTitle">Schéma directeur</div>
-                    <div class="mainDataSubTitle simpleText">4 plans quinquénnaux &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 12
-                        actions en retard</div>
-                </div>
-                <i class="fas fa-plus iconTitle openCloseIcon"></i>
+    <!-- SCHEMA DIRECTORY SECTION -->
+    <div class="sectionContainer">
+        <div class="primaryInfos">
+            <i class="fas fa-rocket simpleTitle verticalAlignMiddle"></i>
+            <div class="mainData" id="schemaDirectoryMainData">
+                <div class="mainDataTitle smallTitle">Schéma directeur</div>
+                <div class="mainDataSubTitle simpleText">4 plans quinquénnaux &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 12
+                    actions en retard</div>
             </div>
-            <div class="allData" id="schemaDirectoryAllData">
-            </div>
+            <i class="fas fa-plus iconTitle openCloseIcon"></i>
         </div>
+        <div class="allData" id="schemaDirectoryAllData">
+        </div>
+    </div>
 
     </div>
 </body>
 
 </html>
-    
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-    crossorigin="anonymous">
+    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous">
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous">
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
 </script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous">
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
 </script>
 <script src="./horizontalTreePlugin/dist/jquery.hortree.min.js"></script>
 <script src="./horizontalTreePlugin/demo/jquery.line.js"></script>
@@ -1328,63 +1406,55 @@
         // Add event when user click on openCloseIcon element :
         handleOpenCloseContainer();
 
-        let jsonLegalDataOne = [
-            {
-                description: "Propriété de Veolia",
-                children: [
-                    {
-                        description: "Locataire n°1",
-                        children: [
-                            {
-                                description: "Bale 123",
-                                children: []
-                            },
-                            {
-                                description: "Sous-Location n°2",
-                                children: []
-                            }
-                        ]
-                    },
-                    {
-                        description: "Altran Services SA",
-                        children: [
-                            {
-                                description: "Bale 123",
-                                children: []
-                            },
-                            {
-                                description: "Bale 99",
-                                children: []
-                            }
-                        ]
-                    },
-                    {
-                        description: "Altran Services SA",
-                        children: []
-                    },
-                    {
-                        description: "Altran Services SA",
-                        children: []
-                    }
-                ]
-            }
-        ];
-        let jsonLegalDataTwo = [
-            {
-                description: "FR69.P01 FR33.00001 - CMA CGM",
-                children: [
-                    {
-                        description: "Altran Services SA",
-                        children: []
-                    },
-                    {
-                        description: "Altran Services SA",
-                        children: []
-                    }
-                ]
-            }
-        ];
-        
+        let jsonLegalDataOne = [{
+            description: "Propriété de Veolia",
+            children: [{
+                    description: "Locataire n°1",
+                    children: [{
+                            description: "Bale 123",
+                            children: []
+                        },
+                        {
+                            description: "Sous-Location n°2",
+                            children: []
+                        }
+                    ]
+                },
+                {
+                    description: "Altran Services SA",
+                    children: [{
+                            description: "Bale 123",
+                            children: []
+                        },
+                        {
+                            description: "Bale 99",
+                            children: []
+                        }
+                    ]
+                },
+                {
+                    description: "Altran Services SA",
+                    children: []
+                },
+                {
+                    description: "Altran Services SA",
+                    children: []
+                }
+            ]
+        }];
+        let jsonLegalDataTwo = [{
+            description: "FR69.P01 FR33.00001 - CMA CGM",
+            children: [{
+                    description: "Altran Services SA",
+                    children: []
+                },
+                {
+                    description: "Altran Services SA",
+                    children: []
+                }
+            ]
+        }];
+
         // Horizontal tree creation in Legal Section :
         createLegalHortree([{
             horTreeId: "#legalHorTreeOne",
@@ -1431,14 +1501,16 @@
         // height of previous HorTree + marginTop of previous HorTree
         Array.from(horTreeContainers).forEach((container, index) => {
             if (index < horTreeContainers.length - 1) {
-                let horTreeLineMarginTop = parseInt(getComputedStyle(document.querySelector("#" + container.id + " .line")).marginTop);
+                let horTreeLineMarginTop = parseInt(getComputedStyle(document.querySelector("#" + container.id +
+                    " .line")).marginTop);
                 let horTreeHeight = parseInt(getComputedStyle(container).height);
                 let horTreeMarginTop = parseInt(getComputedStyle(container).marginTop);
                 let nextHorTreeLineMarginTop = horTreeLineMarginTop + horTreeHeight + horTreeMarginTop;
 
-                Array.from(document.querySelectorAll("#" + horTreeContainers[index + 1].id + " .line")).forEach((line) => {
-                    line.style.marginTop = nextHorTreeLineMarginTop.toString() + "px";
-                });
+                Array.from(document.querySelectorAll("#" + horTreeContainers[index + 1].id + " .line")).forEach(
+                    (line) => {
+                        line.style.marginTop = nextHorTreeLineMarginTop.toString() + "px";
+                    });
             }
         });
 
@@ -1480,5 +1552,4 @@
             });
         });
     }
-
 </script>
