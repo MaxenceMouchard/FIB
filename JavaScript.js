@@ -1,9 +1,7 @@
 /* ------ HORTREE PLUGIN ------ */
-// PUE SA MERE
 !function (e, t, r, n) { "use strict"; function i(t) { var r = []; return r.push('<div class="hortree-branch">'), e(t).each(function () { r.push(o(this)) }), r.push("</div>"), r.join("\n") } function o(e) { l++; var t = []; return t.push('<div class="hortree-entry" data-entry-id="' + l + '">'), e.tooltip && "" !== e.tooltip.toString().trim() ? (t.push('<div class="hortree-label hortree-tooltip">'), t.push('<span class="hortree-tooltip-text">' + e.tooltip + "</span>"), t.push(e.description), t.push("</div>")) : t.push('<div class="hortree-label">' + e.description + "</div>"), e.children.length && t.push(i(e.children)), t.push("</div>"), t.join("\n") } function h() { var t = []; e(".hortree-entry").each(function () { var r = e(this).attr("data-entry-id"); t.push({ entryId: parseInt(r), entry: e(this) }) }); var r = t.slice(0); r.sort(function (e, t) { return e.entryId - t.entryId }), r.reverse(); for (var n = 0; n < r.length; n++) { var i = r[n].entry, o = i.children(".hortree-branch"); if (o.length) { var h = 0; o.each(function () { h += e(this).height() }), i.height(h) } } } function a(t) { function r(t) { for (var r = 0, n = 0; null !== t && (r += t.offsetLeft, n += t.offsetTop, t = t.offsetParent, !e(".hortree-wrapper").is(t));); return { x: r, y: n } } e(".hortree-wrapper").each(function () { var n = e(this), i = 0, o = 0; n.find(".hortree-label").each(function () { if (0 === o) { var h = e(this).offset().top; i = -1 * h + 20 } if (e(this).siblings(".hortree-branch").length) { var a = r(e(this).get(0)); e(this).siblings(".hortree-branch").children(".hortree-entry").children(".hortree-label").each(function () { var o = r(e(this).get(0)); n.line(a.x + e(this).width() - 10, a.y + i, o.x, o.y + i, { zindex: t.lineZindex, color: t.lineColor, stroke: t.lineStrokeWidth }) }) } o++ }) }) } function s() { e(".hortree-label").each(function () { var t = e(this).height(); e(this).parent(".hortree-entry").height(t) }) } var l = 0; e.fn.hortree = function (t) { t = t || {}; var r = { lineStrokeWidth: 2, lineZindex: 8, lineColor: "#4b86b7", data: [], onComplete: function () { } }, n = e.extend(r, t); if (!e.fn.line) throw new Error("You must load jquery.line.js library! Get it here: https://github.com/tbem/jquery.line"); if (!n.data) throw new Error("No data specified!"); if (!(n.data instanceof Array)) throw new Error("Data should be an array"); n.data.length || console.warn("Data is empty"); var o = []; o.push('<div class="hortree-wrapper">'), o.push(i(n.data)), o.push("</div>"), this.html(o.join("\n")), s(), h(), a(n), n.onComplete && "function" == typeof n.onComplete && n.onComplete.apply() } }(jQuery, window, document);
 
 /* ------ LINE PLUGIN ------ */
-//PUE SA MERE
 !function (t) { var e = function (t, e, s, l, a) { var n = navigator.userAgent.indexOf("MSIE") > -1; if (s < t) { var r = t; t = s, s = r, r = e, e = l, l = r } var o = document.createElement("div"); o.className = a.class; var i = Math.sqrt((t - s) * (t - s) + (e - l) * (e - l)); if (o.style.width = i + "px", o.style.borderBottom = a.stroke + "px " + a.style, o.style.borderColor = a.color, o.style.position = "absolute", o.style.zIndex = a.zindex, n) { o.style.top = l > e ? e + "px" : l + "px", o.style.left = t + "px"; var c = (s - t) / i, f = (l - e) / i; o.style.filter = "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=" + c + ", M12=" + -1 * f + ", M21=" + f + ", M22=" + c + ")" } else { var d = Math.atan((l - e) / (s - t)); o.style.top = e + .5 * i * Math.sin(d) + "px", o.style.left = t - .5 * i * (1 - Math.cos(d)) + "px", o.style.transform = o.style.MozTransform = o.style.WebkitTransform = o.style.msTransform = o.style.OTransform = "rotate(" + d + "rad)" } return o }; t.fn.line = function (s, l, a, n, r, o) { return t(this).each(function () { t.isFunction(r) ? (callback = r, r = null) : callback = o, r = t.extend({}, t.fn.line.defaults, r), t(this).append(e(s, l, a, n, r)).promise().done(function () { t.isFunction(callback) && callback.call() }) }) }, t.fn.line.defaults = { zindex: 1e4, color: "#000000", stroke: "1", style: "solid", class: "line" } }(jQuery);
 
 /* ------ CODE ------ */
@@ -72,8 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle the site selection
     handleSiteSelectorFilter();
 
-    // site paris pré-selectionné pour les tests : à supprimer
-    document.getElementById("siteSelector").selectedIndex = 47;
+    // site pré-selectionné pour les tests : à supprimer
+    document.getElementById("siteSelector").selectedIndex = 21;
     $("#searchFilterButton").trigger("click");
 
     // Add event when user click on openCloseIcon element :
@@ -216,42 +214,93 @@ function loadDataContacts(oSite) {
 }
 
 function loadDataPropertyTitles(oSite) {
-    let propertyTitles = [];
+    let propertyTitles_owners = [];
+    let leases = [];
+    let subLeases = [];
     let indexId = 1;
-
-    console.log(jsonAllPropertyTitles);
-    console.log(jsonAllContacts);
-
+    
     document.getElementById("legalHorTreeContainers").innerHTML = "";
+
+    // Titres de propriété (type Interne)
     for (let i = 0; i < jsonAllPropertyTitles.length; i += 1) {
         if (oSite.Id == jsonAllPropertyTitles[i].OrganizationId) {
-            propertyTitles.push({
-                horTreeId: "#legalHorTree" + indexId,
+            for (let j = 0; j < jsonAllBaux.length; j += 1) {
+                if (jsonAllBaux[j].PropertyTitleId == jsonAllPropertyTitles[i].Id) {
+                    // for (let k = 0; jsonAllBaux.length; k += 1) 
+
+                    leases.push({
+                        description: jsonAllBaux[j].Reference,
+                        children: []
+                    });
+                }
+            }
+
+            // L'ID commence par 'P' pour les Property Titles
+            propertyTitles_owners.push({
+                horTreeId: "#P_legalHorTree" + indexId,
                 horTreeData: [
                     {
                         description: jsonAllPropertyTitles[i].Reference,
-                        children: []
+                        children: leases
                     }
                 ]
             });
-            document.getElementById("legalHorTreeContainers").innerHTML += "<div class='legalHorTreeContainer' id='legalHorTree" + indexId + "'></div>"
+            // Les data attributes serviront pour le tooltip :
+            let surface = (jsonAllPropertyTitles[i].Surface) ? Math.round(jsonAllPropertyTitles[i].Surface.replace(",", ".")).toLocaleString() : "Inconnue";
+            let cost = (jsonAllPropertyTitles[i].AcquisitionCost) ? Math.round(jsonAllPropertyTitles[i].AcquisitionCost.replace(",", ".")).toLocaleString() : "Inconnu";
+            let date = (jsonAllPropertyTitles[i].AcquisitionDate) ? new Date(jsonAllPropertyTitles[i].AcquisitionDate).toLocaleDateString() : "Inconnue";
+            document.getElementById("legalHorTreeContainers").innerHTML += "<div class='legalHorTreeContainer' id='P_legalHorTree" +
+            indexId + "' data-surface='" + surface + " m²' data-cost='" + cost + " €' data-date='" + date + "'></div>";
             indexId += 1;
         }
     }
+
+    leases = [];
+    subLeases = [];
+
+    // Propriétaires (type Externe)
+    for (let i = 0; i < jsonAllOwners.length; i += 1) {
+        if (oSite.Id == jsonAllOwners[i].OrganizationsId) {
+            for (let j = 0; j < jsonAllBaux.length; j += 1) {
+                if (jsonAllBaux[j].OwnerId == jsonAllOwners[i].Id) {
+                    for (let k = 0; k < jsonAllBaux.length; k += 1) {
+                        if (jsonAllBaux[k].BailParentId == jsonAllBaux[j].Id) {
+                            subLeases.push({
+                                description: jsonAllBaux[k].Reference,
+                                children: []
+                            });
+                        }
+                    }
+
+                    leases.push({
+                        description: jsonAllBaux[j].Reference,
+                        children: subLeases
+                    });
+                }
+            }
+
+            // L'ID commence par 'O' pour les Owners
+            propertyTitles_owners.push({
+                horTreeId: "#O_legalHorTree" + indexId,
+                horTreeData: [
+                    {
+                        description: jsonAllOwners[i].Denomination,
+                        children: leases
+                    }
+                ]
+            });
+            document.getElementById("legalHorTreeContainers").innerHTML += "<div class='legalHorTreeContainer' id='O_legalHorTree" + indexId + "'></div>";
+            indexId += 1;
+        }
+    }
+
     // Si il n'y avait aucun titre de propriété pour ce site :
     if (indexId === 1)
         document.getElementById("legalHorTreeContainers").innerHTML = "<div class='simpleText' style='margin-top:18px;text-align:center;'>Aucune titre de propriété n'est référencé</div>"
 
     
     // Horizontal tree creation in Legal Section :
-    // createLegalHortree([{
-    //     horTreeId: "#legalHorTreeOne",
-    //     horTreeData: jsonLegalDataOne
-    // }, {
-    //     horTreeId: "#legalHorTreeTwo",
-    //     horTreeData: jsonLegalDataTwo
-    // }]);
-    createLegalHortree(propertyTitles);
+    createLegalHortree(propertyTitles_owners);
 }
 
 function handleOpenCloseContainer() {
@@ -282,11 +331,56 @@ function createLegalHortree(arrayHorTreeObjects) {
 
     let horTreeContainers = document.getElementsByClassName("legalHorTreeContainer");
 
+    // Text format of the labels
+    Array.from(document.getElementsByClassName("hortree-label")).forEach((label) => {
+        label.classList.add("simpleText");
+    });
+    
+    // // Managing background color of the labels (depending of their section) :
+    let offsetFirstLine = 0;
+    Array.from(horTreeContainers).forEach((container) => {
+        container.querySelectorAll(".hortree-branch").forEach((branch, branchIndex) => {
+            if (branchIndex === 0) {
+                branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
+                    // Tooltip with data for the Property Titles :
+                    if (container.id[0] == "P") {
+                        $(label).tooltip({
+                            html: true,
+                            title: "<div class='simpleText'>" +
+                                "Surface totale Propriétaire : <strong>" + container.dataset.surface + "</strong><br />" +
+                                "Montant d'acquisition : <strong>" + container.dataset.cost + "</strong><br />" +
+                                "Date d'acquisition : <strong>" + container.dataset.date + "</strong></div>",
+                            placement: "top",
+                            container: "body"
+                        })
+                        label.style.backgroundColor = "#7BD679";
+                    } else if (container.id[0] == "O")
+                        label.style.backgroundColor = "#79D6CB";
+                })
+            } else if (branchIndex === 1) {
+                branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label, labelIndex) => {
+                    if (labelIndex === 0 && offsetFirstLine === 0) {
+                        // The offset of the first line = the offset of the first lease :
+                        offsetFirstLine = label.getBoundingClientRect().top - 2;
+                        document.querySelector("#" + container.id + " .line").style.marginTop = offsetFirstLine;
+                    }
+                    label.style.backgroundColor = "#76BA74";
+                })
+            } else if (branchIndex > 1) {
+                branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
+                    label.style.backgroundColor = "#548852";
+                })
+            }
+        });
+    });
+    
     // The marginTop of the lines of the new HorTree == marginTop of lines of previous HorTree +
     // height of previous HorTree + marginTop of previous HorTree
     Array.from(horTreeContainers).forEach((container, index) => {
         if (index < horTreeContainers.length - 1) {
-            let horTreeLineMarginTop = parseInt(getComputedStyle(document.querySelector("#" + container.id + " .line")).marginTop);
+            // Check to have the good offset :
+            let offsetContainer = container.getBoundingClientRect().top - 2;
+            let horTreeLineMarginTop = (offsetContainer < offsetFirstLine) ? offsetContainer : offsetFirstLine;
             let horTreeHeight = parseInt(getComputedStyle(container).height);
             let horTreeMarginTop = parseInt(getComputedStyle(container).marginTop);
             let nextHorTreeLineMarginTop = horTreeLineMarginTop + horTreeHeight + horTreeMarginTop;
@@ -295,43 +389,5 @@ function createLegalHortree(arrayHorTreeObjects) {
                 line.style.marginTop = nextHorTreeLineMarginTop.toString() + "px";
             });
         }
-    });
-
-    // Text format of the labels
-    Array.from(document.getElementsByClassName("hortree-label")).forEach((label) => {
-        label.classList.add("simpleText");
-    });
-
-    // Managing background color of the labels (depending of their section) + the tooltips only for the first section
-    $(".hortree-label").tooltip({
-        html: true,
-        title: "<div class='simpleText'>" +
-            "Surface totale Propriétaire : <strong>1 000 m²</strong><br />" +
-            "Montant d'acquisition : <strong>12 000 000 €</strong><br />" +
-            "Date d'acquisition : <strong>07/05/2001</strong></div>",
-        placement: "top",
-        container: "body"
-    })
-    Array.from(horTreeContainers).forEach((container, index) => {
-        container.querySelectorAll(".hortree-branch").forEach((branch, indexBis) => {
-            if (indexBis === 0) {
-                branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
-                    if (index === 0)
-                        label.style.backgroundColor = "#79D6CB";
-                    else if (index === 1)
-                        label.style.backgroundColor = "#7BD679";
-                })
-            } else if (indexBis === 1) {
-                branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
-                    $(label).tooltip("disable");
-                    label.style.backgroundColor = "#76BA74";
-                })
-            } else if (indexBis > 1) {
-                branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
-                    $(label).tooltip("disable");
-                    label.style.backgroundColor = "#548852";
-                })
-            }
-        });
     });
 }
