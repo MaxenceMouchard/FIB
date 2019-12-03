@@ -218,6 +218,11 @@ function loadDataPropertyTitles(oSite) {
     let leases = [];
     let subLeases = [];
     let indexId = 1;
+
+    let nbPropertyTitles = 0;
+    let nbInternalLeases = 0;
+    let nbExternalLeases = 0;
+    let nbSubLeases = 0;
     
     document.getElementById("legalHorTreeContainers").innerHTML = "";
 
@@ -226,12 +231,21 @@ function loadDataPropertyTitles(oSite) {
         if (oSite.Id == jsonAllPropertyTitles[i].OrganizationId) {
             for (let j = 0; j < jsonAllBaux.length; j += 1) {
                 if (jsonAllBaux[j].PropertyTitleId == jsonAllPropertyTitles[i].Id) {
-                    // for (let k = 0; jsonAllBaux.length; k += 1) 
+                    for (let k = 0; k < jsonAllBaux.length; k += 1) {
+                        if (jsonAllBaux[k].BailParentId == jsonAllBaux[j].Id) {
+                            subLeases.push({
+                                description: jsonAllBaux[k].Reference,
+                                children: []
+                            });
+                            nbSubLeases += 1;
+                        }
+                    }
 
                     leases.push({
                         description: jsonAllBaux[j].Reference,
-                        children: []
+                        children: subLeases
                     });
+                    nbInternalLeases += 1;
                 }
             }
 
@@ -249,9 +263,12 @@ function loadDataPropertyTitles(oSite) {
             let surface = (jsonAllPropertyTitles[i].Surface) ? Math.round(jsonAllPropertyTitles[i].Surface.replace(",", ".")).toLocaleString() : "Inconnue";
             let cost = (jsonAllPropertyTitles[i].AcquisitionCost) ? Math.round(jsonAllPropertyTitles[i].AcquisitionCost.replace(",", ".")).toLocaleString() : "Inconnu";
             let date = (jsonAllPropertyTitles[i].AcquisitionDate) ? new Date(jsonAllPropertyTitles[i].AcquisitionDate).toLocaleDateString() : "Inconnue";
+            
             document.getElementById("legalHorTreeContainers").innerHTML += "<div class='legalHorTreeContainer' id='P_legalHorTree" +
             indexId + "' data-surface='" + surface + " m²' data-cost='" + cost + " €' data-date='" + date + "'></div>";
+
             indexId += 1;
+            nbPropertyTitles += 1
         }
     }
 
@@ -269,6 +286,7 @@ function loadDataPropertyTitles(oSite) {
                                 description: jsonAllBaux[k].Reference,
                                 children: []
                             });
+                            nbSubLeases += 1;
                         }
                     }
 
@@ -276,6 +294,7 @@ function loadDataPropertyTitles(oSite) {
                         description: jsonAllBaux[j].Reference,
                         children: subLeases
                     });
+                    nbExternalLeases += 1;
                 }
             }
 
@@ -293,6 +312,11 @@ function loadDataPropertyTitles(oSite) {
             indexId += 1;
         }
     }
+
+    document.getElementById("legalNbPropTitles").innerHTML = (nbPropertyTitles > 1) ? nbPropertyTitles + " titres de propriété" : nbPropertyTitles + " titre de propriété";
+    document.getElementById("legalNbInternalLeases").innerHTML = (nbInternalLeases > 1) ? nbInternalLeases + " baux internes" : nbInternalLeases + " bail interne";
+    document.getElementById("legalNbExternalLeases").innerHTML = (nbExternalLeases > 1) ? nbExternalLeases + " baux externes" : nbExternalLeases + " bail externe";
+    document.getElementById("legalNbSubLeases").innerHTML = (nbSubLeases > 1) ? nbSubLeases + " sous-baux" : nbSubLeases + " sous-bail";
 
     // Si il n'y avait aucun titre de propriété pour ce site :
     if (indexId === 1)
