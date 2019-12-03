@@ -5,8 +5,11 @@
     var organizations = VP.GetEntitiesData("Organization", "Image.Id,Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ERPTypes.TypeName,M2,UrlBentley,Lat,Long", "EntityState=Active,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
     var contacts = VP.GetEntitiesData("OrganizationContact", "Organization.Id,Contact.FullName,Contact.Email,Contact.Job,Contact.Denomination,Contact.LastConnection,Contact.ConnectionsCounter,Contact.MobilePro,Contact.LandlinePro,Contact.AllPhone", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
-    var propertyTitles = VP.GetEntitiesData("PropertyTitle", "Organization.Id,Reference", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
+    var propertyTitles = VP.GetEntitiesData("PropertyTitle", "Id,Organization.Id,Reference,Surface,AcquisitionCost,AcquisitionDate", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
+    var owners = VP.GetEntitiesData("Owner", "Id,Organizations.Id,Denomination", "Organizations.IsArchive=False,Organizations.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
+    var baux = VP.GetEntitiesData("Bail", "Id,Reference,Owner.Id,PropertyTitle.Id,BailParent.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
 }
+
 <!-- Id,Name,Image.Id,Code,StaffCount,AddressLine1,City,PostCode,Country.Name,AuditDataWorkflowStatus,RPlusFloSurfaceSHONorCount,RMinusFloorCount,IsArchive,EntityState,SurfaceSHON,BuyingDate,VisitLate,ReserveCritTodo,M2,LastRepairDate,ActivitiesAndSector,ModifiedDate -->
 <!DOCTYPE html>
 <html>
@@ -380,6 +383,8 @@ let jsonAllOrganizations = JSON.parse(('@JsonConvert.SerializeObject(organizatio
 let jsonAllContacts = JSON.parse(('@JsonConvert.SerializeObject(contacts)').replace(/&quot;/g, '"'));
 let jsonAllLots = JSON.parse(('@JsonConvert.SerializeObject(lots)').replace(/&quot;/g, '"'));
 let jsonAllPropertyTitles = JSON.parse(('@JsonConvert.SerializeObject(propertyTitles)').replace(/&quot;/g, '"'));
+let jsonAllOwners = JSON.parse(('@JsonConvert.SerializeObject(owners)').replace(/&quot;/g, '"'));
+let jsonAllBaux = JSON.parse(('@JsonConvert.SerializeObject(baux)').replace(/&quot;/g, '"'));
 
 function initFIBGoogleMap() {
   // La map est crée grâce à l'API de Google Maps :
