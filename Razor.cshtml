@@ -4,6 +4,9 @@
 @{    
     var organizations = VP.GetEntitiesData("Organization", "Image.Id,Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ERPTypes.TypeName,M2,UrlBentley,Lat,Long", "EntityState=Active,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
     var contacts = VP.GetEntitiesData("OrganizationContact", "Organization.Id,Contact.FullName,Contact.Email,Contact.Job,Contact.Denomination,Contact.LastConnection,Contact.ConnectionsCounter,Contact.MobilePro,Contact.LandlinePro,Contact.AllPhone", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
+    var equipments = VP.GetEntitiesData("Equipment", "Id,Organization.Id,Theme,Reference,QRCode,Brand,EndOfGuarantee", "");
+    var equipmentsExtension = VP.GetEntitiesData("ReserveOfVisit", "Organization.Id,Equipments.Id,ReserveStatus,VisitDate", "");
+    var equipmentsAction = VP.GetEntitiesData("CActionEquipment", "Organization.Id,Equipment.Id,Status", "", "");
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var propertyTitles = VP.GetEntitiesData("PropertyTitle", "Organization.Id,Reference", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
 }
@@ -216,96 +219,121 @@
                 <i class="fas fa-plus openCloseIcon"></i>
             </div>
             <div class="allData" id="equipmentsAllData">
-                <div class="equipmentAllSquares">
-                    <div class="equipmentSquare">
-                        <div class="equipmentSquareNumberAndText">
-                            <div class="equipmentSquareNumber simpleTitle">80</div>
-                            <div class="equipmentSquareText simpleText">équipements</div>
-                        </div>
-                    </div>
-                    <div class="equipmentSquare">
-                        <div class="equipmentSquareNumberAndText">
-                            <div class="equipmentSquareNumber simpleTitle">3%</div>
-                            <div class="equipmentSquareText simpleText">suivi</div>
-                        </div>
-                    </div>
-                    <div class="equipmentSquare">
-                        <div class="equipmentSquareNumberAndText">
-                            <div class="equipmentSquareNumber simpleTitle">2</div>
-                            <div class="equipmentSquareText simpleText">Non-conformités en retard</div>
-                        </div>
-                    </div>
-                    <div class="equipmentSquare">
-                        <div class="equipmentSquareNumberAndText">
-                            <div class="equipmentSquareNumber simpleTitle">10</div>
-                            <div class="equipmentSquareText simpleText">Actions à faire</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="blackButton simpleText">Ajouter un équipement</div>
+                <main class="tab">
+                    <input id="tab1" type="radio" name="tabs" checked>
+                    <label for="tab1"><span id="nbEquipments">0</span>Equipements</label>
 
-                <div id="equipmentFilters" class="simpleText">
-                    <div class="inline verticalAlignMiddle">
-                        <label>En fin de garantie dans
-                            <select name="garantie" id="garantieSelector" class="selector">
-                                <option value="">--Choisissez une valeur--</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="inline verticalAlignMiddle">
-                        <label>Visites prévues dans
-                            <select name="visite" id="visiteSelector" class="selector">
-                                <option value="">--Choisissez une valeur--</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="equipmentSwitchFilter verticalAlignMiddle">
-                        <label id="equipmentSliderLabel">
-                            <input type="checkbox" checked />
-                            <span class="slider round"></span>
-                        Voir les non-conformités</label>
-                    </div>
-                </div>
+                    <input id="tab2" type="radio" name="tabs">
+                    <label for="tab2"><span>0%</span>Suivi</label>
+                        
+                    <input id="tab3" type="radio" name="tabs">
+                    <label for="tab3"><span id="nbNcToLate">0</span>Non-conformités en retard</label>
+                        
+                    <input id="tab4" type="radio" name="tabs">
+                    <label for="tab4"><span id="nbActionToDo">0</span>Actions à faire</label>
 
-                <!-- TODO -->
-                <div id="equipmentTableWrapper">
-                    <table id="equipmentTable" class="simpleText">
-                        <thead>
-                            <tr>
-                                <th>Thème</th>
-                                <th>Identifiant</th>
-                                <th>QR Code</th>
-                                <th>Marque</th>
-                                <th>Fin de garantie</th>
-                                <th>NC à lever</th>
-                                <th>Prochaine visite</th>
-                                <th>Actions en cours</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Ascenseur</td>
-                                <td>ASC01</td>
-                                <td>1789657</td>
-                                <td>Otis</td>
-                                <td>21/11/2020</td>
-                                <td>2</td>
-                                <td>23/12/2019</td>
-                                <td>3</td>
-                            </tr>
-                            <tr>
-                                <td>Ascenseur</td>
-                                <td>ASC01</td>
-                                <td>1789657</td>
-                                <td>Otis</td>
-                                <td>21/11/2020</td>
-                                <td>2</td>
-                                <td>23/12/2019</td>
-                                <td>3</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <section style="display: block; border-top: 1px solid #ddd;">
+                        <div id="equipmentFilters" class="simpleText">
+                            <div class="inline verticalAlignMiddle">
+                                <label>En fin de garantie dans
+                                    <select name="garantie" id="garantieSelector" class="selector">
+                                        <option value="">--Choisissez une valeur--</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="inline verticalAlignMiddle">
+                                <label>Visites prévues dans
+                                    <select name="visite" id="visiteSelector" class="selector">
+                                        <option value="">--Choisissez une valeur--</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <label class="equipmentSwitchFilter verticalAlignMiddle">
+                                <label id="equipmentSliderLabel">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                Voir les non-conformités</label>
+                            </label>
+                        </div>
+                    </section>
+
+                    <section id="content1">
+                        <!-- TODO -->
+                        <div class="equipmentTableWrapper">
+                            <table id="equipmentFirstTable" class="equipmentTable simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Identifiant</th>
+                                        <th>QR Code</th>
+                                        <th>Marque</th>
+                                        <th>Fin de garantie</th>
+                                        <th>NC à lever</th>
+                                        <th>Prochaine visite</th>
+                                        <th>Actions en cours</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="content2">
+                        <p>
+                        Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback spare ribs salami beef ribs.
+                        </p>
+                        <p>
+                        Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
+                        </p>
+                    </section>
+                        
+                    <section id="content3">
+                        <!-- TODO -->
+                        <div class="equipmentTableWrapper">
+                            <table id="equipmentThirdTable" class="equipmentTable simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Identifiant</th>
+                                        <th>QR Code</th>
+                                        <th>Marque</th>
+                                        <th>Fin de garantie</th>
+                                        <th>NC en retard</th>
+                                        <th>Prochaine visite</th>
+                                        <th>Actions en cours</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="content4">
+                        <div class="equipmentTableWrapper">
+                            <table id="equipmentFourthTable" class="equipmentTable simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Identifiant</th>
+                                        <th>QR Code</th>
+                                        <th>Marque</th>
+                                        <th>Fin de garantie</th>
+                                        <th>NC à lever</th>
+                                        <th>Prochaine visite</th>
+                                        <th>Actions à faire</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>                     
+                </main>
             </div>
         </div>
 
@@ -378,6 +406,9 @@
 
 let jsonAllOrganizations = JSON.parse(('@JsonConvert.SerializeObject(organizations)').replace(/&quot;/g, '"'));
 let jsonAllContacts = JSON.parse(('@JsonConvert.SerializeObject(contacts)').replace(/&quot;/g, '"'));
+let jsonAllEquipments = JSON.parse(('@JsonConvert.SerializeObject(equipments)').replace(/&quot;/g, '"'));
+let jsonAllEquipmentsExtension = JSON.parse(('@JsonConvert.SerializeObject(equipmentsExtension)').replace(/&quot;/g, '"'));
+let jsonAllEquipmentsAction = JSON.parse(('@JsonConvert.SerializeObject(equipmentsAction)').replace(/&quot;/g, '"'));
 let jsonAllLots = JSON.parse(('@JsonConvert.SerializeObject(lots)').replace(/&quot;/g, '"'));
 let jsonAllPropertyTitles = JSON.parse(('@JsonConvert.SerializeObject(propertyTitles)').replace(/&quot;/g, '"'));
 
