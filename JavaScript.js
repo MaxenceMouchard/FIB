@@ -115,6 +115,7 @@ function loadNewOrganization(siteId) {
     loadDataBatiment(selectedSite);
     loadDataContacts(selectedSite);
     loadDataPropertyTitles(selectedSite);
+    loadDataEquipments(selectedSite);
 }
 
 function loadDataBatiment(oSite) {
@@ -213,25 +214,128 @@ function loadDataContacts(oSite) {
         document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = counter + ' contacts référencés';
 }
 
+function loadDataEquipments(oSite) {
+    let equipmentsAllData = document.getElementById("equipmentsAllData");
+    let counterEquipment = 0;
+    let counterTotalNcToLate = 0;
+    let counterTotalActionToDo = 0;
+    let rowFirstTable = "";
+    let rowSecondTable = "";
+    let rowThirdTable = "";
+    let rowFourthTable = "";
+
+    Array.from(jsonAllEquipments).forEach( (item, index) => {
+        if (item.OrganizationId == oSite.Id) {
+            //First Table
+            let counterNcToUp = 0;
+            let counterActualAction = 0;
+            let oDataFirstTable = { Theme: item.ThemeLocalizedName, Reference: item.Reference, QRCode: item.QRCode, Brand: item.Brand, EndOfGuarantee: item.EndOfGuaranteeString, NCToUp: counterNcToUp, VisitDate: "Inconnu", Action: counterActualAction };
+            
+            //Third Table
+            let NcIsToLate = false;
+            let counterNcToLate = 0;
+            let counterActionNcToLate = 0;
+            let oDataThirdTable = { Theme: item.ThemeLocalizedName, Reference: item.Reference, QRCode: item.QRCode, Brand: item.Brand, EndOfGuarantee: item.EndOfGuaranteeString, NCToLate: counterNcToLate, VisitDate: "Inconnu", Action: counterActionNcToLate };
+            
+            //Fourth Table
+            let actionIsToDo = false;
+            let counterActionToDo = 0;
+            let oDataFourthTable = { Theme: item.ThemeLocalizedName, Reference: item.Reference, QRCode: item.QRCode, Brand: item.Brand, EndOfGuarantee: item.EndOfGuaranteeString, NCToUp: counterNcToLate, VisitDate: "Inconnu", Action: counterActionToDo };
+
+            counterEquipment++;
+            Array.from(jsonAllEquipmentsExtension).forEach( (secondItem, index) => {
+                if (secondItem.OrganizationId == oSite.Id && secondItem.EquipmentsId == item.Id) {
+                    if (secondItem.ReserveStatus == 0)
+                        counterNcToUp++;
+                    else if (secondItem.ReserveStatus == 1) { //To confirmed => number to late is 1 ????
+                        NcIsToLate = true;
+                        counterNcToLate++;
+                        counterTotalNcToLate++;
+                    }
+                    if (oDataFirstTable.VisitDate === "Inconnu" || oDataFirstTable.VisitDate < secondItem.VisitDateString)
+                        oDataFirstTable.VisitDate = secondItem.VisitDateString;
+                };
+            });
+            Array.from(jsonAllEquipmentsAction).forEach( (secondItem, index) => {
+                if (secondItem.OrganizationId == oSite.Id && secondItem.EquipmentId == item.Id) {
+                    if (secondItem.StatusLocalizedName == "En cours")
+                        counterActualAction++;
+                    else if (secondItem.StatusLocalizedName == "A faire") {
+                        actionIsToDo = true;
+                        counterTotalActionToDo++;
+                        counterActionToDo++;
+                    }
+                    if(NcIsToLate)
+                        counterActionNcToLate++;
+                };
+            });
+
+            //First Table
+            oDataFirstTable.NCToUp = counterNcToUp;
+            oDataFirstTable.Action = counterActualAction;
+            rowFirstTable += "<tr><td>"+ oDataFirstTable.Theme +"</td><td>"+ oDataFirstTable.Reference +"</td><td>"+ oDataFirstTable.QRCode +"</td><td>"+ oDataFirstTable.Brand +"</td><td>"+ oDataFirstTable.EndOfGuarantee +"</td><td>"+ oDataFirstTable.NCToUp +"</td><td>"+ oDataFirstTable.VisitDate +"</td><td>"+ oDataFirstTable.Action +"</td></tr>";
+            equipmentsAllData.querySelector("#equipmentFirstTable > tbody").innerHTML = rowFirstTable;
+
+            //Third Table
+            if(NcIsToLate) {
+                oDataThirdTable.NCToLate = counterNcToLate;
+                oDataThirdTable.Action = counterActionNcToLate;
+                rowThirdTable += "<tr><td>"+ oDataThirdTable.Theme +"</td><td>"+ oDataThirdTable.Reference +"</td><td>"+ oDataThirdTable.QRCode +"</td><td>"+ oDataThirdTable.Brand +"</td><td>"+ oDataThirdTable.EndOfGuarantee +"</td><td>"+ oDataThirdTable.NCToLate +"</td><td>"+ oDataThirdTable.VisitDate +"</td><td>"+ oDataThirdTable.Action +"</td></tr>";
+                equipmentsAllData.querySelector("#equipmentThirdTable > tbody").innerHTML = rowThirdTable;
+            }
+
+            //Fourth Table
+            if(actionIsToDo) {
+                oDataFourthTable.NCToUp = counterNcToUp;
+                oDataFourthTable.Action = counterActionToDo;
+                rowFourthTable += "<tr><td>"+ oDataFourthTable.Theme +"</td><td>"+ oDataFourthTable.Reference +"</td><td>"+ oDataFourthTable.QRCode +"</td><td>"+ oDataFourthTable.Brand +"</td><td>"+ oDataFourthTable.EndOfGuarantee +"</td><td>"+ oDataFourthTable.NCToUp +"</td><td>"+ oDataFourthTable.VisitDate +"</td><td>"+ oDataFourthTable.Action +"</td></tr>";
+                equipmentsAllData.querySelector("#equipmentFourthTable > tbody").innerHTML = rowFourthTable;
+            }
+        };
+    });
+    equipmentsAllData.querySelector("#nbEquipments").innerHTML = counterEquipment;
+    equipmentsAllData.querySelector("#nbNcToLate").innerHTML = counterTotalNcToLate;
+    equipmentsAllData.querySelector("#nbActionToDo").innerHTML = counterTotalActionToDo;
+}
+
 function loadDataPropertyTitles(oSite) {
     let propertyTitles_owners = [];
     let leases = [];
     let subLeases = [];
     let indexId = 1;
+
+    let nbPropertyTitles = 0;
+    let nbInternalLeases = 0;
+    let nbExternalLeases = 0;
+    let nbSubLeases = 0;
     
     document.getElementById("legalHorTreeContainers").innerHTML = "";
+    console.log(jsonAllPropertyTitles);
+    console.log(jsonAllContacts);
+    console.log(jsonAllEquipments);
+    console.log(jsonAllEquipmentsExtension);
+    console.log(jsonAllEquipmentsAction);
 
     // Titres de propriété (type Interne)
     for (let i = 0; i < jsonAllPropertyTitles.length; i += 1) {
         if (oSite.Id == jsonAllPropertyTitles[i].OrganizationId) {
             for (let j = 0; j < jsonAllBaux.length; j += 1) {
                 if (jsonAllBaux[j].PropertyTitleId == jsonAllPropertyTitles[i].Id) {
-                    // for (let k = 0; jsonAllBaux.length; k += 1) 
+                    for (let k = 0; k < jsonAllBaux.length; k += 1) {
+                        if (jsonAllBaux[k].BailParentId == jsonAllBaux[j].Id) {
+                            subLeases.push({
+                                description: jsonAllBaux[k].Reference,
+                                children: []
+                            });
+                            nbSubLeases += 1;
+                        }
+                    }
 
                     leases.push({
                         description: jsonAllBaux[j].Reference,
-                        children: []
+                        children: subLeases
                     });
+                    nbInternalLeases += 1;
                 }
             }
 
@@ -249,9 +353,12 @@ function loadDataPropertyTitles(oSite) {
             let surface = (jsonAllPropertyTitles[i].Surface) ? Math.round(jsonAllPropertyTitles[i].Surface.replace(",", ".")).toLocaleString() : "Inconnue";
             let cost = (jsonAllPropertyTitles[i].AcquisitionCost) ? Math.round(jsonAllPropertyTitles[i].AcquisitionCost.replace(",", ".")).toLocaleString() : "Inconnu";
             let date = (jsonAllPropertyTitles[i].AcquisitionDate) ? new Date(jsonAllPropertyTitles[i].AcquisitionDate).toLocaleDateString() : "Inconnue";
+            
             document.getElementById("legalHorTreeContainers").innerHTML += "<div class='legalHorTreeContainer' id='P_legalHorTree" +
             indexId + "' data-surface='" + surface + " m²' data-cost='" + cost + " €' data-date='" + date + "'></div>";
+
             indexId += 1;
+            nbPropertyTitles += 1
         }
     }
 
@@ -269,6 +376,7 @@ function loadDataPropertyTitles(oSite) {
                                 description: jsonAllBaux[k].Reference,
                                 children: []
                             });
+                            nbSubLeases += 1;
                         }
                     }
 
@@ -276,6 +384,7 @@ function loadDataPropertyTitles(oSite) {
                         description: jsonAllBaux[j].Reference,
                         children: subLeases
                     });
+                    nbExternalLeases += 1;
                 }
             }
 
@@ -293,6 +402,11 @@ function loadDataPropertyTitles(oSite) {
             indexId += 1;
         }
     }
+
+    document.getElementById("legalNbPropTitles").innerHTML = (nbPropertyTitles > 1) ? nbPropertyTitles + " titres de propriété" : nbPropertyTitles + " titre de propriété";
+    document.getElementById("legalNbInternalLeases").innerHTML = (nbInternalLeases > 1) ? nbInternalLeases + " baux internes" : nbInternalLeases + " bail interne";
+    document.getElementById("legalNbExternalLeases").innerHTML = (nbExternalLeases > 1) ? nbExternalLeases + " baux externes" : nbExternalLeases + " bail externe";
+    document.getElementById("legalNbSubLeases").innerHTML = (nbSubLeases > 1) ? nbSubLeases + " sous-baux" : nbSubLeases + " sous-bail";
 
     // Si il n'y avait aucun titre de propriété pour ce site :
     if (indexId === 1)
