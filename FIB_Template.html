@@ -679,8 +679,7 @@
 
     #legalAllData.active {
         max-height: 1000px;
-        margin-top: 20px;
-        margin-left: 53px;
+        margin: 25px 45px 25px 45px;
         white-space: nowrap;
         overflow-x: auto;
     }
@@ -940,6 +939,7 @@
         color: #FFFFFF;
         font-size: 14px;
         font-weight: bold;
+        padding-left: 10px;
     }
 
     .elem-bandeau-rightSide {
@@ -1172,7 +1172,20 @@
                 </div>
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
+
+
+
             <div class="allData" id="legalAllData">
+
+                <!-- bandeau -->
+                <div class="elem-bandeau mt-2 mb-5">
+                    <div class="elem-bandeau-leftSide">
+                        <h1 class="elem-bandeau-title">1- Mapping</h1>
+                    </div>
+                    <div class="elem-bandeau-rightSide">
+                        <i class="far fa-window-minimize"></i>
+                    </div>
+                </div>
                 <div id="legalLegend">
                     <div class="simpleText">
                         <div id="legalLegendSquareIntern" class="legalLegendSquares"></div>Titres de propriété internes
@@ -1188,6 +1201,26 @@
                 </div>
                 <div class="legalHorTreeContainer" id="legalHorTreeOne"></div>
                 <div class="legalHorTreeContainer" id="legalHorTreeTwo"></div>
+
+                <!-- bandeau -->
+                <div class="elem-bandeau my-5">
+                    <div class="elem-bandeau-leftSide">
+                        <h1 class="elem-bandeau-title">2- Occupation</h1>
+                    </div>
+                    <div class="elem-bandeau-rightSide">
+                        <i class="far fa-window-minimize"></i>
+                    </div>
+                </div>
+
+                <!-- bandeau -->
+                <div class="elem-bandeau my-5">
+                    <div class="elem-bandeau-leftSide">
+                        <h1 class="elem-bandeau-title">3- Analyse Financière</h1>
+                    </div>
+                    <div class="elem-bandeau-rightSide">
+                        <i class="far fa-window-minimize"></i>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1218,7 +1251,149 @@
                 </div>
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
-            <div class="allData" id="auditAllData">
+            <div class="allData" id="equipmentsAllData">
+                <!-- bandeau -->
+                <div class="elem-bandeau mb-4">
+                    <div class="elem-bandeau-leftSide">
+                        <h1 class="elem-bandeau-title">1- Audit</h1>
+                    </div>
+                    <div class="elem-bandeau-rightSide">
+                        <button class="btn elem-button">Ajouter un audit</button>
+                        <i class="far fa-window-minimize"></i>
+                    </div>
+                </div>
+                <main class="tab">
+                    <input id="tab1" type="radio" name="tabs" checked>
+                    <label for="tab1"><span id="nbEquipments">34</span>En attente</label>
+
+                    <input id="tab2" type="radio" name="tabs">
+                    <label for="tab2"><span>10</span>En révision</label>
+
+                    <input id="tab3" type="radio" name="tabs">
+                    <label for="tab3"><span>3,33</span>Scoring</label>
+
+                    <input id="tab4" type="radio" name="tabs">
+                    <label for="tab4"><span>92%</span>Progression</label>
+
+                    <section id="content1">
+                        <div id="equipmentTableWrapper">
+                            <table id="equipmentTable" class="simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Nom</th>
+                                        <th>Date de début</th>
+                                        <th>Date de fin</th>
+                                        <th>Scoring</th>
+                                        <th>Progression</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="content2">
+                    </section>
+
+                    <section id="content3">
+                    </section>
+
+                    <section id="content4">
+                    </section>
+                </main>
+                <!-- bandeau -->
+                <div class="elem-bandeau mb-4">
+                    <div class="elem-bandeau-leftSide">
+                        <h1 class="elem-bandeau-title">2- Action</h1>
+                    </div>
+                    <div class="elem-bandeau-rightSide">
+                        <i class="far fa-window-minimize"></i>
+                    </div>
+                </div>
+                <main class="tab">
+                    <input id="tab1" type="radio" name="tabs" checked>
+                    <label for="tab1"><span id="nbEquipments">21</span>A faire</label>
+
+                    <input id="tab2" type="radio" name="tabs">
+                    <label for="tab2"><span>3</span>En cours</label>
+
+                    <input id="tab3" type="radio" name="tabs">
+                    <label for="tab3"><span>12</span>Réalisées</label>
+
+                    <section id="content1">
+                        <div id="equipmentTableWrapper">
+                            <table id="equipmentTable" class="simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Audit</th>
+                                        <th>Section</th>
+                                        <th>Question</th>
+                                        <th>Nom de l'action</th>
+                                        <th>Priorité</th>
+                                        <th>Echéance</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="content2">
+                    </section>
+
+                    <section id="content3">
+                    </section>
+                </main>
+                <!-- bandeau -->
+                <div class="elem-bandeau mb-4">
+                    <div class="elem-bandeau-leftSide">
+                        <h1 class="elem-bandeau-title">3- Non conformité</h1>
+                    </div>
+                    <div class="elem-bandeau-rightSide">
+                        <i class="far fa-window-minimize"></i>
+                    </div>
+                </div>
+                <main class="tab">
+                    <input id="tab1" type="radio" name="tabs" checked>
+                    <label for="tab1"><span id="nbEquipments">22</span>A lever</label>
+
+                    <input id="tab2" type="radio" name="tabs">
+                    <label for="tab2"><span>14</span>En cours</label>
+
+                    <input id="tab3" type="radio" name="tabs">
+                    <label for="tab3"><span>22</span>Levées</label>
+
+                    <section id="content1">
+                        <div id="equipmentTableWrapper">
+                            <table id="equipmentTable" class="simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Audit</th>
+                                        <th>Question</th>
+                                        <th>Détail de la NC</th>
+                                        <th>Criticité</th>
+                                        <th>A lever avant</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="content2">
+                    </section>
+
+                    <section id="content3">
+                    </section>
+                </main>
             </div>
         </div>
 
