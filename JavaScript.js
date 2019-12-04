@@ -210,7 +210,7 @@ function loadDataContacts(oSite) {
     if (counter === 0)
         contactsReferenced.innerHTML = `<div style="font-weight: normal; padding-left: 50px;">Aucun contact n'est référencé</div>`;
     else 
-        document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = counter + ' contacts référencés';
+        document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = (counter > 1) ? counter + ' contacts référencés' : counter + ' contact référencé';
 }
 
 function loadDataPropertyTitles(oSite) {
@@ -374,7 +374,8 @@ function createLegalHortree(arrayHorTreeObjects) {
                                 "Surface totale Propriétaire : <strong>" + container.dataset.surface + "</strong><br />" +
                                 "Montant d'acquisition : <strong>" + container.dataset.cost + "</strong><br />" +
                                 "Date d'acquisition : <strong>" + container.dataset.date + "</strong></div>",
-                            placement: "top",
+                            // placement: "top",
+                            boundary: 'viewport',
                             container: "body"
                         })
                         label.style.backgroundColor = "#7BD679";

@@ -337,6 +337,7 @@ body {
     display: inline-block;
     margin-left: 22px;
     vertical-align: top;
+    max-width: 474px;
 }
 
 #identityLocation {
@@ -379,8 +380,8 @@ body {
 
 #identityGoogleMap {
     width: 44%;
-    display: inline-block;
     margin-top: 5px;
+    float: right;
 }
 
 /* General Sections Properties */
@@ -548,7 +549,8 @@ body {
 /* LEGAL Section Properties */
 
 #legalMainData {
-    width: calc(100% - 80px); /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+    padding-left: 14px;
 }
 
 #legalAllData {
@@ -778,13 +780,15 @@ input:checked + .slider:before {
 /* DATA COLLECTION Section Properties */
 
 #dataCollectionMainData {
-    width: calc(100% - 68px); /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+    padding-left: 26px;
 }
 
 /* INCIDENTS Section Properties */
 
 #incidentsMainData {
-    width: calc(100% - 77px); /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+    padding-left: 17px;
 }
 
 /* SCHEMA DIRECTORY Section Properties */
