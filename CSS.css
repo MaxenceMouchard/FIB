@@ -18,7 +18,7 @@
 .tab section {
     display: none;
     padding: 20px 0 0;
-    /* border-top: 1px solid #ddd; */
+    border-top: 1px solid #ddd;
 }
 
 .tab input {
@@ -717,6 +717,10 @@ body {
     border-top-color: #979797 !important;
     border-right-color: #979797 !important;
     border-left-color: #979797 !important;
+}
+
+#legalHorTree1 .line {
+    margin-top: 702px;
 }
 
 /* COMPLIANCE Section Properties */

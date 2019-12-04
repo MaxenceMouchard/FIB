@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleSiteSelectorFilter();
 
     // site pré-selectionné pour les tests : à supprimer
-    document.getElementById("siteSelector").selectedIndex = 21;
+    document.getElementById("siteSelector").selectedIndex = 20;
     $("#searchFilterButton").trigger("click");
 
     // Add event when user click on openCloseIcon element :
@@ -216,86 +216,110 @@ function loadDataContacts(oSite) {
 
 function loadDataEquipments(oSite) {
     let equipmentsAllData = document.getElementById("equipmentsAllData");
+
+    //Data on tab title
     let counterEquipment = 0;
     let counterTotalNcToLate = 0;
     let counterTotalActionToDo = 0;
+    let counterFollowingPourcent = 0;
+
+    //Row forEach table (for each tab)
     let rowFirstTable = "";
     let rowSecondTable = "";
     let rowThirdTable = "";
-    let rowFourthTable = "";
 
-    Array.from(jsonAllEquipments).forEach( (item, index) => {
-        if (item.OrganizationId == oSite.Id) {
+    Array.from(jsonAllEquipments).forEach( equipment => {
+        if (equipment.OrganizationId == oSite.Id) {
+            counterEquipment++;
+
             //First Table
             let counterNcToUp = 0;
             let counterActualAction = 0;
-            let oDataFirstTable = { Theme: item.ThemeLocalizedName, Reference: item.Reference, QRCode: item.QRCode, Brand: item.Brand, EndOfGuarantee: item.EndOfGuaranteeString, NCToUp: counterNcToUp, VisitDate: "Inconnu", Action: counterActualAction };
+            let visitDateString = "Inconnu";
+            let visiteDateEN = new Date(); 
             
-            //Third Table
-            let NcIsToLate = false;
-            let counterNcToLate = 0;
-            let counterActionNcToLate = 0;
-            let oDataThirdTable = { Theme: item.ThemeLocalizedName, Reference: item.Reference, QRCode: item.QRCode, Brand: item.Brand, EndOfGuarantee: item.EndOfGuaranteeString, NCToLate: counterNcToLate, VisitDate: "Inconnu", Action: counterActionNcToLate };
-            
-            //Fourth Table
-            let actionIsToDo = false;
-            let counterActionToDo = 0;
-            let oDataFourthTable = { Theme: item.ThemeLocalizedName, Reference: item.Reference, QRCode: item.QRCode, Brand: item.Brand, EndOfGuarantee: item.EndOfGuaranteeString, NCToUp: counterNcToLate, VisitDate: "Inconnu", Action: counterActionToDo };
-
-            counterEquipment++;
-            Array.from(jsonAllEquipmentsExtension).forEach( (secondItem, index) => {
-                if (secondItem.OrganizationId == oSite.Id && secondItem.EquipmentsId == item.Id) {
-                    if (secondItem.ReserveStatus == 0)
+            Array.from(jsonAllEquipmentsNC).forEach( NC => {
+                if (NC.OrganizationId == oSite.Id && NC.EquipmentsId == equipment.Id) {
+                    if (NC.StatusOfReserveLocalizedName == "A lever") {
                         counterNcToUp++;
-                    else if (secondItem.ReserveStatus == 1) { //To confirmed => number to late is 1 ????
-                        NcIsToLate = true;
-                        counterNcToLate++;
+                    }
+                    if (visitDateString === "Inconnu" || visitDateString < NC.VisitDateString) {
+                        visitDateString = NC.VisitDateString;
+                        visiteDateEN = NC.VisitDate;
+                    }
+                    if (NC.IsLate) {
                         counterTotalNcToLate++;
                     }
-                    if (oDataFirstTable.VisitDate === "Inconnu" || oDataFirstTable.VisitDate < secondItem.VisitDateString)
-                        oDataFirstTable.VisitDate = secondItem.VisitDateString;
-                };
+
+                    rowSecondTable += "<tr><td>"+ equipment.Name +"</td><td>"+ NC.VisitObligation +"</td><td>"+ NC.UserProviderForReserveFullName +"</td><td>"+ NC.Location +"</td><td>"+ NC.RedundantString +"</td><td>"+ NC.ReserveText +"</td><td>"+ NC.CritLevelLocalizedName +"</td><td>"+ NC.ExpectedDateString +"</td><td>"+ NC.StatusOfReserveLocalizedName +"</td></tr>";
+                }
             });
-            Array.from(jsonAllEquipmentsAction).forEach( (secondItem, index) => {
-                if (secondItem.OrganizationId == oSite.Id && secondItem.EquipmentId == item.Id) {
-                    if (secondItem.StatusLocalizedName == "En cours")
+
+            Array.from(jsonAllEquipmentsActions).forEach( action => {
+                if (action.OrganizationId == oSite.Id && action.EquipmentsId == equipment.Id) {
+                    if (action.StatusLocalizedName == "En cours") {
                         counterActualAction++;
-                    else if (secondItem.StatusLocalizedName == "A faire") {
-                        actionIsToDo = true;
-                        counterTotalActionToDo++;
-                        counterActionToDo++;
                     }
-                    if(NcIsToLate)
-                        counterActionNcToLate++;
-                };
+                    if (action.StatusLocalizedName == "A faire") {
+                        counterTotalActionToDo++;
+                        rowThirdTable += "<tr><td>"+ equipment.Name +"</td><td>"+ action.Name +"</td><td>"+ action.BeginTimeString +"</td><td>"+ action.EndTimeString +"</td><td>"+ action.ResponsibleFullName +"</td><td>"+ action.PriorityName +"</td><td>"+ action.StatusLocalizedName +"</td></tr>";
+                    }
+                }
             });
 
-            //First Table
-            oDataFirstTable.NCToUp = counterNcToUp;
-            oDataFirstTable.Action = counterActualAction;
-            rowFirstTable += "<tr><td>"+ oDataFirstTable.Theme +"</td><td>"+ oDataFirstTable.Reference +"</td><td>"+ oDataFirstTable.QRCode +"</td><td>"+ oDataFirstTable.Brand +"</td><td>"+ oDataFirstTable.EndOfGuarantee +"</td><td>"+ oDataFirstTable.NCToUp +"</td><td>"+ oDataFirstTable.VisitDate +"</td><td>"+ oDataFirstTable.Action +"</td></tr>";
-            equipmentsAllData.querySelector("#equipmentFirstTable > tbody").innerHTML = rowFirstTable;
+            let enOfGuarantee = monthDiff(new Date(), new Date(equipment.EndOfGuarantee));
+            let nextVisiteDate = monthDiff(new Date(), new Date(visiteDateEN));
+            rowFirstTable += "<tr data-endOfGuarantee='"+ enOfGuarantee +"' data-nextVisiteDate='"+ nextVisiteDate +"'><td>"+ equipment.ThemeLocalizedName +"</td><td>"+ equipment.Reference +"</td><td>"+ equipment.QRCode +"</td><td>"+ equipment.Brand +"</td><td>"+ equipment.EndOfGuaranteeString +"</td><td>"+ counterNcToUp +"</td><td>"+ visitDateString +"</td><td>"+ counterActualAction +"</td></tr>";
 
-            //Third Table
-            if(NcIsToLate) {
-                oDataThirdTable.NCToLate = counterNcToLate;
-                oDataThirdTable.Action = counterActionNcToLate;
-                rowThirdTable += "<tr><td>"+ oDataThirdTable.Theme +"</td><td>"+ oDataThirdTable.Reference +"</td><td>"+ oDataThirdTable.QRCode +"</td><td>"+ oDataThirdTable.Brand +"</td><td>"+ oDataThirdTable.EndOfGuarantee +"</td><td>"+ oDataThirdTable.NCToLate +"</td><td>"+ oDataThirdTable.VisitDate +"</td><td>"+ oDataThirdTable.Action +"</td></tr>";
-                equipmentsAllData.querySelector("#equipmentThirdTable > tbody").innerHTML = rowThirdTable;
-            }
-
-            //Fourth Table
-            if(actionIsToDo) {
-                oDataFourthTable.NCToUp = counterNcToUp;
-                oDataFourthTable.Action = counterActionToDo;
-                rowFourthTable += "<tr><td>"+ oDataFourthTable.Theme +"</td><td>"+ oDataFourthTable.Reference +"</td><td>"+ oDataFourthTable.QRCode +"</td><td>"+ oDataFourthTable.Brand +"</td><td>"+ oDataFourthTable.EndOfGuarantee +"</td><td>"+ oDataFourthTable.NCToUp +"</td><td>"+ oDataFourthTable.VisitDate +"</td><td>"+ oDataFourthTable.Action +"</td></tr>";
-                equipmentsAllData.querySelector("#equipmentFourthTable > tbody").innerHTML = rowFourthTable;
-            }
         };
     });
+
+    
+    //First Table
+    equipmentsAllData.querySelector("#equipmentFirstTable > tbody").innerHTML = rowFirstTable;
+    //Second Table
+    equipmentsAllData.querySelector("#equipmentSecondTable > tbody").innerHTML = rowSecondTable;
+    //Third Table
+    equipmentsAllData.querySelector("#equipmentThirdTable > tbody").innerHTML = rowThirdTable;
+
+    //First tab
     equipmentsAllData.querySelector("#nbEquipments").innerHTML = counterEquipment;
+    //SecondTab
     equipmentsAllData.querySelector("#nbNcToLate").innerHTML = counterTotalNcToLate;
+    //Third Tab
     equipmentsAllData.querySelector("#nbActionToDo").innerHTML = counterTotalActionToDo;
+
+    //SubTitle
+    document.querySelector("#equipmentsMainData .mainDataSubTitle").innerHTML = counterFollowingPourcent + '% suivi';
+}
+
+function filterDataEquipments() {
+    let garantieSelector = document.getElementById("garantieSelector");
+    let visiteSelector = document.getElementById("visiteSelector");
+
+    let selectedGarantieValue = parseInt(garantieSelector.options[garantieSelector.selectedIndex].value);
+    let selectedVisiteValue = parseInt(visiteSelector.options[visiteSelector.selectedIndex].value);
+
+    let allRow = document.querySelectorAll("#equipmentFirstTable > tbody tr");
+
+    allRow.forEach( row => {
+        let endOfGarantie = parseInt(row.getAttribute("data-endOfGuarantee"));
+        let visiteDate = parseInt(row.getAttribute("data-nextVisiteDate"));
+
+        if(selectedGarantieValue <= endOfGarantie && selectedVisiteValue <= visiteDate) {
+            row.style.display = "table-row";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+function monthDiff(d1, d2) {
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth() + 1;
+    months += d2.getMonth();
+    return months <= 0 ? 0 : months;
 }
 
 function loadDataPropertyTitles(oSite) {
@@ -313,8 +337,8 @@ function loadDataPropertyTitles(oSite) {
     console.log(jsonAllPropertyTitles);
     console.log(jsonAllContacts);
     console.log(jsonAllEquipments);
-    console.log(jsonAllEquipmentsExtension);
-    console.log(jsonAllEquipmentsAction);
+    console.log(jsonAllEquipmentsNC);
+    console.log(jsonAllEquipmentsActions);
 
     // Titres de propriété (type Interne)
     for (let i = 0; i < jsonAllPropertyTitles.length; i += 1) {
