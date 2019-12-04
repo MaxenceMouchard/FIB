@@ -8,8 +8,11 @@
     var equipmentsExtension = VP.GetEntitiesData("ReserveOfVisit", "Organization.Id,Equipments.Id,ReserveStatus,VisitDate", "");
     var equipmentsAction = VP.GetEntitiesData("CActionEquipment", "Organization.Id,Equipment.Id,Status", "", "");
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
-    var propertyTitles = VP.GetEntitiesData("PropertyTitle", "Organization.Id,Reference", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
+    var propertyTitles = VP.GetEntitiesData("PropertyTitle", "Id,Organization.Id,Reference,Surface,AcquisitionCost,AcquisitionDate", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
+    var owners = VP.GetEntitiesData("Owner", "Id,Organizations.Id,Denomination", "Organizations.IsArchive=False,Organizations.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
+    var baux = VP.GetEntitiesData("Bail", "Id,Reference,Owner.Id,PropertyTitle.Id,BailParent.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
 }
+
 <!-- Id,Name,Image.Id,Code,StaffCount,AddressLine1,City,PostCode,Country.Name,AuditDataWorkflowStatus,RPlusFloSurfaceSHONorCount,RMinusFloorCount,IsArchive,EntityState,SurfaceSHON,BuyingDate,VisitLate,ReserveCritTodo,M2,LastRepairDate,ActivitiesAndSector,ModifiedDate -->
 <!DOCTYPE html>
 <html>
@@ -154,9 +157,12 @@
                 <i class="fas fa-balance-scale simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="legalMainData">
                     <div class="mainDataTitle smallTitle">Juridique</div>
-                    <div class="mainDataSubTitle simpleText">1 titre de propriété &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 2
-                        baux internes &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 baux externes &nbsp&nbsp&nbsp /
-                        &nbsp&nbsp&nbsp 4 sous-baux</div>
+                    <div class="mainDataSubTitle simpleText">
+                        <span id="legalNbPropTitles"></span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 
+                        <span id="legalNbInternalLeases"></span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 
+                        <span id="legalNbExternalLeases"></span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 
+                        <span id="legalNbSubLeases"></span> 
+                    </div>
                 </div>
                 <i class="fas fa-plus openCloseIcon"></i>
             </div>
@@ -411,6 +417,8 @@ let jsonAllEquipmentsExtension = JSON.parse(('@JsonConvert.SerializeObject(equip
 let jsonAllEquipmentsAction = JSON.parse(('@JsonConvert.SerializeObject(equipmentsAction)').replace(/&quot;/g, '"'));
 let jsonAllLots = JSON.parse(('@JsonConvert.SerializeObject(lots)').replace(/&quot;/g, '"'));
 let jsonAllPropertyTitles = JSON.parse(('@JsonConvert.SerializeObject(propertyTitles)').replace(/&quot;/g, '"'));
+let jsonAllOwners = JSON.parse(('@JsonConvert.SerializeObject(owners)').replace(/&quot;/g, '"'));
+let jsonAllBaux = JSON.parse(('@JsonConvert.SerializeObject(baux)').replace(/&quot;/g, '"'));
 
 function initFIBGoogleMap() {
   // La map est crée grâce à l'API de Google Maps :
