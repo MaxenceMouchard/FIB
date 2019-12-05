@@ -1,3 +1,105 @@
+/* CSS for all tabs filter */
+.tab *,
+.tab *:before,
+.tab *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.tab main {
+    min-width: 320px;
+    max-width: 800px;
+    padding: 50px;
+    margin: 0 auto;
+    background: #fff;
+}
+
+.tab section {
+    display: none;
+    padding: 20px 0 0;
+    border-top: 1px solid #ddd;
+}
+
+.tab input {
+    display: none;
+}
+
+.tab span {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+}
+
+.tab > label {
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 15px 25px;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+}
+
+/*.tab > label:before {
+    font-family: fontawesome;
+    font-weight: normal;
+    margin-right: 10px;
+}
+
+.tab > label[for*='1']:before {
+    content: '\f1cb';
+}
+
+.tab > label[for*='2']:before {
+    content: '\f17d';
+}
+
+.tab > label[for*='3']:before {
+    content: '\f16b';
+}
+
+.tab > label[for*='4']:before {
+    content: '\f1a9';
+} */
+
+.tab > label:hover {
+    color: #888;
+    cursor: pointer;
+}
+
+.tab input:checked+label {
+    color: #555;
+    border: 1px solid #ddd;
+    border-top: 5px solid #00A4BF;
+    border-bottom: 1px solid #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#tab1:checked~#content1,
+#tab2:checked~#content2,
+#tab3:checked~#content3,
+#tab4:checked~#content4 {
+    display: block;
+}
+
+@media screen and (max-width: 650px) {
+    .tab > label {
+        font-size: 0;
+    }
+
+    .tab > label:before {
+        margin: 0;
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .tab > label {
+        padding: 15px;
+    }
+}
+
 /* CSS for HorTree plugin (for Legal section) */
 
 .hortree-wrapper *,
@@ -833,15 +935,15 @@ body {
     transition: .4s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: #00A4BF;
 }
 
-input:focus + .slider {
+input:focus+.slider {
     box-shadow: 0 0 1px #00A4BF;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(12px);
@@ -859,30 +961,30 @@ input:checked + .slider:before {
     margin-left: 36px;
 }
 
-#equipmentTableWrapper {
+.equipmentTableWrapper {
     overflow-x: auto;
 }
 
-#equipmentTable {
+.equipmentTable {
     margin-top: 60px;
     width: 100%;
     min-width: 688px;
 }
 
-#equipmentTable > thead {
+.equipmentTable>thead {
     font-weight: bold;
     border-bottom: 1px solid;
 }
 
-#equipmentTable > thead > tr > th {
+.equipmentTable>thead>tr>th {
     padding-bottom: 10px;
 }
 
-#equipmentTable tr:nth-child(even) {
+.equipmentTable tr:nth-child(even) {
     background-color: #F5F5F5;
 }
 
-#equipmentTable > tbody > tr > td {
+.equipmentTable>tbody>tr>td {
     padding: 10px 0;
 }
 
