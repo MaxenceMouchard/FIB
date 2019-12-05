@@ -963,30 +963,45 @@ input:checked+.slider:before {
     margin-left: 36px;
 }
 
+/* Documents Section */
+#documentsMainData {
+    width: calc(100% - 68px); /* 100% - (padding + inconSize) */
+}
+
+#documentsAllData.active {
+    padding: 25px 45px 25px 45px;
+    max-height: 1000px;
+}
+
+#documentsAllData {
+    max-height: 0px;
+}
+
+/* Generic Table */
 .tableWrapper {
     overflow-x: auto;
 }
 
-.table {
+.tableFib {
     margin-top: 60px;
     width: 100%;
     min-width: 688px;
 }
 
-.table>thead {
+.tableFib>thead {
     font-weight: bold;
     border-bottom: 1px solid;
 }
 
-.table>thead>tr>th {
+.tableFib>thead>tr>th {
     padding-bottom: 10px;
 }
 
-.table tr:nth-child(even) {
+.tableFib tr:nth-child(even) {
     background-color: #F5F5F5;
 }
 
-.table>tbody>tr>td {
+.tableFib>tbody>tr>td {
     padding: 10px 0;
 }
 
