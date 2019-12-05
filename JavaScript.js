@@ -239,14 +239,14 @@ function loadDataEquipments(oSite) {
             let counterNcToUp = 0;
             let counterActualAction = 0;
             let visitDateString = "Inconnu";
-            let visiteDateEN = "";
+            let visiteDateEN = new Date();
             
             Array.from(jsonAllEquipmentsNC).forEach( NC => {
                 if (NC.OrganizationId == oSite.Id && NC.EquipmentsId == equipment.Id) {
                     if (NC.StatusOfReserveLocalizedName == "A lever") {
                         counterNcToUp++;
                     }
-                    if (NC.VisitDateString !== "" && NC.visitDateString !== null && visiteDateEN < NC.VisitDate) {
+                    if (NC.VisitDateString !== "" && NC.visitDateString !== null && visiteDateEN <= new Date(NC.VisitDate)) {
                         visitDateString = NC.VisitDateString;
                         visiteDateEN = NC.VisitDate;
                     }
