@@ -171,9 +171,10 @@ function placeMarkerOnFIBGoogleMap(oSite) {
 function loadDataContacts(oSite) {
     let contactsReferenced = document.getElementById("contactsReferenced");
     let counter = 0;
-    contactsReferenced.innerHTML = '';
+    let contactsReferencedBody = '';
     Array.from(jsonAllContacts).forEach( (item, index) => {
         if(item.OrganizationId === oSite.Id) {
+            counter++;
             let separator = (counter > 0) ? '<hr class="contactSeparator"/>' : '';
             let contactFullName = (item.ContactFullName) ? item.ContactFullName : '';
             let contactInitial = (contactFullName).split(/\s/).reduce((response,word)=> response += word.slice(0,1), '');
@@ -183,7 +184,7 @@ function loadDataContacts(oSite) {
             let contactEmail = (item.ContactEmail) ? item.ContactEmail : 'Inconnu';
             let contactLastConnection = (item.ContactLastConnection) ? new Date(item.ContactLastConnection).toLocaleDateString() : 'Inconnu';
             let contactConnectionsCounter = (item.ContactConnectionsCounter) ? item.ContactConnectionsCounter : 'Inconnu';
-            contactsReferenced.innerHTML +=
+            contactsReferencedBody +=
             separator + '<div class="contactRow">' +
                 '<div class="squareContact">' +
                     '<div class="contactInitial">' + contactInitial + '</div>' +
@@ -204,24 +205,26 @@ function loadDataContacts(oSite) {
                     '<div>' + contactConnectionsCounter + ' connexions au total</div>' +
                 '</div>' +
             '</div>';
-            counter++;
         };
     });
 
     if (counter === 0)
-        contactsReferenced.innerHTML = `<div style="font-weight: normal; padding-left: 50px;">Aucun contact n'est référencé</div>`;
-    else 
-        document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = counter + ' contacts référencés';
+        contactsReferencedBody = `<div style="font-weight: normal; padding-left: 50px;">Aucun contact n'est référencé</div>`;
+
+    contactsReferenced.innerHTML = contactsReferencedBody;
+    document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = counter + ' contacts référencés';
 }
 
 function loadDataEquipments(oSite) {
     let equipmentsAllData = document.getElementById("equipmentsAllData");
 
+    //Data on subTitle
+    let counterFollowingPourcent = 0;
+
     //Data on tab title
     let counterEquipment = 0;
     let counterTotalNcToLate = 0;
     let counterTotalActionToDo = 0;
-    let counterFollowingPourcent = 0;
 
     //Row forEach table (for each tab)
     let rowFirstTable = "";
@@ -236,14 +239,14 @@ function loadDataEquipments(oSite) {
             let counterNcToUp = 0;
             let counterActualAction = 0;
             let visitDateString = "Inconnu";
-            let visiteDateEN = new Date(); 
+            let visiteDateEN = "";
             
             Array.from(jsonAllEquipmentsNC).forEach( NC => {
                 if (NC.OrganizationId == oSite.Id && NC.EquipmentsId == equipment.Id) {
                     if (NC.StatusOfReserveLocalizedName == "A lever") {
                         counterNcToUp++;
                     }
-                    if (visitDateString === "Inconnu" || visitDateString < NC.VisitDateString) {
+                    if (NC.VisitDateString !== "" && NC.visitDateString !== null && visiteDateEN < NC.VisitDate) {
                         visitDateString = NC.VisitDateString;
                         visiteDateEN = NC.VisitDate;
                     }
@@ -273,6 +276,15 @@ function loadDataEquipments(oSite) {
 
         };
     });
+
+    let nbVisits = 0;
+    Array.from(jsonAllEquipmentsVisit).forEach( visit => {
+        nbVisits += visit.EquipmentsId.split(',').length;
+    });
+
+	if (counterEquipment > 0) {
+		counterFollowingPourcent = Math.round(nbVisits * 100 / counterEquipment);
+	}
 
     
     //First Table
