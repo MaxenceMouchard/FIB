@@ -4,18 +4,16 @@
 @{    
     var organizations = VP.GetEntitiesData("Organization", "Image.Id,Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ERPTypes.TypeName,M2,UrlBentley,Lat,Long", "EntityState=Active,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
     var contacts = VP.GetEntitiesData("OrganizationContact", "Organization.Id,Contact.FullName,Contact.Email,Contact.Job,Contact.Denomination,Contact.LastConnection,Contact.ConnectionsCounter,Contact.MobilePro,Contact.LandlinePro,Contact.AllPhone", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
+    
+    var equipments = VP.GetEntitiesData("Equipment", "Id,Organization.Id,Name,Theme,Reference,QRCode,Brand,EndOfGuarantee", "");
+    var equipmentsNC = VP.GetEntitiesData("ReserveOfVisit", "Organization.Id,Equipments.Id,VisitDate,IsLate,VisitObligation,UserProviderForReserve,Location,Redundant,ReserveText,CritLevel,ExpectedDate,StatusOfReserve", "");
+    var equipmentsActions = VP.GetEntitiesData("CActionEquipment", "Organization.Id,Equipment.Id,Name,BeginTime,EndTime,Responsible,Priority,Status", "");
+
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var propertyTitles = VP.GetEntitiesData("PropertyTitle", "Id,Organization.Id,Reference,Surface,AcquisitionCost,AcquisitionDate", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var owners = VP.GetEntitiesData("Owner", "Id,Organizations.Id,Denomination", "Organizations.IsArchive=False,Organizations.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var baux = VP.GetEntitiesData("Bail", "Id,Reference,Owner.Id,PropertyTitle.Id,BailParent.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
 }
-
-
-<!-- @VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/bundles/jquery")) -->
-<!-- @VP.StringToHtml(""+System.Web.Optimization.Styles.Render("~/Content/css/font-awesome/css/font-awesome.min.css")) -->
-@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/highcharts.js"))
-@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/highcharts-more.js"))
-@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/modules/solid-gauge.js"))
 
 <!-- Id,Name,Image.Id,Code,StaffCount,AddressLine1,City,PostCode,Country.Name,AuditDataWorkflowStatus,RPlusFloSurfaceSHONorCount,RMinusFloorCount,IsArchive,EntityState,SurfaceSHON,BuyingDate,VisitLate,ReserveCritTodo,M2,LastRepairDate,ActivitiesAndSector,ModifiedDate -->
 <!DOCTYPE html>
@@ -29,6 +27,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
     crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="./style.css" /> -->
 </head>
 
 <body>
@@ -91,7 +90,7 @@
                 <i class="fas fa-user-alt simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="contactMainData">
                     <div class="mainDataTitle smallTitle">Contact</div>
-                    <div class="mainDataSubTitle simpleText"></div>
+                    <div class="mainDataSubTitle simpleText">0 contacts référencés</div>
                 </div>
                 <i class="fas fa-plus openCloseIcon"></i>
             </div>
@@ -170,39 +169,20 @@
                 <i class="fas fa-plus openCloseIcon"></i>
             </div>
             <div class="allData" id="legalAllData">
-                <div class="legalSubSectionTitle smallTitle">1 - Mapping</div>
-                <div class="legalSubSection">
-                    <div id="legalLegend">
-                        <div class="simpleText">
-                            <div id="legalLegendSquareIntern" class="legalLegendSquares"></div>Titres de propriété internes
-                        </div>
-                        <div class="simpleText">
-                            <div id="legalLegendSquareExtern" class="legalLegendSquares"></div>Titres de propriété externes
-                        </div>
+                <div id="legalLegend">
+                    <div class="simpleText">
+                        <div id="legalLegendSquareIntern" class="legalLegendSquares"></div>Titres de propriété internes
                     </div>
-                    <div id="legalHorTreeTitles">
-                        <div class="simpleText">Titres de propriété</div>
-                        <div class="simpleText">Baux</div>
-                        <div class="simpleText">Sous-Baux</div>
-                    </div>
-                    <div id="legalHorTreeContainers"></div>
-                </div>
-                <div class="legalSubSectionTitle smallTitle">2 - Occupation</div>
-                <div class="legalSubSection" id="legalGaugeSection">
-                    <div class="legalGauge" id="legalOccupationGauge"></div>
-                    <div class="legalGauge" id="legalRepartitionGauge"></div>
-                    <div class="legalGaugeData simpleText">
-                        <div class="simpleText"><div id="LegalInternalRepartitionQuare"></div>Interne - 10%</div>
-                        <div class="simpleText"><div id="LegalExternalRepartitionQuare"></div>Externe - 10%</div>
-                    </div>
-                    <div class="legalGauge" id="legalSurfaceTypeGauge"></div>
-                    <div class="legalGaugeData simpleText">
-                        <div class="simpleText"><div id="LegalInternalSurfaceQuare"></div>Interne - 10%</div>
-                        <div class="simpleText"><div id="LegalInternalSurfaceQuare"></div>Externe - 10%</div>
-                        <div class="simpleText"><div id="LegalInternalSurfaceQuare"></div>Interne - 10%</div>
-                        <div class="simpleText"><div id="LegalInternalSurfaceQuare"></div>Externe - 10%</div>
+                    <div class="simpleText">
+                        <div id="legalLegendSquareExtern" class="legalLegendSquares"></div>Titres de propriété externes
                     </div>
                 </div>
+                <div id="legalHorTreeTitles">
+                    <div class="simpleText">Titres de propriété</div>
+                    <div class="simpleText">Baux</div>
+                    <div class="simpleText">Sous-Baux</div>
+                </div>
+                <div id="legalHorTreeContainers"></div>
             </div>
         </div>
 
@@ -243,100 +223,119 @@
                 <i class="fas fa-wrench simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="equipmentsMainData">
                     <div class="mainDataTitle smallTitle">Equipements</div>
+                    <div class="mainDataSubTitle simpleText">0% Suivi</div>
                 </div>
                 <i class="fas fa-plus openCloseIcon"></i>
             </div>
             <div class="allData" id="equipmentsAllData">
-                <div class="equipmentAllSquares">
-                    <div class="equipmentSquare">
-                        <div class="equipmentSquareNumberAndText">
-                            <div class="equipmentSquareNumber simpleTitle">80</div>
-                            <div class="equipmentSquareText simpleText">équipements</div>
-                        </div>
-                    </div>
-                    <div class="equipmentSquare">
-                        <div class="equipmentSquareNumberAndText">
-                            <div class="equipmentSquareNumber simpleTitle">3%</div>
-                            <div class="equipmentSquareText simpleText">suivi</div>
-                        </div>
-                    </div>
-                    <div class="equipmentSquare">
-                        <div class="equipmentSquareNumberAndText">
-                            <div class="equipmentSquareNumber simpleTitle">2</div>
-                            <div class="equipmentSquareText simpleText">Non-conformités en retard</div>
-                        </div>
-                    </div>
-                    <div class="equipmentSquare">
-                        <div class="equipmentSquareNumberAndText">
-                            <div class="equipmentSquareNumber simpleTitle">10</div>
-                            <div class="equipmentSquareText simpleText">Actions à faire</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="blackButton simpleText">Ajouter un équipement</div>
+                <main class="tab">
+                    <input id="tab1" type="radio" name="tabs" checked>
+                    <label for="tab1"><span id="nbEquipments">0</span>Equipements</label>
+                        
+                    <input id="tab2" type="radio" name="tabs">
+                    <label for="tab2"><span id="nbNcToLate">0</span>Non-conformités en retard</label>
+                        
+                    <input id="tab3" type="radio" name="tabs">
+                    <label for="tab3"><span id="nbActionToDo">0</span>Actions à faire</label>
 
-                <div id="equipmentFilters" class="simpleText">
-                    <div class="inline verticalAlignMiddle">
-                        <label>En fin de garantie dans
-                            <select name="garantie" id="garantieSelector" class="selector">
-                                <option value="">--Choisissez une valeur--</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="inline verticalAlignMiddle">
-                        <label>Visites prévues dans
-                            <select name="visite" id="visiteSelector" class="selector">
-                                <option value="">--Choisissez une valeur--</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="equipmentSwitchFilter verticalAlignMiddle">
-                        <label id="equipmentSliderLabel">
-                            <input type="checkbox" checked />
-                            <span class="slider round"></span>
-                        Voir les non-conformités</label>
-                    </div>
-                </div>
-
-                <!-- TODO -->
-                <div id="equipmentTableWrapper">
-                    <table id="equipmentTable" class="simpleText">
-                        <thead>
-                            <tr>
-                                <th>Thème</th>
-                                <th>Identifiant</th>
-                                <th>QR Code</th>
-                                <th>Marque</th>
-                                <th>Fin de garantie</th>
-                                <th>NC à lever</th>
-                                <th>Prochaine visite</th>
-                                <th>Actions en cours</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Ascenseur</td>
-                                <td>ASC01</td>
-                                <td>1789657</td>
-                                <td>Otis</td>
-                                <td>21/11/2020</td>
-                                <td>2</td>
-                                <td>23/12/2019</td>
-                                <td>3</td>
-                            </tr>
-                            <tr>
-                                <td>Ascenseur</td>
-                                <td>ASC01</td>
-                                <td>1789657</td>
-                                <td>Otis</td>
-                                <td>21/11/2020</td>
-                                <td>2</td>
-                                <td>23/12/2019</td>
-                                <td>3</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <section id="content1">
+                        <div id="equipmentFilters" class="simpleText">
+                            <div class="inline verticalAlignMiddle">
+                                <label>En fin de garantie dans
+                                    <select name="garantie" id="garantieSelector" class="selector" onChange="filterDataEquipments()">
+                                        <option value="0">--Choisissez une valeur--</option>
+                                        <option value="1">1 mois</option>
+                                        <option value="3">3 mois</option>
+                                        <option value="6">6 mois</option>
+                                        <option value="12">1 an</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="inline verticalAlignMiddle">
+                                <label>Visites prévues dans
+                                    <select name="visite" id="visiteSelector" class="selector" onChange="filterDataEquipments()">
+                                        <option value="0">--Choisissez une valeur--</option>
+                                        <option value="1">1 mois</option>
+                                        <option value="3">3 mois</option>
+                                        <option value="6">6 mois</option>
+                                        <option value="12">1 an</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <!-- <label class="equipmentSwitchFilter verticalAlignMiddle">
+                                <label id="equipmentSliderLabel">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                Voir les non-conformités</label>
+                            </label> -->
+                        </div>
+                        
+                        <div class="equipmentTableWrapper">
+                            <table id="equipmentFirstTable" class="equipmentTable simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Identifiant</th>
+                                        <th>QR Code</th>
+                                        <th>Marque</th>
+                                        <th>Fin de garantie</th>
+                                        <th>NC à lever</th>
+                                        <th>Prochaine visite</th>
+                                        <th>Actions en cours</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="content2">
+                        <!-- TODO -->
+                        <div class="equipmentTableWrapper">
+                            <table id="equipmentSecondTable" class="equipmentTable simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Equipement</th>
+                                        <th>Obligation</th>
+                                        <th>Responsable NC</th>
+                                        <th>Localisation</th>
+                                        <th>Réccurent</th>
+                                        <th>Détails de la NC</th>
+                                        <th>Criticité</th>
+                                        <th>A lever avant</th>
+                                        <th>Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="content3">
+                        <div class="equipmentTableWrapper">
+                            <table id="equipmentThirdTable" class="equipmentTable simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Equipement</th>
+                                        <th>Nom</th>
+                                        <th>Date de début</th>
+                                        <th>Echéance</th>
+                                        <th>Responsable</th>
+                                        <th>Priorité</th>
+                                        <th>Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>                     
+                </main>
             </div>
         </div>
 
@@ -402,11 +401,18 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous">
 </script>
+<!-- <script src="./horizontalTreePlugin/dist/jquery.hortree.min.js"></script> -->
+<!-- <script src="./horizontalTreePlugin/demo/jquery.line.js"></script> -->
 
 <script>
 
 let jsonAllOrganizations = JSON.parse(('@JsonConvert.SerializeObject(organizations)').replace(/&quot;/g, '"'));
 let jsonAllContacts = JSON.parse(('@JsonConvert.SerializeObject(contacts)').replace(/&quot;/g, '"'));
+
+let jsonAllEquipments = JSON.parse(('@JsonConvert.SerializeObject(equipments)').replace(/&quot;/g, '"'));
+let jsonAllEquipmentsNC = JSON.parse(('@JsonConvert.SerializeObject(equipmentsNC)').replace(/&quot;/g, '"'));
+let jsonAllEquipmentsActions = JSON.parse(('@JsonConvert.SerializeObject(equipmentsActions)').replace(/&quot;/g, '"'));
+
 let jsonAllLots = JSON.parse(('@JsonConvert.SerializeObject(lots)').replace(/&quot;/g, '"'));
 let jsonAllPropertyTitles = JSON.parse(('@JsonConvert.SerializeObject(propertyTitles)').replace(/&quot;/g, '"'));
 let jsonAllOwners = JSON.parse(('@JsonConvert.SerializeObject(owners)').replace(/&quot;/g, '"'));
@@ -436,3 +442,4 @@ function initFIBGoogleMap() {
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKL92_ats3EIcnsjjSjxp5UgZseR6lnIY&libraries=places&sensor=false&callback=initFIBGoogleMap"></script>
+<!-- <script src="./script.js"></script> -->
