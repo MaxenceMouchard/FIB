@@ -5,73 +5,18 @@
 !function (t) { var e = function (t, e, s, l, a) { var n = navigator.userAgent.indexOf("MSIE") > -1; if (s < t) { var r = t; t = s, s = r, r = e, e = l, l = r } var o = document.createElement("div"); o.className = a.class; var i = Math.sqrt((t - s) * (t - s) + (e - l) * (e - l)); if (o.style.width = i + "px", o.style.borderBottom = a.stroke + "px " + a.style, o.style.borderColor = a.color, o.style.position = "absolute", o.style.zIndex = a.zindex, n) { o.style.top = l > e ? e + "px" : l + "px", o.style.left = t + "px"; var c = (s - t) / i, f = (l - e) / i; o.style.filter = "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=" + c + ", M12=" + -1 * f + ", M21=" + f + ", M22=" + c + ")" } else { var d = Math.atan((l - e) / (s - t)); o.style.top = e + .5 * i * Math.sin(d) + "px", o.style.left = t - .5 * i * (1 - Math.cos(d)) + "px", o.style.transform = o.style.MozTransform = o.style.WebkitTransform = o.style.msTransform = o.style.OTransform = "rotate(" + d + "rad)" } return o }; t.fn.line = function (s, l, a, n, r, o) { return t(this).each(function () { t.isFunction(r) ? (callback = r, r = null) : callback = o, r = t.extend({}, t.fn.line.defaults, r), t(this).append(e(s, l, a, n, r)).promise().done(function () { t.isFunction(callback) && callback.call() }) }) }, t.fn.line.defaults = { zindex: 1e4, color: "#000000", stroke: "1", style: "solid", class: "line" } }(jQuery);
 
 /* ------ CODE ------ */
-let jsonLegalDataOne = [
-    {
-        description: "Propriété de Veolia",
-        children: [
-            {
-                description: "Locataire n°1",
-                children: [
-                    {
-                        description: "Bale 123",
-                        children: []
-                    },
-                    {
-                        description: "Sous-Location n°2",
-                        children: []
-                    }
-                ]
-            },
-            {
-                description: "Altran Services SA",
-                children: [
-                    {
-                        description: "Bale 123",
-                        children: []
-                    },
-                    {
-                        description: "Bale 99",
-                        children: []
-                    }
-                ]
-            },
-            {
-                description: "Altran Services SA",
-                children: []
-            },
-            {
-                description: "Altran Services SA",
-                children: []
-            }
-        ]
-    }
-];
-
-let jsonLegalDataTwo = [
-    {
-        description: "FR69.P01 FR33.00001 - CMA CGM",
-        children: [
-            {
-                description: "Altran Services SA",
-                children: []
-            },
-            {
-                description: "Altran Services SA",
-                children: []
-            }
-        ]
-    }
-];
 
 let identityMap = initFIBGoogleMap();
 let identityMapMarkers = [];
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log(jsonAllOrganizations)
+
     // Handle the site selection
     handleSiteSelectorFilter();
 
     // site pré-selectionné pour les tests : à supprimer
-    document.getElementById("siteSelector").selectedIndex = 20;
+    document.getElementById("siteSelector").selectedIndex = 9;
     $("#searchFilterButton").trigger("click");
 
     // Add event when user click on openCloseIcon element :
@@ -115,7 +60,6 @@ function loadNewOrganization(siteId) {
     loadDataBatiment(selectedSite);
     loadDataContacts(selectedSite);
     loadDataPropertyTitles(selectedSite);
-    loadDataEquipments(selectedSite);
 }
 
 function loadDataBatiment(oSite) {
@@ -154,7 +98,7 @@ function loadDataBatiment(oSite) {
 }
 
 function placeMarkerOnFIBGoogleMap(oSite) {
-    for (var i = 0; i < identityMapMarkers.length; i++) {
+    for (let i = 0; i < identityMapMarkers.length; i++) {
         identityMapMarkers[i].setMap(null);
     }
 
@@ -171,9 +115,10 @@ function placeMarkerOnFIBGoogleMap(oSite) {
 function loadDataContacts(oSite) {
     let contactsReferenced = document.getElementById("contactsReferenced");
     let counter = 0;
-    contactsReferenced.innerHTML = '';
+    let contactsReferencedBody = '';
     Array.from(jsonAllContacts).forEach( (item, index) => {
         if(item.OrganizationId === oSite.Id) {
+            counter++;
             let separator = (counter > 0) ? '<hr class="contactSeparator"/>' : '';
             let contactFullName = (item.ContactFullName) ? item.ContactFullName : '';
             let contactInitial = (contactFullName).split(/\s/).reduce((response,word)=> response += word.slice(0,1), '');
@@ -183,7 +128,7 @@ function loadDataContacts(oSite) {
             let contactEmail = (item.ContactEmail) ? item.ContactEmail : 'Inconnu';
             let contactLastConnection = (item.ContactLastConnection) ? new Date(item.ContactLastConnection).toLocaleDateString() : 'Inconnu';
             let contactConnectionsCounter = (item.ContactConnectionsCounter) ? item.ContactConnectionsCounter : 'Inconnu';
-            contactsReferenced.innerHTML +=
+            contactsReferencedBody +=
             separator + '<div class="contactRow">' +
                 '<div class="squareContact">' +
                     '<div class="contactInitial">' + contactInitial + '</div>' +
@@ -204,24 +149,26 @@ function loadDataContacts(oSite) {
                     '<div>' + contactConnectionsCounter + ' connexions au total</div>' +
                 '</div>' +
             '</div>';
-            counter++;
         };
     });
 
     if (counter === 0)
-        contactsReferenced.innerHTML = `<div style="font-weight: normal; padding-left: 50px;">Aucun contact n'est référencé</div>`;
-    else 
-        document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = counter + ' contacts référencés';
+        contactsReferencedBody = `<div style="font-weight: normal; padding-left: 50px;">Aucun contact n'est référencé</div>`;
+
+    contactsReferenced.innerHTML = contactsReferencedBody;
+    document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = counter + ' contacts référencés';
 }
 
 function loadDataEquipments(oSite) {
     let equipmentsAllData = document.getElementById("equipmentsAllData");
 
+    //Data on subTitle
+    let counterFollowingPourcent = 0;
+
     //Data on tab title
     let counterEquipment = 0;
     let counterTotalNcToLate = 0;
     let counterTotalActionToDo = 0;
-    let counterFollowingPourcent = 0;
 
     //Row forEach table (for each tab)
     let rowFirstTable = "";
@@ -236,14 +183,14 @@ function loadDataEquipments(oSite) {
             let counterNcToUp = 0;
             let counterActualAction = 0;
             let visitDateString = "Inconnu";
-            let visiteDateEN = new Date(); 
+            let visiteDateEN = new Date();
             
             Array.from(jsonAllEquipmentsNC).forEach( NC => {
                 if (NC.OrganizationId == oSite.Id && NC.EquipmentsId == equipment.Id) {
                     if (NC.StatusOfReserveLocalizedName == "A lever") {
                         counterNcToUp++;
                     }
-                    if (visitDateString === "Inconnu" || visitDateString < NC.VisitDateString) {
+                    if (NC.VisitDateString !== "" && NC.visitDateString !== null && visiteDateEN <= new Date(NC.VisitDate)) {
                         visitDateString = NC.VisitDateString;
                         visiteDateEN = NC.VisitDate;
                     }
@@ -273,6 +220,15 @@ function loadDataEquipments(oSite) {
 
         };
     });
+
+    let nbVisits = 0;
+    Array.from(jsonAllEquipmentsVisit).forEach( visit => {
+        nbVisits += visit.EquipmentsId.split(',').length;
+    });
+
+	if (counterEquipment > 0) {
+		counterFollowingPourcent = Math.round(nbVisits * 100 / counterEquipment);
+	}
 
     
     //First Table
@@ -323,6 +279,7 @@ function monthDiff(d1, d2) {
 }
 
 function loadDataPropertyTitles(oSite) {
+    // SUB-SECTION 1:
     let propertyTitles_owners = [];
     let leases = [];
     let subLeases = [];
@@ -333,12 +290,10 @@ function loadDataPropertyTitles(oSite) {
     let nbExternalLeases = 0;
     let nbSubLeases = 0;
     
+    let maxCapacity = 0;
+    let occupiedWorkstation = 0;
+    
     document.getElementById("legalHorTreeContainers").innerHTML = "";
-    console.log(jsonAllPropertyTitles);
-    console.log(jsonAllContacts);
-    console.log(jsonAllEquipments);
-    console.log(jsonAllEquipmentsNC);
-    console.log(jsonAllEquipmentsActions);
 
     // Titres de propriété (type Interne)
     for (let i = 0; i < jsonAllPropertyTitles.length; i += 1) {
@@ -359,6 +314,8 @@ function loadDataPropertyTitles(oSite) {
                         description: jsonAllBaux[j].Reference,
                         children: subLeases
                     });
+                    maxCapacity += jsonAllBaux[j].MaxCapacity;
+                    occupiedWorkstation += jsonAllBaux[j].OccupiedWorkstationsNb;
                     nbInternalLeases += 1;
                 }
             }
@@ -408,6 +365,8 @@ function loadDataPropertyTitles(oSite) {
                         description: jsonAllBaux[j].Reference,
                         children: subLeases
                     });
+                    maxCapacity += jsonAllBaux[j].MaxCapacity;
+                    occupiedWorkstation += jsonAllBaux[j].OccupiedWorkstationsNb;
                     nbExternalLeases += 1;
                 }
             }
@@ -436,26 +395,76 @@ function loadDataPropertyTitles(oSite) {
     if (indexId === 1)
         document.getElementById("legalHorTreeContainers").innerHTML = "<div class='simpleText' style='margin-top:18px;text-align:center;'>Aucune titre de propriété n'est référencé</div>"
 
-    
     // Horizontal tree creation in Legal Section :
     createLegalHortree(propertyTitles_owners);
-}
 
-function handleOpenCloseContainer() {
-    let iconOpenContainer = document.querySelectorAll(".openCloseIcon");
+    // SUB-SECTION 2 :
+    let percentageOccupation = maxCapacity > 0 ? Math.round(occupiedWorkstation / maxCapacity * 100) : 0;
+    let percentageInternalLease = (nbInternalLeases + nbExternalLeases) > 0 ? Math.round(nbInternalLeases / (nbInternalLeases + nbExternalLeases) * 100) : 0;
+    let percentageExternalLease = (nbInternalLeases + nbExternalLeases) > 0 ? Math.round(nbExternalLeases / (nbInternalLeases + nbExternalLeases) * 100) : 0;
 
-    iconOpenContainer.forEach(element => {
-        element.addEventListener("click", () => {
-            let nextPartContainer = element.parentNode.nextElementSibling;
+console.log(jsonAllBaux)
 
-            if (nextPartContainer.classList.contains("active")) {
-                nextPartContainer.classList.remove("active");
-                element.classList.replace('fa-window-minimize', 'fa-plus');
-            } else {
-                nextPartContainer.classList.add("active");
-                element.classList.replace('fa-plus', 'fa-window-minimize');
-            }
-        });
+    document.getElementById("legalInternalData").innerHTML = percentageInternalLease;
+    document.getElementById("legalExternalData").innerHTML = percentageExternalLease;
+    displayGauge("legalOccupationGauge", [{
+        y: percentageOccupation,
+        color: this.y < 50 ? "#FF0000" : this.y < 75 ? "#FFA500" : "#7BD679",
+        radius: 100,
+        innerRadius: 94,
+        labela: percentageOccupation + "%",
+        labelb: "d'occupation"
+    }]);
+
+    displayGauge("legalRepartitionGauge", [{
+        y: percentageInternalLease > 0 || percentageExternalLease > 0 ? 100 : 0,
+        color: "#7BD679",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Répartition<br />d'occupation"
+    }, {
+        y: percentageExternalLease,
+        color: "#7984D6",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Répartition<br />d'occupation"
+    }]);
+    
+    displayGauge("legalSurfaceTypeGauge", [{
+        y: 100,
+        color: "#7BD679",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Occupation par<br />type de surface"
+    }, {
+        y: 70,
+        color: "#7984D6",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Occupation par<br />type de surface"
+    }, {
+        y: 40,
+        color: "#FFE22B",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Occupation par<br />type de surface"
+    }, {
+        y: 15,
+        color: "#FF5858",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Occupation par<br />type de surface"
+    }]);
+
+    Array.from(document.getElementsByClassName("gaugeDataText")).forEach((text) => {
+        if (text.innerHTML)
+            text.style.margin = 0;
     });
 }
 
@@ -479,16 +488,16 @@ function createLegalHortree(arrayHorTreeObjects) {
     Array.from(horTreeContainers).forEach((container) => {
         container.querySelectorAll(".hortree-branch").forEach((branch, branchIndex) => {
             if (branchIndex === 0) {
-                branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
+                branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label, labelIndex) => {
                     // Tooltip with data for the Property Titles :
-                    if (container.id[0] == "P") {
+                    if (container.id[0] == "P" && labelIndex === 0) {
                         $(label).tooltip({
                             html: true,
                             title: "<div class='simpleText'>" +
                                 "Surface totale Propriétaire : <strong>" + container.dataset.surface + "</strong><br />" +
                                 "Montant d'acquisition : <strong>" + container.dataset.cost + "</strong><br />" +
                                 "Date d'acquisition : <strong>" + container.dataset.date + "</strong></div>",
-                            placement: "top",
+                            boundary: 'viewport',
                             container: "body"
                         })
                         label.style.backgroundColor = "#7BD679";
@@ -527,5 +536,84 @@ function createLegalHortree(arrayHorTreeObjects) {
                 line.style.marginTop = nextHorTreeLineMarginTop.toString() + "px";
             });
         }
+    });
+}
+
+function displayGauge(divId, dataArray) {
+    Highcharts.chart(divId, {
+        chart: {
+            type: "solidgauge",
+        },
+        title: {
+            text: '',
+            style: {
+                fontSize: "12px"
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        pane: {
+            name: "",
+            startAngle: 0,
+            endAngle: 360,
+            background: [{
+                outerRadius: "100%",
+                innerRadius: "98%",
+            }]
+        },
+        tooltip: {
+            enabled: false
+        },
+        yAxis: {
+            min: 0,
+            max: 100,
+            lineWidth: 0,
+            tickPositions: [],
+        },
+        plotOptions: {
+            solidgauge: {
+                dataLabels: {
+                    enabled: true,
+                    borderWidth: 0,
+                    align: "center",
+                    x: 0,
+                    y: 0
+                },
+                linecap: "round",
+                stickyTracking: false,
+                rounded: true
+            }
+        },
+        series: [{
+            name: "",
+            data: dataArray,
+            dataLabels: {
+                useHTML: true,
+                format:
+                  	"<div class='gaugeTextDisplay'>" +
+                  		"<p class='gaugeDataText'>{point.labela}</p>" +
+                  		"<p>{point.labelb}</p>" +
+                  	"</div>"
+            },
+        }]
+    });
+}
+
+function handleOpenCloseContainer() {
+    let iconOpenContainer = document.querySelectorAll(".openCloseIcon");
+
+    iconOpenContainer.forEach(element => {
+        element.addEventListener("click", () => {
+            let nextPartContainer = element.parentNode.nextElementSibling;
+
+            if (nextPartContainer.classList.contains("active")) {
+                nextPartContainer.classList.remove("active");
+                element.classList.replace('fa-window-minimize', 'fa-plus');
+            } else {
+                nextPartContainer.classList.add("active");
+                element.classList.replace('fa-plus', 'fa-window-minimize');
+            }
+        });
     });
 }
