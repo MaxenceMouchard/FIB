@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleSiteSelectorFilter();
 
     // site pré-selectionné pour les tests : à supprimer
-    document.getElementById("siteSelector").selectedIndex = 21;
+    document.getElementById("siteSelector").selectedIndex = 20;
     $("#searchFilterButton").trigger("click");
 
     // Add event when user click on openCloseIcon element :
@@ -115,6 +115,7 @@ function loadNewOrganization(siteId) {
     loadDataBatiment(selectedSite);
     loadDataContacts(selectedSite);
     loadDataPropertyTitles(selectedSite);
+    loadDataEquipments(selectedSite);
 }
 
 function loadDataBatiment(oSite) {
@@ -213,6 +214,114 @@ function loadDataContacts(oSite) {
         document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = (counter > 1) ? counter + ' contacts référencés' : counter + ' contact référencé';
 }
 
+function loadDataEquipments(oSite) {
+    let equipmentsAllData = document.getElementById("equipmentsAllData");
+
+    //Data on tab title
+    let counterEquipment = 0;
+    let counterTotalNcToLate = 0;
+    let counterTotalActionToDo = 0;
+    let counterFollowingPourcent = 0;
+
+    //Row forEach table (for each tab)
+    let rowFirstTable = "";
+    let rowSecondTable = "";
+    let rowThirdTable = "";
+
+    Array.from(jsonAllEquipments).forEach( equipment => {
+        if (equipment.OrganizationId == oSite.Id) {
+            counterEquipment++;
+
+            //First Table
+            let counterNcToUp = 0;
+            let counterActualAction = 0;
+            let visitDateString = "Inconnu";
+            let visiteDateEN = new Date(); 
+            
+            Array.from(jsonAllEquipmentsNC).forEach( NC => {
+                if (NC.OrganizationId == oSite.Id && NC.EquipmentsId == equipment.Id) {
+                    if (NC.StatusOfReserveLocalizedName == "A lever") {
+                        counterNcToUp++;
+                    }
+                    if (visitDateString === "Inconnu" || visitDateString < NC.VisitDateString) {
+                        visitDateString = NC.VisitDateString;
+                        visiteDateEN = NC.VisitDate;
+                    }
+                    if (NC.IsLate) {
+                        counterTotalNcToLate++;
+                    }
+
+                    rowSecondTable += "<tr><td>"+ equipment.Name +"</td><td>"+ NC.VisitObligation +"</td><td>"+ NC.UserProviderForReserveFullName +"</td><td>"+ NC.Location +"</td><td>"+ NC.RedundantString +"</td><td>"+ NC.ReserveText +"</td><td>"+ NC.CritLevelLocalizedName +"</td><td>"+ NC.ExpectedDateString +"</td><td>"+ NC.StatusOfReserveLocalizedName +"</td></tr>";
+                }
+            });
+
+            Array.from(jsonAllEquipmentsActions).forEach( action => {
+                if (action.OrganizationId == oSite.Id && action.EquipmentsId == equipment.Id) {
+                    if (action.StatusLocalizedName == "En cours") {
+                        counterActualAction++;
+                    }
+                    if (action.StatusLocalizedName == "A faire") {
+                        counterTotalActionToDo++;
+                        rowThirdTable += "<tr><td>"+ equipment.Name +"</td><td>"+ action.Name +"</td><td>"+ action.BeginTimeString +"</td><td>"+ action.EndTimeString +"</td><td>"+ action.ResponsibleFullName +"</td><td>"+ action.PriorityName +"</td><td>"+ action.StatusLocalizedName +"</td></tr>";
+                    }
+                }
+            });
+
+            let enOfGuarantee = monthDiff(new Date(), new Date(equipment.EndOfGuarantee));
+            let nextVisiteDate = monthDiff(new Date(), new Date(visiteDateEN));
+            rowFirstTable += "<tr data-endOfGuarantee='"+ enOfGuarantee +"' data-nextVisiteDate='"+ nextVisiteDate +"'><td>"+ equipment.ThemeLocalizedName +"</td><td>"+ equipment.Reference +"</td><td>"+ equipment.QRCode +"</td><td>"+ equipment.Brand +"</td><td>"+ equipment.EndOfGuaranteeString +"</td><td>"+ counterNcToUp +"</td><td>"+ visitDateString +"</td><td>"+ counterActualAction +"</td></tr>";
+
+        };
+    });
+
+    
+    //First Table
+    equipmentsAllData.querySelector("#equipmentFirstTable > tbody").innerHTML = rowFirstTable;
+    //Second Table
+    equipmentsAllData.querySelector("#equipmentSecondTable > tbody").innerHTML = rowSecondTable;
+    //Third Table
+    equipmentsAllData.querySelector("#equipmentThirdTable > tbody").innerHTML = rowThirdTable;
+
+    //First tab
+    equipmentsAllData.querySelector("#nbEquipments").innerHTML = counterEquipment;
+    //SecondTab
+    equipmentsAllData.querySelector("#nbNcToLate").innerHTML = counterTotalNcToLate;
+    //Third Tab
+    equipmentsAllData.querySelector("#nbActionToDo").innerHTML = counterTotalActionToDo;
+
+    //SubTitle
+    document.querySelector("#equipmentsMainData .mainDataSubTitle").innerHTML = counterFollowingPourcent + '% suivi';
+}
+
+function filterDataEquipments() {
+    let garantieSelector = document.getElementById("garantieSelector");
+    let visiteSelector = document.getElementById("visiteSelector");
+
+    let selectedGarantieValue = parseInt(garantieSelector.options[garantieSelector.selectedIndex].value);
+    let selectedVisiteValue = parseInt(visiteSelector.options[visiteSelector.selectedIndex].value);
+
+    let allRow = document.querySelectorAll("#equipmentFirstTable > tbody tr");
+
+    allRow.forEach( row => {
+        let endOfGarantie = parseInt(row.getAttribute("data-endOfGuarantee"));
+        let visiteDate = parseInt(row.getAttribute("data-nextVisiteDate"));
+
+        if(selectedGarantieValue <= endOfGarantie && selectedVisiteValue <= visiteDate) {
+            row.style.display = "table-row";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+function monthDiff(d1, d2) {
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth() + 1;
+    months += d2.getMonth();
+    return months <= 0 ? 0 : months;
+}
+
 function loadDataPropertyTitles(oSite) {
     let propertyTitles_owners = [];
     let leases = [];
@@ -225,6 +334,11 @@ function loadDataPropertyTitles(oSite) {
     let nbSubLeases = 0;
     
     document.getElementById("legalHorTreeContainers").innerHTML = "";
+    console.log(jsonAllPropertyTitles);
+    console.log(jsonAllContacts);
+    console.log(jsonAllEquipments);
+    console.log(jsonAllEquipmentsNC);
+    console.log(jsonAllEquipmentsActions);
 
     // Titres de propriété (type Interne)
     for (let i = 0; i < jsonAllPropertyTitles.length; i += 1) {
