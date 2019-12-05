@@ -29,13 +29,8 @@
     }
 
     .tab section {
-        display: none;
         padding: 20px 0 0;
         border-top: 1px solid #ddd;
-    }
-
-    .tab input {
-        display: none;
     }
 
     .tab span {
@@ -44,7 +39,7 @@
         font-weight: bold;
     }
 
-    .tab>label {
+    .tab>.tabHeader-elem {
         display: inline-block;
         margin: 0 0 -1px;
         padding: 15px 25px;
@@ -75,25 +70,18 @@
     content: '\f1a9';
 } */
 
-    .tab>label:hover {
+    .tab>.tabHeader-elem:hover {
         color: #888;
         cursor: pointer;
     }
 
-    .tab input:checked+label {
+    .tab .tabHeader-elem.active {
         color: #555;
         border: 1px solid #ddd;
         border-top: 5px solid #00A4BF;
         border-bottom: 1px solid #fff;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
-    }
-
-    #tab1:checked~#content1,
-    #tab2:checked~#content2,
-    #tab3:checked~#content3,
-    #tab4:checked~#content4 {
-        display: block;
     }
 
     @media screen and (max-width: 650px) {
@@ -540,6 +528,13 @@
         -moz-transition: all 0.5s;
         -o-transition: all 0.5s;
         transition: all 0.5s;
+    }
+
+    .tabHeader-elem.active{
+        -webkit-transition: all 0s;
+        -moz-transition: all 0s;
+        -o-transition: all 0s;
+        transition: all 0s;
     }
 
     .active {
@@ -1262,18 +1257,19 @@
                         <i class="far fa-window-minimize"></i>
                     </div>
                 </div>
-                <main class="tab">
-                    <input id="tab1" type="radio" name="tabs" checked>
-                    <label for="tab1"><span id="nbEquipments">34</span>En attente</label>
-
-                    <input id="tab2" type="radio" name="tabs">
-                    <label for="tab2"><span>10</span>En révision</label>
-
-                    <input id="tab3" type="radio" name="tabs">
-                    <label for="tab3"><span>3,33</span>Scoring</label>
-
-                    <input id="tab4" type="radio" name="tabs">
-                    <label for="tab4"><span>92%</span>Progression</label>
+                <main class="tab" id='audit-tab1'>
+                    <div class="tabHeader-elem active" onclick="openTab('content1','audit-tab1',this)">
+                        <span id="nbEquipments">34</span>En attente
+                    </div>
+                    <div class="tabHeader-elem" onclick="openTab('content2','audit-tab1',this)">
+                        <span>10</span>En révision
+                    </div>
+                    <div class="tabHeader-elem" onclick="openTab('content3','audit-tab1',this)">
+                        <span>3,33</span>Scoring
+                    </div>
+                    <div class="tabHeader-elem" onclick="openTab('content4','audit-tab1',this)">
+                        <span>92%</span>Progression
+                    </div>
 
                     <section id="content1">
                         <div id="equipmentTableWrapper">
@@ -1313,15 +1309,19 @@
                         <i class="far fa-window-minimize"></i>
                     </div>
                 </div>
-                <main class="tab">
-                    <input id="tab1" type="radio" name="tabs" checked>
-                    <label for="tab1"><span id="nbEquipments">21</span>A faire</label>
+                <main class="tab" id="audit-tab2">
+                    
+                    <div class="tabHeader-elem active" onclick="openTab('content1','audit-tab2',this)">
+                        <span>21</span>A faire
+                    </div>
+                    
+                    <div class="tabHeader-elem" onclick="openTab('content2','audit-tab2',this)">
+                        <span>3</span>En cours
+                    </div>
 
-                    <input id="tab2" type="radio" name="tabs">
-                    <label for="tab2"><span>3</span>En cours</label>
-
-                    <input id="tab3" type="radio" name="tabs">
-                    <label for="tab3"><span>12</span>Réalisées</label>
+                    <div class="tabHeader-elem" onclick="openTab('content3','audit-tab2',this)">
+                        <span>12</span>Réalisées
+                    </div>
 
                     <section id="content1">
                         <div id="equipmentTableWrapper">
@@ -1343,10 +1343,10 @@
                         </div>
                     </section>
 
-                    <section id="content2">
+                    <section style='display:none' id="content2">
                     </section>
 
-                    <section id="content3">
+                    <section style='display:none' id="content3">
                     </section>
                 </main>
                 <!-- bandeau -->
@@ -1358,15 +1358,16 @@
                         <i class="far fa-window-minimize"></i>
                     </div>
                 </div>
-                <main class="tab">
-                    <input id="tab1" type="radio" name="tabs" checked>
-                    <label for="tab1"><span id="nbEquipments">22</span>A lever</label>
-
-                    <input id="tab2" type="radio" name="tabs">
-                    <label for="tab2"><span>14</span>En cours</label>
-
-                    <input id="tab3" type="radio" name="tabs">
-                    <label for="tab3"><span>22</span>Levées</label>
+                <main class="tab" id="audit-tab3">
+                    <div class="tabHeader-elem active" onclick="openTab('content1','audit-tab3',this)">
+                        <span id="nbEquipments">22</span>A lever
+                    </div>
+                    <div class="tabHeader-elem" onclick="openTab('content2','audit-tab3',this)">
+                        <span>14</span>En cours
+                    </div>
+                    <div class="tabHeader-elem" onclick="openTab('content3','audit-tab3',this)">
+                        <span>22</span>Levées
+                    </div>
 
                     <section id="content1">
                         <div id="equipmentTableWrapper">
@@ -1388,10 +1389,10 @@
                         </div>
                     </section>
 
-                    <section id="content2">
+                    <section style='display:none' id="content2">
                     </section>
 
-                    <section id="content3">
+                    <section style='display:none' id="content3">
                     </section>
                 </main>
             </div>
@@ -1407,20 +1408,21 @@
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
             <div class="allData" id="equipmentsAllData">
-                <main class="tab">
-                    <input id="tab1" type="radio" name="tabs" checked>
-                    <label for="tab1"><span id="nbEquipments">80</span>Equipements</label>
+                <main class="tab" id='equipement-tab1'>
+                    <div class="tabHeader-elem active" onclick="openTab('content1','equipement-tab1',this)">
+                        <span id="nbEquipments">80</span>Equipements
+                    </div>
+                    <div class="tabHeader-elem" onclick="openTab('content2','equipement-tab1',this)">
+                        <span>3%</span>Suivi
+                    </div>
+                    <div class="tabHeader-elem" onclick="openTab('content3','equipement-tab1',this)">
+                        <span>2</span>Non-conformités en retard
+                    </div>
+                    <div class="tabHeader-elem" onclick="openTab('content4','equipement-tab1',this)">
+                        <span>10</span> actions à faire
+                    </div>
 
-                    <input id="tab2" type="radio" name="tabs">
-                    <label for="tab2"><span>3%</span>Suivi</label>
-
-                    <input id="tab3" type="radio" name="tabs">
-                    <label for="tab3"><span>2</span>Non-conformités en retard</label>
-
-                    <input id="tab4" type="radio" name="tabs">
-                    <label for="tab4"><span>10</span> actions à faire</label>
-
-                    <section id="content1">
+                    <section class='tabSection' id="content1">
                         <div id="equipmentFilters" class="simpleText">
                             <div class="inline verticalAlignMiddle">
                                 <label>En fin de garantie dans
@@ -1464,7 +1466,7 @@
                         </div>
                     </section>
 
-                    <section id="content2">
+                    <section class='tabSection' id="content2"  style='display:none;'>
                         <p>
                             Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball
                             tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye
@@ -1484,7 +1486,7 @@
                         </p>
                     </section>
 
-                    <section id="content3">
+                    <section class='tabSection' id="content3" style='display:none;'>
                         <p>
                             Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone
                             sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket
@@ -1497,7 +1499,7 @@
                         </p>
                     </section>
 
-                    <section id="content4">
+                    <section class='tabSection' id="content4" style='display:none;'>
                         <p>
                             Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball
                             tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye
@@ -1544,15 +1546,16 @@
                     </div>
                 </div>
 
-                <main class="tab">
-                    <input id="tab1" type="radio" name="tabs" checked>
-                    <label for="tab1"><span id="nbEquipments">87%</span>Documents obligatoires disponibles</label>
-
-                    <input id="tab2" type="radio" name="tabs">
-                    <label for="tab2"><span id="nbEquipments">34</span>Documents à renouveler</label>
-
-                    <input id="tab3" type="radio" name="tabs">
-                    <label for="tab3"><span id="nbEquipments">240</span>Documents à valider</label>
+                <main class="tab" id="equipment-tab1">
+                    <div class="tabHeader-elem active" onclick="openTab('content1','equipment-tab1',this)">
+                        <span id="nbEquipments">87%</span>Documents obligatoires disponibles
+                    </div>
+                    <div class="tabHeader-elem" onclick="openTab('content2','equipment-tab1',this)">
+                        <span id="nbEquipments">34</span>Documents à renouveler
+                    </div>
+                    <div class="tabHeader-elem" onclick="openTab('content3','equipment-tab1',this)">
+                        <span id="nbEquipments">240</span>Documents à valider
+                    </div>
 
                     <section id="content1">
                         <div id="equipmentTableWrapper">
@@ -1589,7 +1592,7 @@
                         </div>
                     </section>
 
-                    <section id="content2">
+                    <section id="content2" style='display:none'>
                         <p>
                             Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball
                             tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye
@@ -1609,7 +1612,7 @@
                         </p>
                     </section>
 
-                    <section id="content3">
+                    <section id="content3" style='display:none'>
                         <p>
                             Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone
                             sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket
@@ -1899,4 +1902,21 @@
             });
         });
     }
+
+        const openTab = (tabId, tabMainId,elem) => {
+            // Display section
+            var section = document.querySelectorAll("#"+tabMainId + " section");
+            for (let i = 0; i < section.length; i++) {
+                section[i].style.display = "none";
+            }
+            
+            // Toggle active class on header 
+            var headerElems =  document.querySelectorAll("#"+ tabMainId + " .tabHeader-elem");
+            for(let i=0; i< headerElems.length;i++){
+                headerElems[i].classList.remove("active");
+            }
+            elem.classList.add("active");
+
+            document.querySelector( "#" + tabMainId+ " #"+tabId).style.display = "block";
+      }
 </script>
