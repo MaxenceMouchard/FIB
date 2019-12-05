@@ -1,9 +1,18 @@
 <!-- Part of Razor -->
 @using Newtonsoft.Json
 
-@{    
+@{
+    //Filtres obligatoires (données actives, non archivées) :
+	var activeFilter = "Organization.IsArchive=False,Organization.Entitystate=Active,Theme.EntityState=Active,EntityState=Active";
+
     var organizations = VP.GetEntitiesData("Organization", "Image.Id,Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ERPTypes.TypeName,M2,UrlBentley,Lat,Long", "Level=4,EntityState=Active,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
     var contacts = VP.GetEntitiesData("OrganizationContact", "Organization.Id,Contact.FullName,Contact.Email,Contact.Job,Contact.Denomination,Contact.LastConnection,Contact.ConnectionsCounter,Contact.MobilePro,Contact.LandlinePro,Contact.AllPhone", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
+    
+    var equipments = VP.GetEntitiesData("Equipment", "Id,Organization.Id,Name,Theme,Reference,QRCode,Brand,EndOfGuarantee", activeFilter, "Organization=FilterQueryOrga");
+    var equipmentsNC = VP.GetEntitiesData("ReserveOfVisit", "Organization.Id,Equipments.Id,VisitDate,IsLate,VisitObligation,UserProviderForReserve,Location,Redundant,ReserveText,CritLevel,ExpectedDate,StatusOfReserve", activeFilter, "Organization=FilterQueryOrga");
+    var equipmentsActions = VP.GetEntitiesData("CActionEquipment", "Organization.Id,Equipment.Id,Name,BeginTime,EndTime,Responsible,Priority,Status", activeFilter, "Organization=FilterQueryOrga");
+	var equipmentsVisit = VP.GetEntitiesData("Visit", "Equipments.Id", activeFilter, "Organization=FilterQueryOrga");
+
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var propertyTitles = VP.GetEntitiesData("PropertyTitle", "Id,Organization.Id,Reference,Surface,AcquisitionCost,AcquisitionDate", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var owners = VP.GetEntitiesData("Owner", "Id,Organizations.Id,Denomination", "Organizations.IsArchive=False,Organizations.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
@@ -407,6 +416,12 @@
 
 let jsonAllOrganizations = JSON.parse(('@JsonConvert.SerializeObject(organizations)').replace(/&quot;/g, '"'));
 let jsonAllContacts = JSON.parse(('@JsonConvert.SerializeObject(contacts)').replace(/&quot;/g, '"'));
+
+let jsonAllEquipments = JSON.parse(('@JsonConvert.SerializeObject(equipments)').replace(/&quot;/g, '"'));
+let jsonAllEquipmentsNC = JSON.parse(('@JsonConvert.SerializeObject(equipmentsNC)').replace(/&quot;/g, '"'));
+let jsonAllEquipmentsActions = JSON.parse(('@JsonConvert.SerializeObject(equipmentsActions)').replace(/&quot;/g, '"'));
+let jsonAllEquipmentsVisit = JSON.parse(('@JsonConvert.SerializeObject(equipmentsVisit)').replace(/&quot;/g, '"'));
+
 let jsonAllLots = JSON.parse(('@JsonConvert.SerializeObject(lots)').replace(/&quot;/g, '"'));
 let jsonAllPropertyTitles = JSON.parse(('@JsonConvert.SerializeObject(propertyTitles)').replace(/&quot;/g, '"'));
 let jsonAllOwners = JSON.parse(('@JsonConvert.SerializeObject(owners)').replace(/&quot;/g, '"'));

@@ -115,9 +115,10 @@ function placeMarkerOnFIBGoogleMap(oSite) {
 function loadDataContacts(oSite) {
     let contactsReferenced = document.getElementById("contactsReferenced");
     let counter = 0;
-    contactsReferenced.innerHTML = '';
+    let contactsReferencedBody = '';
     Array.from(jsonAllContacts).forEach( (item, index) => {
         if(item.OrganizationId === oSite.Id) {
+            counter++;
             let separator = (counter > 0) ? '<hr class="contactSeparator"/>' : '';
             let contactFullName = (item.ContactFullName) ? item.ContactFullName : '';
             let contactInitial = (contactFullName).split(/\s/).reduce((response,word)=> response += word.slice(0,1), '');
@@ -127,7 +128,7 @@ function loadDataContacts(oSite) {
             let contactEmail = (item.ContactEmail) ? item.ContactEmail : 'Inconnu';
             let contactLastConnection = (item.ContactLastConnection) ? new Date(item.ContactLastConnection).toLocaleDateString() : 'Inconnu';
             let contactConnectionsCounter = (item.ContactConnectionsCounter) ? item.ContactConnectionsCounter : 'Inconnu';
-            contactsReferenced.innerHTML +=
+            contactsReferencedBody +=
             separator + '<div class="contactRow">' +
                 '<div class="squareContact">' +
                     '<div class="contactInitial">' + contactInitial + '</div>' +
@@ -148,14 +149,133 @@ function loadDataContacts(oSite) {
                     '<div>' + contactConnectionsCounter + ' connexions au total</div>' +
                 '</div>' +
             '</div>';
-            counter++;
         };
     });
 
     if (counter === 0)
-        contactsReferenced.innerHTML = `<div style="font-weight: normal; padding-left: 50px;">Aucun contact n'est référencé</div>`;
-    else 
-        document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = (counter > 1) ? counter + ' contacts référencés' : counter + ' contact référencé';
+        contactsReferencedBody = `<div style="font-weight: normal; padding-left: 50px;">Aucun contact n'est référencé</div>`;
+
+    contactsReferenced.innerHTML = contactsReferencedBody;
+    document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = counter + ' contacts référencés';
+}
+
+function loadDataEquipments(oSite) {
+    let equipmentsAllData = document.getElementById("equipmentsAllData");
+
+    //Data on subTitle
+    let counterFollowingPourcent = 0;
+
+    //Data on tab title
+    let counterEquipment = 0;
+    let counterTotalNcToLate = 0;
+    let counterTotalActionToDo = 0;
+
+    //Row forEach table (for each tab)
+    let rowFirstTable = "";
+    let rowSecondTable = "";
+    let rowThirdTable = "";
+
+    Array.from(jsonAllEquipments).forEach( equipment => {
+        if (equipment.OrganizationId == oSite.Id) {
+            counterEquipment++;
+
+            //First Table
+            let counterNcToUp = 0;
+            let counterActualAction = 0;
+            let visitDateString = "Inconnu";
+            let visiteDateEN = new Date();
+            
+            Array.from(jsonAllEquipmentsNC).forEach( NC => {
+                if (NC.OrganizationId == oSite.Id && NC.EquipmentsId == equipment.Id) {
+                    if (NC.StatusOfReserveLocalizedName == "A lever") {
+                        counterNcToUp++;
+                    }
+                    if (NC.VisitDateString !== "" && NC.visitDateString !== null && visiteDateEN <= new Date(NC.VisitDate)) {
+                        visitDateString = NC.VisitDateString;
+                        visiteDateEN = NC.VisitDate;
+                    }
+                    if (NC.IsLate) {
+                        counterTotalNcToLate++;
+                    }
+
+                    rowSecondTable += "<tr><td>"+ equipment.Name +"</td><td>"+ NC.VisitObligation +"</td><td>"+ NC.UserProviderForReserveFullName +"</td><td>"+ NC.Location +"</td><td>"+ NC.RedundantString +"</td><td>"+ NC.ReserveText +"</td><td>"+ NC.CritLevelLocalizedName +"</td><td>"+ NC.ExpectedDateString +"</td><td>"+ NC.StatusOfReserveLocalizedName +"</td></tr>";
+                }
+            });
+
+            Array.from(jsonAllEquipmentsActions).forEach( action => {
+                if (action.OrganizationId == oSite.Id && action.EquipmentsId == equipment.Id) {
+                    if (action.StatusLocalizedName == "En cours") {
+                        counterActualAction++;
+                    }
+                    if (action.StatusLocalizedName == "A faire") {
+                        counterTotalActionToDo++;
+                        rowThirdTable += "<tr><td>"+ equipment.Name +"</td><td>"+ action.Name +"</td><td>"+ action.BeginTimeString +"</td><td>"+ action.EndTimeString +"</td><td>"+ action.ResponsibleFullName +"</td><td>"+ action.PriorityName +"</td><td>"+ action.StatusLocalizedName +"</td></tr>";
+                    }
+                }
+            });
+
+            let enOfGuarantee = monthDiff(new Date(), new Date(equipment.EndOfGuarantee));
+            let nextVisiteDate = monthDiff(new Date(), new Date(visiteDateEN));
+            rowFirstTable += "<tr data-endOfGuarantee='"+ enOfGuarantee +"' data-nextVisiteDate='"+ nextVisiteDate +"'><td>"+ equipment.ThemeLocalizedName +"</td><td>"+ equipment.Reference +"</td><td>"+ equipment.QRCode +"</td><td>"+ equipment.Brand +"</td><td>"+ equipment.EndOfGuaranteeString +"</td><td>"+ counterNcToUp +"</td><td>"+ visitDateString +"</td><td>"+ counterActualAction +"</td></tr>";
+
+        };
+    });
+
+    let nbVisits = 0;
+    Array.from(jsonAllEquipmentsVisit).forEach( visit => {
+        nbVisits += visit.EquipmentsId.split(',').length;
+    });
+
+	if (counterEquipment > 0) {
+		counterFollowingPourcent = Math.round(nbVisits * 100 / counterEquipment);
+	}
+
+    
+    //First Table
+    equipmentsAllData.querySelector("#equipmentFirstTable > tbody").innerHTML = rowFirstTable;
+    //Second Table
+    equipmentsAllData.querySelector("#equipmentSecondTable > tbody").innerHTML = rowSecondTable;
+    //Third Table
+    equipmentsAllData.querySelector("#equipmentThirdTable > tbody").innerHTML = rowThirdTable;
+
+    //First tab
+    equipmentsAllData.querySelector("#nbEquipments").innerHTML = counterEquipment;
+    //SecondTab
+    equipmentsAllData.querySelector("#nbNcToLate").innerHTML = counterTotalNcToLate;
+    //Third Tab
+    equipmentsAllData.querySelector("#nbActionToDo").innerHTML = counterTotalActionToDo;
+
+    //SubTitle
+    document.querySelector("#equipmentsMainData .mainDataSubTitle").innerHTML = counterFollowingPourcent + '% suivi';
+}
+
+function filterDataEquipments() {
+    let garantieSelector = document.getElementById("garantieSelector");
+    let visiteSelector = document.getElementById("visiteSelector");
+
+    let selectedGarantieValue = parseInt(garantieSelector.options[garantieSelector.selectedIndex].value);
+    let selectedVisiteValue = parseInt(visiteSelector.options[visiteSelector.selectedIndex].value);
+
+    let allRow = document.querySelectorAll("#equipmentFirstTable > tbody tr");
+
+    allRow.forEach( row => {
+        let endOfGarantie = parseInt(row.getAttribute("data-endOfGuarantee"));
+        let visiteDate = parseInt(row.getAttribute("data-nextVisiteDate"));
+
+        if(selectedGarantieValue <= endOfGarantie && selectedVisiteValue <= visiteDate) {
+            row.style.display = "table-row";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+function monthDiff(d1, d2) {
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth() + 1;
+    months += d2.getMonth();
+    return months <= 0 ? 0 : months;
 }
 
 function loadDataPropertyTitles(oSite) {
