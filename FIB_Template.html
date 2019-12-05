@@ -7,7 +7,7 @@
     <title>FIB</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
 </head>
 
 <style>
@@ -19,7 +19,7 @@
         padding: 0;
         box-sizing: border-box;
     }
-
+    
     .tab main {
         min-width: 320px;
         max-width: 800px;
@@ -27,18 +27,18 @@
         margin: 0 auto;
         background: #fff;
     }
-
+    
     .tab section {
         padding: 20px 0 0;
         border-top: 1px solid #ddd;
     }
-
+    
     .tab span {
         display: block;
         text-align: left;
         font-weight: bold;
     }
-
+    
     .tab>.tabHeader-elem {
         display: inline-block;
         margin: 0 0 -1px;
@@ -47,34 +47,34 @@
         color: #bbb;
         border: 1px solid transparent;
     }
-
+    
     /*.tab > label:before {
-    font-family: fontawesome;
-    font-weight: normal;
-    margin-right: 10px;
-}
-
-.tab > label[for*='1']:before {
-    content: '\f1cb';
-}
-
-.tab > label[for*='2']:before {
-    content: '\f17d';
-}
-
-.tab > label[for*='3']:before {
-    content: '\f16b';
-}
-
-.tab > label[for*='4']:before {
-    content: '\f1a9';
-} */
-
+        font-family: fontawesome;
+        font-weight: normal;
+        margin-right: 10px;
+    }
+    
+    .tab > label[for*='1']:before {
+        content: '\f1cb';
+    }
+    
+    .tab > label[for*='2']:before {
+        content: '\f17d';
+    }
+    
+    .tab > label[for*='3']:before {
+        content: '\f16b';
+    }
+    
+    .tab > label[for*='4']:before {
+        content: '\f1a9';
+    } */
+    
     .tab>.tabHeader-elem:hover {
         color: #888;
         cursor: pointer;
     }
-
+    
     .tab .tabHeader-elem.active {
         color: #555;
         border: 1px solid #ddd;
@@ -83,52 +83,52 @@
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
     }
-
+    
     @media screen and (max-width: 650px) {
         .tab>label {
             font-size: 0;
         }
-
+        
         .tab>label:before {
             margin: 0;
             font-size: 18px;
         }
     }
-
+    
     @media screen and (max-width: 400px) {
         .tab>label {
             padding: 15px;
         }
     }
-
+    
     /* CSS for HorTree plugin (for Legal section) */
-
+    
     .hortree-wrapper *,
     .hortree-wrapper *:before,
     .hortree-wrapper *:after {
         box-sizing: border-box;
     }
-
+    
     .hortree-wrapper {
         position: relative;
         font-family: sans-serif, Verdana, Arial;
         font-size: 0.9em;
     }
-
+    
     .hortree-branch {
         position: relative;
         margin-left: 320px;
     }
-
+    
     .hortree-branch:first-child {
         margin-left: 0;
     }
-
+    
     .hortree-entry {
         position: relative;
         margin-bottom: 10px;
     }
-
+    
     .hortree-label {
         display: block;
         width: 150px;
@@ -142,12 +142,12 @@
         color: white;
         white-space: normal;
     }
-
+    
     .hortree-tooltip {
         position: relative;
         display: inline-block;
     }
-
+    
     .hortree-tooltip .hortree-tooltip-text {
         visibility: hidden;
         background-color: #484848;
@@ -164,7 +164,7 @@
         opacity: 0;
         transition: opacity 0.5s;
     }
-
+    
     .hortree-tooltip .hortree-tooltip-text::after {
         content: "";
         position: absolute;
@@ -174,186 +174,186 @@
         border: 5px solid transparent;
         border-top-color: #484848;
     }
-
+    
     .hortree-tooltip:hover .hortree-tooltip-text {
         visibility: visible;
         opacity: 1;
     }
-
+    
     /* FontSize for different screen size */
-
+    
     @media only screen and (max-width: 1150px) {
-
+        
         /* styles for screens smaller than 1150px; */
         #identityContainer {
             height: 235px;
         }
-
+        
         #allIdentityInfos {
             width: calc(100% - 275px);
             /* width = 100% - padding - pictures size */
         }
-
+        
         #identityPicture {
             width: 235px;
         }
-
+        
         .smallText {
             font-size: 8px;
         }
-
+        
         .simpleText {
             font-size: 10px;
         }
-
+        
         .smallTitle {
             font-size: 14px;
         }
-
+        
         .title {
             font-size: 22px;
         }
-
+        
         /* Legal Hortree */
         #legalHorTreeTitles {
             margin-left: 29px;
         }
-
+        
         #legalHorTreeTitles> :nth-child(2) {
             margin-left: 260px;
         }
-
+        
         #legalHorTreeTitles> :nth-child(3) {
             margin-left: 281px;
         }
-
+        
         #identityGoogleMap {
             height: 160px;
         }
-
+        
         #identityType {
             height: 15px;
         }
-
+        
         #identityLocation {
             height: 54px;
         }
-
+        
         #identityLabel {
             font-size: 11px;
         }
     }
-
+    
     @media only screen and (min-width: 1150px) {
-
+        
         /* styles for screens larger than 1150px; */
         #identityContainer {
             height: 285px;
         }
-
+        
         #allIdentityInfos {
             width: calc(100% - 325px);
             /* width = 100% - padding - pictures size */
         }
-
+        
         #identityPicture {
             width: 285px;
         }
-
+        
         .smallText {
             font-size: 10px;
         }
-
+        
         .simpleText {
             font-size: 12px;
         }
-
+        
         .smallTitle {
             font-size: 16px;
         }
-
+        
         .simpleTitle {
             font-size: 24px;
         }
-
+        
         /* Legal Hortree */
         #legalHorTreeTitles {
             margin-left: 18px;
         }
-
+        
         #legalHorTreeTitles> :nth-child(2) {
             margin-left: 248px;
         }
-
+        
         #legalHorTreeTitles> :nth-child(3) {
             margin-left: 276px;
         }
-
+        
         #identityGoogleMap {
             height: 200px;
         }
-
+        
         #identityType {
             height: 18px;
         }
-
+        
         #identityLocation {
             height: 93px;
         }
-
+        
         #identityLabel {
             font-size: 13px;
         }
     }
-
+    
     /* Some generic class or element */
-
+    
     body {
         background-color: #E9EEF3 !important;
         font-family: "Open Sans" !important;
         margin: auto !important;
     }
-
+    
     .inline {
         display: inline-block;
     }
-
+    
     .verticalAlignMiddle {
         vertical-align: middle;
     }
-
+    
     .openCloseIcon:hover {
         cursor: pointer;
     }
-
+    
     /* References section */
-
+    
     #referencesContainer {
         min-height: 45px;
         background-color: #00A4BF;
         color: #FFFFFF;
     }
-
+    
     #referencesContainer>.referencesText {
         padding: 15px 0 0 30px;
         font-size: 12px;
         font-weight: bold;
     }
-
+    
     /* Filters section */
-
+    
     #filtersContainer {
         min-height: 80px;
         background-color: #FEFEFE;
         color: #333333;
     }
-
+    
     #filtersContainer>.allFilters {
         padding: 20px 0 0 30px;
         font-size: 12px;
         font-weight: bold;
     }
-
+    
     #filtersContainer>.allFilters .selector {
         height: 35px;
         border-radius: 5px;
@@ -361,7 +361,7 @@
         margin-right: 40px;
         margin-bottom: 10px;
     }
-
+    
     #searchFilterButton,
     #rebootFilterButton {
         font-family: "Open Sans";
@@ -374,45 +374,45 @@
         border-radius: 5px;
         transition: 0.5s;
     }
-
+    
     #searchFilterButton:hover,
     #rebootFilterButton:hover {
         cursor: pointer;
         transform: scale(1.1);
     }
-
+    
     #searchFilterButton:active,
     #rebootFilterButton:active {
         opacity: 0.8;
     }
-
+    
     #searchFilterButton {
         background-color: #00A4BF;
         border-color: #00A4BF;
         color: #FFFFFF;
         transition: 0.5s;
     }
-
+    
     #rebootFilterButton {
         background-color: #f2f2f2;
         border-color: #f2f2f2;
     }
-
+    
     /* Identity section */
-
+    
     #identityContainer {
         margin: 20px 35px 0 35px;
         background-color: #FFFFFF;
         border-radius: 5px;
     }
-
+    
     #identityPicture {
         float: left;
         height: 100%;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
     }
-
+    
     #allIdentityInfos {
         display: inline-block;
         height: calc(100% - 40px);
@@ -421,50 +421,50 @@
         overflow-x: auto;
         white-space: nowrap;
     }
-
+    
     #identityIntroContainer {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-
+    
     #identityTitle {
         display: inline;
         margin-left: 5px;
         font-weight: bold;
     }
-
+    
     #identityExport {
         margin-left: 8px;
     }
-
+    
     #identityInfosDetails {
         display: block;
         margin-left: 22px;
         vertical-align: top;
     }
-
+    
     #identityLocation {
         margin-top: 20px;
     }
-
+    
     #identityPostCodeLocation,
     #identityCityLocation {
         display: inline-block;
     }
-
+    
     #identityProperties {
         height: 80px;
         white-space: nowrap;
     }
-
+    
     #identityLabel,
     #identityFloorsNumber,
     #identityTotalSurface,
     #identityDaysNumberBeforeDueDate,
     #identityNumberPersonOnThisSite,
     #identityOccupationPercent
-     {
+    {
         display: inline-block;
         height: calc(85% - 10px);
         vertical-align: top;
@@ -475,51 +475,51 @@
         max-width: 84px;
         padding-left: 30px;
     }
-
+    
     #identityLink3D {
         border-right: 1px solid #979797;
         margin-top: 14px;
         margin-right: 30px;
         margin-left: 30px;
     }
-
+    
     #identityGoogleMap {
         width: 44%;
         display: inline-block;
         margin-top: 5px;
     }
-
+    
     /* General Sections Properties */
-
+    
     .sectionContainer {
         margin: 20px 35px 0 35px;
         padding: 25px;
         background-color: #FFFFFF;
         border-radius: 5px;
     }
-
+    
     .sectionContainer>.primaryInfos {
         color: #333333;
     }
-
+    
     .sectionContainer>.primaryInfos>.mainData {
         display: inline-block;
         vertical-align: middle;
         padding-left: 20px;
     }
-
+    
     .sectionContainer>.primaryInfos>.mainData>.mainDataTitle {
         font-weight: bold;
     }
-
+    
     .sectionContainer>.primaryInfos>.mainData>.mainDataSubTitle {
         color: #9B9B9B;
     }
-
+    
     .redTextColor {
         color: red;
     }
-
+    
     .allData,
     .active {
         visibility: hidden;
@@ -529,25 +529,25 @@
         -o-transition: all 0.5s;
         transition: all 0.5s;
     }
-
+    
     .tabHeader-elem.active{
         -webkit-transition: all 0s;
         -moz-transition: all 0s;
         -o-transition: all 0s;
         transition: all 0s;
     }
-
+    
     .active {
         visibility: visible;
         opacity: 1;
     }
-
+    
     .tooltip-inner {
         max-width: 100%;
         text-align: left;
         padding: 12px;
     }
-
+    
     .blackButton {
         display: inline-block;
         background-color: #333333;
@@ -557,48 +557,48 @@
         transition: 0.5s;
         vertical-align: top;
     }
-
+    
     .blackButton:hover {
         cursor: pointer;
         transform: scale(1.1);
     }
-
+    
     /* Override */
     *,
     ::after,
     ::before {
         box-sizing: unset !important;
     }
-
+    
     .fa-balance-scale {
         transform: translateX(-3px);
     }
-
+    
     .fa-sd-card {
         transform: translateX(2px);
     }
-
+    
     .fa-exclamation-triangle {
         transform: translateX(-2px);
     }
-
+    
     /* CONTACT Section Properties */
-
+    
     #contactMainData {
         width: calc(100% - 74px);
         /* 100% - (padding + inconSize) */
     }
-
+    
     #contactAllData {
         max-height: 0px;
         font-weight: bold;
     }
-
+    
     #contactAllData.active {
         max-height: 400px;
         margin: 20px 49px 20px 49px;
     }
-
+    
     #contactsReferenced,
     #contactsIntervenant {
         padding-top: 20px;
@@ -607,7 +607,7 @@
         width: 100%;
         /*max-width: max-content;*/
     }
-
+    
     .squareContact {
         display: inline-table;
         vertical-align: middle;
@@ -617,23 +617,23 @@
         border-radius: 5px;
         color: #FFFFFF;
     }
-
+    
     .contactInitial {
         display: table-cell;
         vertical-align: middle;
         text-align: center;
     }
-
+    
     .contactNameAndFunction {
         display: inline-block;
         vertical-align: middle;
         padding-left: 10px;
     }
-
+    
     .contactFunction {
         font-weight: normal;
     }
-
+    
     .contactPhonesNumbers,
     .contactEmail {
         display: inline-block;
@@ -641,7 +641,7 @@
         font-weight: normal;
         padding-left: 80px;
     }
-
+    
     .contactLog {
         display: inline-block;
         vertical-align: middle;
@@ -650,116 +650,116 @@
         opacity: 0.35;
         max-width: 195px;
     }
-
+    
     .contactSeparator {
         border-color: #E5E5E5;
         margin: 15px;
     }
-
+    
     .fa-phone,
     .fa-envelope {
         margin-right: 10px;
     }
-
+    
     /* LEGAL Section Properties */
-
+    
     #legalMainData {
         width: calc(100% - 80px);
         /* 100% - (padding + inconSize) */
     }
-
+    
     #legalAllData {
         max-height: 0px;
     }
-
+    
     #legalAllData.active {
         max-height: 1000px;
         margin: 25px 45px 25px 45px;
         white-space: nowrap;
         overflow-x: auto;
     }
-
+    
     #legalLegend {
         display: flex;
         width: auto;
     }
-
+    
     #legalLegend> :not(:first-child) {
         margin-left: 70px;
     }
-
+    
     #legalLegend>div {
         display: flex;
         justify-content: space-around;
         align-items: center;
     }
-
+    
     .legalLegendSquares {
         width: 14px;
         height: 14px;
         margin-right: 8px;
         border-radius: 5px;
     }
-
+    
     #legalLegendSquareIntern {
         background: #7BD679;
     }
-
+    
     #legalLegendSquareExtern {
         background: #79D6CB;
     }
-
+    
     #legalHorTreeTitles {
         display: flex;
         font-weight: bold;
         margin-top: 22px;
     }
-
+    
     .legalHorTreeContainer {
         margin-top: 18px;
     }
-
+    
     .line {
         border-bottom: 1px solid #979797 !important;
         border-top-color: #979797 !important;
         border-right-color: #979797 !important;
         border-left-color: #979797 !important;
     }
-
+    
     #legalHorTree1 .line {
         margin-top: 702px;
     }
-
+    
     /* COMPLIANCE Section Properties */
-
+    
     #complianceMainData {
         width: calc(100% - 74px);
         /* 100% - (padding + inconSize) */
     }
-
+    
     /* AUDIT Section Properties */
-
+    
     #auditMainData {
         width: calc(100% - 74px);
         /* 100% - (padding + inconSize) */
     }
-
+    
     /* EQUIPMENTS Section Properties */
-
+    
     #equipmentsMainData {
         width: calc(100% - 74px);
         /* 100% - (padding + inconSize) */
     }
-
+    
     #equipmentsAllData {
         max-height: 0px;
     }
-
+    
     #equipmentsAllData.active {
         padding: 25px 45px 25px 45px;
         max-height: 1000px;
     }
-
+    
     .equipmentAllSquares {
         display: inline-block;
         width: calc(100% - 165px);
@@ -767,7 +767,7 @@
         overflow-x: auto;
         white-space: nowrap;
     }
-
+    
     .equipmentSquare {
         display: inline-table;
         background-color: #00A4BF;
@@ -779,34 +779,34 @@
         vertical-align: middle;
         margin-right: 15px;
     }
-
+    
     .equipmentSquareNumberAndText {
         display: table-cell;
         vertical-align: middle;
     }
-
+    
     .equipmentSquareNumber {
         font-weight: bold;
     }
-
+    
     .equipmentSquareText {
         width: 119px;
         display: inline-block;
         white-space: normal;
     }
-
+    
     #equipmentFilters {
         overflow-x: auto;
         white-space: nowrap;
     }
-
+    
     #equipmentFilters .selector {
         height: 30px;
         border-radius: 5px;
         margin-left: 10px;
         margin-right: 60px;
     }
-
+    
     .equipmentSwitchFilter {
         position: relative;
         display: inline-block;
@@ -814,13 +814,13 @@
         height: 18px;
         vertical-align: middle;
     }
-
+    
     .equipmentSwitchFilter input {
         opacity: 0;
         width: 0;
         height: 0;
     }
-
+    
     .slider {
         position: absolute;
         cursor: pointer;
@@ -832,7 +832,7 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
-
+    
     .slider:before {
         position: absolute;
         content: "";
@@ -844,83 +844,83 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
-
+    
     input:checked+.slider {
         background-color: #00A4BF;
     }
-
+    
     input:focus+.slider {
         box-shadow: 0 0 1px #00A4BF;
     }
-
+    
     input:checked+.slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(12px);
     }
-
+    
     .slider.round {
         border-radius: 34px;
     }
-
+    
     .slider.round:before {
         border-radius: 50%;
     }
-
+    
     #equipmentSliderLabel {
         margin-left: 36px;
     }
-
+    
     #equipmentTableWrapper {
         overflow-x: auto;
     }
-
+    
     #equipmentTable {
         margin-top: 20px;
         width: 100%;
         min-width: 688px;
     }
-
+    
     #equipmentTable>thead {
         font-weight: bold;
         border-bottom: 1px solid;
     }
-
+    
     #equipmentTable>thead>tr>th {
         padding-bottom: 10px;
     }
-
+    
     #equipmentTable tr:nth-child(even) {
         background-color: #F5F5F5;
     }
-
+    
     #equipmentTable>tbody>tr>td {
         padding: 10px 0;
     }
-
+    
     /* DATA COLLECTION Section Properties */
-
+    
     #dataCollectionMainData {
         width: calc(100% - 68px);
         /* 100% - (padding + inconSize) */
     }
-
+    
     /* INCIDENTS Section Properties */
-
+    
     #incidentsMainData {
         width: calc(100% - 77px);
         /* 100% - (padding + inconSize) */
     }
-
+    
     /* SCHEMA DIRECTORY Section Properties */
-
+    
     #schemaDirectoryMainData {
         width: calc(100% - 74px);
         /* 100% - (padding + inconSize) */
     }
-
+    
     /* ------ ELEMENTS CSS ------ */
-
+    
     /* bandeau */
     .elem-bandeau {
         background-color: #00A4BF !important;
@@ -929,28 +929,28 @@
         background-color: white;
         padding: 10px;
     }
-
+    
     .elem-bandeau-title {
         color: #FFFFFF;
         font-size: 14px;
         font-weight: bold;
         padding-left: 10px;
     }
-
+    
     .elem-bandeau-rightSide {
         align-self: center;
     }
-
+    
     .elem-bandeau-leftSide {
         align-self: center;
         transform: translateY(12%);
     }
-
+    
     i.far.fa-window-minimize {
         color: white;
         margin: 0px 20px;
     }
-
+    
     /* button */
     .elem-button {
         background-color: black;
@@ -961,12 +961,12 @@
 
 <body>
     <div id="containerFIB">
-
+        
         <div id="referencesContainer">
             <div class="referencesText">Fiche d'identité du bâtiment > FR33.00001 - CMA CGM Agences France - Bordeaux
             </div>
         </div>
-
+        
         <div id="filtersContainer">
             <div class="allFilters">
                 <div class="inline">
@@ -976,7 +976,7 @@
                         </select>
                     </label>
                 </div>
-
+                
                 <div class="inline">
                     <label>Région
                         <select name="region" id="regionSelector" class="selector">
@@ -984,7 +984,7 @@
                         </select>
                     </label>
                 </div>
-
+                
                 <div class="inline">
                     <label>Ville
                         <select name="city" id="citySelector" class="selector">
@@ -992,7 +992,7 @@
                         </select>
                     </label>
                 </div>
-
+                
                 <div class="inline">
                     <label>Site
                         <select name="site" id="siteSelector" class="selector">
@@ -1000,15 +1000,15 @@
                         </select>
                     </label>
                 </div>
-
+                
                 <button id="searchFilterButton">Rechercher</button>
                 <button id="rebootFilterButton">Réinitialiser</button>
             </div>
         </div>
-
+        
         <div id="identityContainer">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSr96vtD0rFIx4JnDPjMZ1Iv3guFaeaEqpxXRtqifUG7bJ58bWd"
-                id="identityPicture" />
+            id="identityPicture" />
             <div id="allIdentityInfos">
                 <i class="fas fa-map-marker-alt"></i>
                 <div id="identityTitle" class="smallTitle">FR33.00001 - CMA CGM Agences France - Bordeaux</div>
@@ -1022,219 +1022,274 @@
                     </div>
                     <div id="identityProperties">
                         <div id="identityFloorsNumber" class="simpleTitle">9<div class="simpleText">étages</div>
-                        </div>
-                        <div id="identityTotalSurface" class="simpleTitle">900m²<div class="simpleText">surface totale
-                            </div>
-                        </div>
-                        <div id="identityDaysNumberBeforeDueDate" class="simpleTitle">631<div class="simpleText">jours
-                                avant échéance du bail</div>
-                        </div>
-                        <div id="identityNumberPersonOnThisSite" class="simpleTitle">55<div class="simpleText">personnes
-                                sur site</div>
-                        </div>
-                        <div id="identityOccupationPercent" class="simpleTitle">72%<div class="simpleText">d'occupation
-                            </div>
-                        </div>
                     </div>
+                    <div id="identityTotalSurface" class="simpleTitle">900m²<div class="simpleText">surface totale
+                    </div>
+                </div>
+                <div id="identityDaysNumberBeforeDueDate" class="simpleTitle">631<div class="simpleText">jours
+                    avant échéance du bail</div>
+                </div>
+                <div id="identityNumberPersonOnThisSite" class="simpleTitle">55<div class="simpleText">personnes
+                    sur site</div>
+                </div>
+                <div id="identityOccupationPercent" class="simpleTitle">72%<div class="simpleText">d'occupation
                 </div>
             </div>
         </div>
+    </div>
+</div>
+</div>
 
-        <!-- CONTACT SECTION -->
-        <div class="sectionContainer">
-            <div class="primaryInfos">
-                <i class="fas fa-user-alt simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="contactMainData">
-                    <div class="mainDataTitle smallTitle">Contact</div>
-                    <div class="mainDataSubTitle simpleText">4 contacts référencés</div>
+<!-- CONTACT SECTION -->
+<div class="sectionContainer">
+    <div class="primaryInfos">
+        <i class="fas fa-user-alt simpleTitle verticalAlignMiddle"></i>
+        <div class="mainData" id="contactMainData">
+            <div class="mainDataTitle smallTitle">Contact</div>
+            <div class="mainDataSubTitle simpleText">4 contacts référencés</div>
+        </div>
+        <i class="fas fa-plus iconTitle openCloseIcon"></i>
+    </div>
+    <div class="allData simpleText" id="contactAllData">
+        Contacts Référencés
+        <div id="contactsReferenced">
+            <!-- ONE CONTACT -->
+            <div class="contactRow">
+                <div class="squareContact">
+                    <div class="contactInitial">OA</div>
+                </div>
+                <div class="contactNameAndFunction">
+                    <div class="contactName">Otis Ascenseurs</div>
+                    <div class="contactFunction">Manager Technique</div>
+                </div>
+                <div class="contactPhonesNumbers">
+                    <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+                    <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+                </div>
+                <div class="contactEmail">
+                    <i class="fas fa-envelope"></i>admin@otis.com
+                </div>
+                <div class="contactLog">
+                    <div>Dernière connexion le 28/10/2019</div>
+                    <div>5 connexions au total</div>
+                </div>
+            </div>
+            
+            <hr class="contactSeparator">
+        </hr>
+        
+        <!-- ONE CONTACT -->
+        <div class="contactRow">
+            <div class="squareContact">
+                <div class="contactInitial">OA</div>
+            </div>
+            <div class="contactNameAndFunction">
+                <div class="contactName">Otis Ascenseurs</div>
+                <div class="contactFunction">Manager Technique</div>
+            </div>
+            <div class="contactPhonesNumbers">
+                <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+                <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+            </div>
+            <div class="contactEmail">
+                <i class="fas fa-envelope"></i>admin@otis.com
+            </div>
+            <div class="contactLog">
+                <div>Dernière connexion le 28/10/2019</div>
+                <div>5 connexions au total</div>
+            </div>
+        </div>
+    </div>
+    
+    <br><br><br>
+    
+    Intervenants
+    <div id="contactsIntervenant">
+        <!-- ONE CONTACT -->
+        <div class="contactRow">
+            <div class="squareContact">
+                <div class="contactInitial">OA</div>
+            </div>
+            <div class="contactNameAndFunction">
+                <div class="contactName">Otis Ascenseurs</div>
+                <div class="contactFunction">Manager Technique</div>
+            </div>
+            <div class="contactPhonesNumbers">
+                <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+                <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+            </div>
+            <div class="contactEmail">
+                <i class="fas fa-envelope"></i>admin@otis.com
+            </div>
+            <div class="contactLog">
+                <div>Dernière connexion le 28/10/2019</div>
+                <div>5 connexions au total</div>
+            </div>
+        </div>
+        
+        <hr class="contactSeparator">
+    </hr>
+    
+    <!-- ONE CONTACT -->
+    <div class="contactRow">
+        <div class="squareContact">
+            <div class="contactInitial">OA</div>
+        </div>
+        <div class="contactNameAndFunction">
+            <div class="contactName">Otis Ascenseurs</div>
+            <div class="contactFunction">Manager Technique</div>
+        </div>
+        <div class="contactPhonesNumbers">
+            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
+            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
+        </div>
+        <div class="contactEmail">
+            <i class="fas fa-envelope"></i>admin@otis.com
+        </div>
+        <div class="contactLog">
+            <div>Dernière connexion le 28/10/2019</div>
+            <div>5 connexions au total</div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<!-- LEGAL SECTION -->
+<div class="sectionContainer">
+    <div class="primaryInfos">
+        <i class="fas fa-balance-scale simpleTitle verticalAlignMiddle"></i>
+        <div class="mainData" id="legalMainData">
+            <div class="mainDataTitle smallTitle">Juridique</div>
+            <div class="mainDataSubTitle simpleText">1 titre de propriété &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 2
+                baux internes &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 baux externes &nbsp&nbsp&nbsp /
+                &nbsp&nbsp&nbsp 4 sous-baux</div>
+            </div>
+            <i class="fas fa-plus iconTitle openCloseIcon"></i>
+        </div>
+        
+        
+        
+        <div class="allData" id="legalAllData">
+            
+            <!-- bandeau -->
+            <div class="elem-bandeau mt-2 mb-5">
+                <div class="elem-bandeau-leftSide">
+                    <h1 class="elem-bandeau-title">1- Mapping</h1>
+                </div>
+                <div class="elem-bandeau-rightSide">
+                    <i class="far fa-window-minimize"></i>
+                </div>
+            </div>
+            <div id="legalLegend">
+                <div class="simpleText">
+                    <div id="legalLegendSquareIntern" class="legalLegendSquares"></div>Titres de propriété internes
+                </div>
+                <div class="simpleText">
+                    <div id="legalLegendSquareExtern" class="legalLegendSquares"></div>Titres de propriété externes
+                </div>
+            </div>
+            <div id="legalHorTreeTitles">
+                <div class="simpleText">Titres de propriété</div>
+                <div class="simpleText">Baux</div>
+                <div class="simpleText">Sous-Baux</div>
+            </div>
+            <div class="legalHorTreeContainer" id="legalHorTreeOne"></div>
+            <div class="legalHorTreeContainer" id="legalHorTreeTwo"></div>
+            
+            <!-- bandeau -->
+            <div class="elem-bandeau my-5">
+                <div class="elem-bandeau-leftSide">
+                    <h1 class="elem-bandeau-title">2- Occupation</h1>
+                </div>
+                <div class="elem-bandeau-rightSide">
+                    <i class="far fa-window-minimize"></i>
+                </div>
+            </div>
+            
+            <!-- bandeau -->
+            <div class="elem-bandeau my-5">
+                <div class="elem-bandeau-leftSide">
+                    <h1 class="elem-bandeau-title">3- Analyse Financière</h1>
+                </div>
+                <div class="elem-bandeau-rightSide">
+                    <i class="far fa-window-minimize"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- COMPLIANCE SECTION -->
+    <div class="sectionContainer">
+        <div class="primaryInfos">
+            <i class="fas fa-check simpleTitle verticalAlignMiddle"></i>
+            <div class="mainData" id="complianceMainData">
+                <div class="mainDataTitle smallTitle">Conformité</div>
+                <div class="mainDataSubTitle simpleText">
+                    <span class="redTextColor"></span><span
+                    class="redTextColor"></span></div>
                 </div>
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
-            <div class="allData simpleText" id="contactAllData">
-                Contacts Référencés
-                <div id="contactsReferenced">
-                    <!-- ONE CONTACT -->
-                    <div class="contactRow">
-                        <div class="squareContact">
-                            <div class="contactInitial">OA</div>
-                        </div>
-                        <div class="contactNameAndFunction">
-                            <div class="contactName">Otis Ascenseurs</div>
-                            <div class="contactFunction">Manager Technique</div>
-                        </div>
-                        <div class="contactPhonesNumbers">
-                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
-                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
-                        </div>
-                        <div class="contactEmail">
-                            <i class="fas fa-envelope"></i>admin@otis.com
-                        </div>
-                        <div class="contactLog">
-                            <div>Dernière connexion le 28/10/2019</div>
-                            <div>5 connexions au total</div>
-                        </div>
+            <div class="allData" id="equipmentsAllData">
+                <main class="tab" id='compliance-tab1'>
+                    <div class="tabHeader-elem active" onclick="openTab('content1','compliance-tab1',this)">
+                        <span id="nbEquipments">144</span>Obligations actives
                     </div>
-
-                    <hr class="contactSeparator">
-                    </hr>
-
-                    <!-- ONE CONTACT -->
-                    <div class="contactRow">
-                        <div class="squareContact">
-                            <div class="contactInitial">OA</div>
-                        </div>
-                        <div class="contactNameAndFunction">
-                            <div class="contactName">Otis Ascenseurs</div>
-                            <div class="contactFunction">Manager Technique</div>
-                        </div>
-                        <div class="contactPhonesNumbers">
-                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
-                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
-                        </div>
-                        <div class="contactEmail">
-                            <i class="fas fa-envelope"></i>admin@otis.com
-                        </div>
-                        <div class="contactLog">
-                            <div>Dernière connexion le 28/10/2019</div>
-                            <div>5 connexions au total</div>
-                        </div>
+                    <div class="tabHeader-elem" onclick="openTab('content2','compliance-tab1',this)">
+                        <span>99%</span>Suivi
                     </div>
-                </div>
-
-                <br><br><br>
-
-                Intervenants
-                <div id="contactsIntervenant">
-                    <!-- ONE CONTACT -->
-                    <div class="contactRow">
-                        <div class="squareContact">
-                            <div class="contactInitial">OA</div>
-                        </div>
-                        <div class="contactNameAndFunction">
-                            <div class="contactName">Otis Ascenseurs</div>
-                            <div class="contactFunction">Manager Technique</div>
-                        </div>
-                        <div class="contactPhonesNumbers">
-                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
-                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
-                        </div>
-                        <div class="contactEmail">
-                            <i class="fas fa-envelope"></i>admin@otis.com
-                        </div>
-                        <div class="contactLog">
-                            <div>Dernière connexion le 28/10/2019</div>
-                            <div>5 connexions au total</div>
-                        </div>
+                    <div class="tabHeader-elem" onclick="openTab('content3','compliance-tab1',this)">
+                        <span>102</span>Visites en retard
                     </div>
-
-                    <hr class="contactSeparator">
-                    </hr>
-
-                    <!-- ONE CONTACT -->
-                    <div class="contactRow">
-                        <div class="squareContact">
-                            <div class="contactInitial">OA</div>
-                        </div>
-                        <div class="contactNameAndFunction">
-                            <div class="contactName">Otis Ascenseurs</div>
-                            <div class="contactFunction">Manager Technique</div>
-                        </div>
-                        <div class="contactPhonesNumbers">
-                            <div><i class="fas fa-phone"></i>06 91 08 10 20</div>
-                            <div><i class="fas fa-phone"></i>01 42 02 50 28</div>
-                        </div>
-                        <div class="contactEmail">
-                            <i class="fas fa-envelope"></i>admin@otis.com
-                        </div>
-                        <div class="contactLog">
-                            <div>Dernière connexion le 28/10/2019</div>
-                            <div>5 connexions au total</div>
-                        </div>
+                    <div class="tabHeader-elem" onclick="openTab('content4','compliance-tab1',this)">
+                        <span>169</span>Non-conformités à lever
                     </div>
-                </div>
+                    <div class="tabHeader-elem" onclick="openTab('content5','compliance-tab1',this)">
+                        <span>50</span>Non-conformités en retard
+                    </div>
+                    <div class="tabHeader-elem" onclick="openTab('content6','compliance-tab1',this)">
+                        <span>3</span>Actions à faire
+                    </div>
+                    
+                    <section id="content1">
+                        <div id="equipmentTableWrapper">
+                            <table id="equipmentTable" class="simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Visite</th>
+                                        <th>Date</th>
+                                        <th>Interlocuteur Visite</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                    
+                    <section id="content2" style='display:none;'>
+                    </section>
+                    
+                    <section id="content3"  style='display:none;'>
+                    </section>
+                    
+                    <section id="content4"  style='display:none;'>
+                    </section>
+                    
+                    <section id="content5"  style='display:none;'>
+                    </section>
+                    
+                    <section id="content6"  style='display:none;'>
+                    </section>
+                </main>
+                <!-- bandeau -->
+                
             </div>
         </div>
-
-        <!-- LEGAL SECTION -->
-        <div class="sectionContainer">
-            <div class="primaryInfos">
-                <i class="fas fa-balance-scale simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="legalMainData">
-                    <div class="mainDataTitle smallTitle">Juridique</div>
-                    <div class="mainDataSubTitle simpleText">1 titre de propriété &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 2
-                        baux internes &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 baux externes &nbsp&nbsp&nbsp /
-                        &nbsp&nbsp&nbsp 4 sous-baux</div>
-                </div>
-                <i class="fas fa-plus iconTitle openCloseIcon"></i>
-            </div>
-
-
-
-            <div class="allData" id="legalAllData">
-
-                <!-- bandeau -->
-                <div class="elem-bandeau mt-2 mb-5">
-                    <div class="elem-bandeau-leftSide">
-                        <h1 class="elem-bandeau-title">1- Mapping</h1>
-                    </div>
-                    <div class="elem-bandeau-rightSide">
-                        <i class="far fa-window-minimize"></i>
-                    </div>
-                </div>
-                <div id="legalLegend">
-                    <div class="simpleText">
-                        <div id="legalLegendSquareIntern" class="legalLegendSquares"></div>Titres de propriété internes
-                    </div>
-                    <div class="simpleText">
-                        <div id="legalLegendSquareExtern" class="legalLegendSquares"></div>Titres de propriété externes
-                    </div>
-                </div>
-                <div id="legalHorTreeTitles">
-                    <div class="simpleText">Titres de propriété</div>
-                    <div class="simpleText">Baux</div>
-                    <div class="simpleText">Sous-Baux</div>
-                </div>
-                <div class="legalHorTreeContainer" id="legalHorTreeOne"></div>
-                <div class="legalHorTreeContainer" id="legalHorTreeTwo"></div>
-
-                <!-- bandeau -->
-                <div class="elem-bandeau my-5">
-                    <div class="elem-bandeau-leftSide">
-                        <h1 class="elem-bandeau-title">2- Occupation</h1>
-                    </div>
-                    <div class="elem-bandeau-rightSide">
-                        <i class="far fa-window-minimize"></i>
-                    </div>
-                </div>
-
-                <!-- bandeau -->
-                <div class="elem-bandeau my-5">
-                    <div class="elem-bandeau-leftSide">
-                        <h1 class="elem-bandeau-title">3- Analyse Financière</h1>
-                    </div>
-                    <div class="elem-bandeau-rightSide">
-                        <i class="far fa-window-minimize"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- COMPLIANCE SECTION -->
-        <div class="sectionContainer">
-            <div class="primaryInfos">
-                <i class="fas fa-check simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="complianceMainData">
-                    <div class="mainDataTitle smallTitle">Conformité</div>
-                    <div class="mainDataSubTitle simpleText">80 obligations suivies &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
-                        <span class="redTextColor">4 visites en retard</span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp <span
-                            class="redTextColor">2 NC critiques à lever</span></div>
-                </div>
-                <i class="fas fa-plus iconTitle openCloseIcon"></i>
-            </div>
-            <div class="allData" id="complianceAllData">
-            </div>
-        </div>
-
+        
         <!-- AUDIT SECTION -->
         <div class="sectionContainer">
             <div class="primaryInfos">
@@ -1243,322 +1298,417 @@
                     <div class="mainDataTitle smallTitle">Audit</div>
                     <div class="mainDataSubTitle simpleText">3 audits en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 6 NC à
                         lever</div>
+                    </div>
+                    <i class="fas fa-plus iconTitle openCloseIcon"></i>
                 </div>
-                <i class="fas fa-plus iconTitle openCloseIcon"></i>
-            </div>
-            <div class="allData" id="equipmentsAllData">
-                <!-- bandeau -->
-                <div class="elem-bandeau mb-4">
-                    <div class="elem-bandeau-leftSide">
-                        <h1 class="elem-bandeau-title">1- Audit</h1>
-                    </div>
-                    <div class="elem-bandeau-rightSide">
-                        <button class="btn elem-button">Ajouter un audit</button>
-                        <i class="far fa-window-minimize"></i>
-                    </div>
-                </div>
-                <main class="tab" id='audit-tab1'>
-                    <div class="tabHeader-elem active" onclick="openTab('content1','audit-tab1',this)">
-                        <span id="nbEquipments">34</span>En attente
-                    </div>
-                    <div class="tabHeader-elem" onclick="openTab('content2','audit-tab1',this)">
-                        <span>10</span>En révision
-                    </div>
-                    <div class="tabHeader-elem" onclick="openTab('content3','audit-tab1',this)">
-                        <span>3,33</span>Scoring
-                    </div>
-                    <div class="tabHeader-elem" onclick="openTab('content4','audit-tab1',this)">
-                        <span>92%</span>Progression
-                    </div>
-
-                    <section id="content1">
-                        <div id="equipmentTableWrapper">
-                            <table id="equipmentTable" class="simpleText">
-                                <thead>
-                                    <tr>
-                                        <th>Thème</th>
-                                        <th>Nom</th>
-                                        <th>Date de début</th>
-                                        <th>Date de fin</th>
-                                        <th>Scoring</th>
-                                        <th>Progression</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
+                <div class="allData" id="equipmentsAllData">
+                    <!-- bandeau -->
+                    <div class="elem-bandeau mb-4">
+                        <div class="elem-bandeau-leftSide">
+                            <h1 class="elem-bandeau-title">1- Audit</h1>
                         </div>
-                    </section>
-
-                    <section id="content2" style='display:none;'>
-                    </section>
-
-                    <section id="content3"  style='display:none;'>
-                    </section>
-
-                    <section id="content4"  style='display:none;'>
-                    </section>
-                </main>
-                <!-- bandeau -->
-                <div class="elem-bandeau mb-4">
-                    <div class="elem-bandeau-leftSide">
-                        <h1 class="elem-bandeau-title">2- Action</h1>
+                        <div class="elem-bandeau-rightSide">
+                            <button class="btn elem-button">Ajouter un audit</button>
+                            <i class="far fa-window-minimize"></i>
+                        </div>
                     </div>
-                    <div class="elem-bandeau-rightSide">
-                        <i class="far fa-window-minimize"></i>
+                    <main class="tab" id='audit-tab1'>
+                        <div class="tabHeader-elem active" onclick="openTab('content1','audit-tab1',this)">
+                            <span id="nbEquipments">34</span>En attente
+                        </div>
+                        <div class="tabHeader-elem" onclick="openTab('content2','audit-tab1',this)">
+                            <span>10</span>En révision
+                        </div>
+                        <div class="tabHeader-elem" onclick="openTab('content3','audit-tab1',this)">
+                            <span>3,33</span>Scoring
+                        </div>
+                        <div class="tabHeader-elem" onclick="openTab('content4','audit-tab1',this)">
+                            <span>92%</span>Progression
+                        </div>
+                        
+                        <section id="content1">
+                            <div id="equipmentTableWrapper">
+                                <table id="equipmentTable" class="simpleText">
+                                    <thead>
+                                        <tr>
+                                            <th>Thème</th>
+                                            <th>Nom</th>
+                                            <th>Date de début</th>
+                                            <th>Date de fin</th>
+                                            <th>Scoring</th>
+                                            <th>Progression</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                        
+                        <section id="content2" style='display:none;'>
+                        </section>
+                        
+                        <section id="content3"  style='display:none;'>
+                        </section>
+                        
+                        <section id="content4"  style='display:none;'>
+                        </section>
+                    </main>
+                    <!-- bandeau -->
+                    <div class="elem-bandeau mb-4">
+                        <div class="elem-bandeau-leftSide">
+                            <h1 class="elem-bandeau-title">2- Action</h1>
+                        </div>
+                        <div class="elem-bandeau-rightSide">
+                            <i class="far fa-window-minimize"></i>
+                        </div>
                     </div>
+                    <main class="tab" id="audit-tab2">
+                        
+                        <div class="tabHeader-elem active" onclick="openTab('content1','audit-tab2',this)">
+                            <span>21</span>A faire
+                        </div>
+                        
+                        <div class="tabHeader-elem" onclick="openTab('content2','audit-tab2',this)">
+                            <span>3</span>En cours
+                        </div>
+                        
+                        <div class="tabHeader-elem" onclick="openTab('content3','audit-tab2',this)">
+                            <span>12</span>Réalisées
+                        </div>
+                        
+                        <section id="content1">
+                            <div id="equipmentTableWrapper">
+                                <table id="equipmentTable" class="simpleText">
+                                    <thead>
+                                        <tr>
+                                            <th>Audit</th>
+                                            <th>Section</th>
+                                            <th>Question</th>
+                                            <th>Nom de l'action</th>
+                                            <th>Priorité</th>
+                                            <th>Echéance</th>
+                                            <th>Responsable</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                        
+                        <section style='display:none' id="content2">
+                        </section>
+                        
+                        <section style='display:none' id="content3">
+                        </section>
+                    </main>
+                    <!-- bandeau -->
+                    <div class="elem-bandeau mb-4">
+                        <div class="elem-bandeau-leftSide">
+                            <h1 class="elem-bandeau-title">3- Non conformité</h1>
+                        </div>
+                        <div class="elem-bandeau-rightSide">
+                            <i class="far fa-window-minimize"></i>
+                        </div>
+                    </div>
+                    <main class="tab" id="audit-tab3">
+                        <div class="tabHeader-elem active" onclick="openTab('content1','audit-tab3',this)">
+                            <span id="nbEquipments">22</span>A lever
+                        </div>
+                        <div class="tabHeader-elem" onclick="openTab('content2','audit-tab3',this)">
+                            <span>14</span>En cours
+                        </div>
+                        <div class="tabHeader-elem" onclick="openTab('content3','audit-tab3',this)">
+                            <span>22</span>Levées
+                        </div>
+                        
+                        <section id="content1">
+                            <div id="equipmentTableWrapper">
+                                <table id="equipmentTable" class="simpleText">
+                                    <thead>
+                                        <tr>
+                                            <th>Thème</th>
+                                            <th>Audit</th>
+                                            <th>Question</th>
+                                            <th>Détail de la NC</th>
+                                            <th>Criticité</th>
+                                            <th>A lever avant</th>
+                                            <th>Responsable</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                        
+                        <section style='display:none' id="content2">
+                        </section>
+                        
+                        <section style='display:none' id="content3">
+                        </section>
+                    </main>
                 </div>
-                <main class="tab" id="audit-tab2">
+            </div>
+            
+            <!-- EQUIPMENTS SECTION -->
+            <div class="sectionContainer">
+                <div class="primaryInfos">
+                    <i class="fas fa-wrench simpleTitle verticalAlignMiddle"></i>
+                    <div class="mainData" id="equipmentsMainData">
+                        <div class="mainDataTitle smallTitle">Equipements</div>
+                    </div>
+                    <i class="fas fa-plus iconTitle openCloseIcon"></i>
+                </div>
+                <div class="allData" id="equipmentsAllData">
+                    <main class="tab" id='equipement-tab1'>
+                        <div class="tabHeader-elem active" onclick="openTab('content1','equipement-tab1',this)">
+                            <span id="nbEquipments">80</span>Equipements
+                        </div>
+                        <div class="tabHeader-elem" onclick="openTab('content2','equipement-tab1',this)">
+                            <span>3%</span>Suivi
+                        </div>
+                        <div class="tabHeader-elem" onclick="openTab('content3','equipement-tab1',this)">
+                            <span>2</span>Non-conformités en retard
+                        </div>
+                        <div class="tabHeader-elem" onclick="openTab('content4','equipement-tab1',this)">
+                            <span>10</span> actions à faire
+                        </div>
+                        
+                        <section class='tabSection' id="content1">
+                            <div id="equipmentFilters" class="simpleText">
+                                <div class="inline verticalAlignMiddle">
+                                    <label>En fin de garantie dans
+                                        <select name="garantie" id="garantieSelector" class="selector">
+                                            <option value="">--Choisissez une valeur--</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="inline verticalAlignMiddle">
+                                    <label>Visites prévues dans
+                                        <select name="visite" id="visiteSelector" class="selector">
+                                            <option value="">--Choisissez une valeur--</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <label class="equipmentSwitchFilter verticalAlignMiddle">
+                                    <label id="equipmentSliderLabel">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                        Voir les non-conformités</label>
+                                    </label>
+                                </div>
+                                <div id="equipmentTableWrapper">
+                                    <table id="equipmentTable" class="simpleText">
+                                        <thead>
+                                            <tr>
+                                                <th>Thème</th>
+                                                <th>Identifiant</th>
+                                                <th>QR Code</th>
+                                                <th>Marque</th>
+                                                <th>Fin de garantie</th>
+                                                <th>NC à lever</th>
+                                                <th>Prochaine visite</th>
+                                                <th>Actions en cours</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                            
+                            <section class='tabSection' id="content2"  style='display:none;'>
+                                <p>
+                                    Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball
+                                    tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye
+                                    shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump
+                                    ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket
+                                    tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye
+                                    tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger
+                                    flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback
+                                    spare ribs salami beef ribs.
+                                </p>
+                                <p>
+                                    Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas
+                                    filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank
+                                    kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta.
+                                    Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip
+                                    leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
+                                </p>
+                            </section>
+                            
+                            <section class='tabSection' id="content3" style='display:none;'>
+                                <p>
+                                    Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone
+                                    sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket
+                                    meatloaf short ribs.
+                                </p>
+                                <p>
+                                    Brisket meatball turkey short loin boudin leberkas meatloaf chuck andouille pork loin
+                                    pastrami spare ribs pancetta rump. Frankfurter corned beef beef tenderloin short loin
+                                    meatloaf swine ground round venison.
+                                </p>
+                            </section>
+                            
+                            <section class='tabSection' id="content4" style='display:none;'>
+                                <p>
+                                    Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball
+                                    tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye
+                                    shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump
+                                    ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket
+                                    tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye
+                                    tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger
+                                    flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback
+                                    spare ribs salami beef ribs.
+                                </p>
+                                <p>
+                                    Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas
+                                    filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank
+                                    kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta.
+                                    Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip
+                                    leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
+                                </p>
+                            </section>
+                        </main>
+                        <div id="equipmentAddOne" class="simpleText">Ajouter un équipement</div>
+                    </div>
                     
-                    <div class="tabHeader-elem active" onclick="openTab('content1','audit-tab2',this)">
-                        <span>21</span>A faire
-                    </div>
-                    
-                    <div class="tabHeader-elem" onclick="openTab('content2','audit-tab2',this)">
-                        <span>3</span>En cours
-                    </div>
-
-                    <div class="tabHeader-elem" onclick="openTab('content3','audit-tab2',this)">
-                        <span>12</span>Réalisées
-                    </div>
-
-                    <section id="content1">
-                        <div id="equipmentTableWrapper">
-                            <table id="equipmentTable" class="simpleText">
-                                <thead>
-                                    <tr>
-                                        <th>Audit</th>
-                                        <th>Section</th>
-                                        <th>Question</th>
-                                        <th>Nom de l'action</th>
-                                        <th>Priorité</th>
-                                        <th>Echéance</th>
-                                        <th>Responsable</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-
-                    <section style='display:none' id="content2">
-                    </section>
-
-                    <section style='display:none' id="content3">
-                    </section>
-                </main>
-                <!-- bandeau -->
-                <div class="elem-bandeau mb-4">
-                    <div class="elem-bandeau-leftSide">
-                        <h1 class="elem-bandeau-title">3- Non conformité</h1>
-                    </div>
-                    <div class="elem-bandeau-rightSide">
-                        <i class="far fa-window-minimize"></i>
-                    </div>
                 </div>
-                <main class="tab" id="audit-tab3">
-                    <div class="tabHeader-elem active" onclick="openTab('content1','audit-tab3',this)">
-                        <span id="nbEquipments">22</span>A lever
-                    </div>
-                    <div class="tabHeader-elem" onclick="openTab('content2','audit-tab3',this)">
-                        <span>14</span>En cours
-                    </div>
-                    <div class="tabHeader-elem" onclick="openTab('content3','audit-tab3',this)">
-                        <span>22</span>Levées
-                    </div>
-
-                    <section id="content1">
-                        <div id="equipmentTableWrapper">
-                            <table id="equipmentTable" class="simpleText">
-                                <thead>
-                                    <tr>
-                                        <th>Thème</th>
-                                        <th>Audit</th>
-                                        <th>Question</th>
-                                        <th>Détail de la NC</th>
-                                        <th>Criticité</th>
-                                        <th>A lever avant</th>
-                                        <th>Responsable</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                
+                <!-- DOCUMENTS SECTION-->
+                <div class="sectionContainer">
+                    <div class="primaryInfos">
+                        <i class="fas fa-file-alt simpleTitle verticalAlignMiddle"></i>
+                        <div class="mainData" id="equipmentsMainData">
+                            <div class="mainDataTitle smallTitle">Documents</div>
                         </div>
-                    </section>
-
-                    <section style='display:none' id="content2">
-                    </section>
-
-                    <section style='display:none' id="content3">
-                    </section>
-                </main>
-            </div>
-        </div>
-
-        <!-- EQUIPMENTS SECTION -->
-        <div class="sectionContainer">
-            <div class="primaryInfos">
-                <i class="fas fa-wrench simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="equipmentsMainData">
-                    <div class="mainDataTitle smallTitle">Equipements</div>
-                </div>
-                <i class="fas fa-plus iconTitle openCloseIcon"></i>
-            </div>
-            <div class="allData" id="equipmentsAllData">
-                <main class="tab" id='equipement-tab1'>
-                    <div class="tabHeader-elem active" onclick="openTab('content1','equipement-tab1',this)">
-                        <span id="nbEquipments">80</span>Equipements
+                        <i class="fas fa-plus iconTitle openCloseIcon"></i>
                     </div>
-                    <div class="tabHeader-elem" onclick="openTab('content2','equipement-tab1',this)">
-                        <span>3%</span>Suivi
-                    </div>
-                    <div class="tabHeader-elem" onclick="openTab('content3','equipement-tab1',this)">
-                        <span>2</span>Non-conformités en retard
-                    </div>
-                    <div class="tabHeader-elem" onclick="openTab('content4','equipement-tab1',this)">
-                        <span>10</span> actions à faire
-                    </div>
-
-                    <section class='tabSection' id="content1">
+                    <div class="allData" id="equipmentsAllData">
+                        
+                        <!-- bandeau -->
+                        <div class="elem-bandeau mb-4">
+                            <div class="elem-bandeau-leftSide">
+                                <h1 class="elem-bandeau-title">1- Base documentaire</h1>
+                            </div>
+                            <div class="elem-bandeau-rightSide">
+                                <button class="btn elem-button">Ajouter un document</button>
+                                <i class="far fa-window-minimize"></i>
+                            </div>
+                        </div>
+                        
+                        <main class="tab" id="equipment-tab1">
+                            <div class="tabHeader-elem active" onclick="openTab('content1','equipment-tab1',this)">
+                                <span id="nbEquipments">87%</span>Documents obligatoires disponibles
+                            </div>
+                            <div class="tabHeader-elem" onclick="openTab('content2','equipment-tab1',this)">
+                                <span id="nbEquipments">34</span>Documents à renouveler
+                            </div>
+                            <div class="tabHeader-elem" onclick="openTab('content3','equipment-tab1',this)">
+                                <span id="nbEquipments">240</span>Documents à valider
+                            </div>
+                            
+                            <section id="content1">
+                                <div id="equipmentTableWrapper">
+                                    <table id="equipmentTable" class="simpleText">
+                                        <thead>
+                                            <tr>
+                                                <th>Thème</th>
+                                                <th>Libellé</th>
+                                                <th>Responsable</th>
+                                                <th>Dernière mise à jour</th>
+                                                <th>Version</th>
+                                                <th>Scope</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>Électricité</th>
+                                                <th>Bail de XYZ</th>
+                                                <th>Jean-Michel Dupont</th>
+                                                <th>21/11/2020</th>
+                                                <th>2</th>
+                                                <th>Orga</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Électricité</th>
+                                                <th>Bail de XYZ</th>
+                                                <th>Jean-Michel Dupont</th>
+                                                <th>21/11/2020</th>
+                                                <th>2</th>
+                                                <th>Orga</th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                            
+                            <section id="content2" style='display:none'>
+                                <p>
+                                    Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball
+                                    tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye
+                                    shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump
+                                    ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket
+                                    tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye
+                                    tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger
+                                    flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback
+                                    spare ribs salami beef ribs.
+                                </p>
+                                <p>
+                                    Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas
+                                    filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank
+                                    kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta.
+                                    Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip
+                                    leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
+                                </p>
+                            </section>
+                            
+                            <section id="content3" style='display:none'>
+                                <p>
+                                    Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone
+                                    sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket
+                                    meatloaf short ribs.
+                                </p>
+                                <p>
+                                    Brisket meatball turkey short loin boudin leberkas meatloaf chuck andouille pork loin
+                                    pastrami spare ribs pancetta rump. Frankfurter corned beef beef tenderloin short loin
+                                    meatloaf swine ground round venison.
+                                </p>
+                            </section>
+                        </main>
+                        <!-- bandeau -->
+                        <div class="elem-bandeau my-5">
+                            <div class="elem-bandeau-leftSide">
+                                <h1 class="elem-bandeau-title">2- Pièces-jointes</h1>
+                            </div>
+                            <div class="elem-bandeau-rightSide">
+                                <i class="far fa-window-minimize"></i>
+                            </div>
+                        </div>
+                        
                         <div id="equipmentFilters" class="simpleText">
                             <div class="inline verticalAlignMiddle">
-                                <label>En fin de garantie dans
+                                <label>Module :
                                     <select name="garantie" id="garantieSelector" class="selector">
                                         <option value="">--Choisissez une valeur--</option>
                                     </select>
                                 </label>
                             </div>
                             <div class="inline verticalAlignMiddle">
-                                <label>Visites prévues dans
+                                <label>Créé depuis :
                                     <select name="visite" id="visiteSelector" class="selector">
                                         <option value="">--Choisissez une valeur--</option>
                                     </select>
                                 </label>
                             </div>
-                            <label class="equipmentSwitchFilter verticalAlignMiddle">
-                                <label id="equipmentSliderLabel">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                    Voir les non-conformités</label>
-                            </label>
+                            
                         </div>
-                        <div id="equipmentTableWrapper">
-                            <table id="equipmentTable" class="simpleText">
-                                <thead>
-                                    <tr>
-                                        <th>Thème</th>
-                                        <th>Identifiant</th>
-                                        <th>QR Code</th>
-                                        <th>Marque</th>
-                                        <th>Fin de garantie</th>
-                                        <th>NC à lever</th>
-                                        <th>Prochaine visite</th>
-                                        <th>Actions en cours</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-
-                    <section class='tabSection' id="content2"  style='display:none;'>
-                        <p>
-                            Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball
-                            tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye
-                            shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump
-                            ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket
-                            tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye
-                            tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger
-                            flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback
-                            spare ribs salami beef ribs.
-                        </p>
-                        <p>
-                            Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas
-                            filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank
-                            kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta.
-                            Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip
-                            leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
-                        </p>
-                    </section>
-
-                    <section class='tabSection' id="content3" style='display:none;'>
-                        <p>
-                            Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone
-                            sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket
-                            meatloaf short ribs.
-                        </p>
-                        <p>
-                            Brisket meatball turkey short loin boudin leberkas meatloaf chuck andouille pork loin
-                            pastrami spare ribs pancetta rump. Frankfurter corned beef beef tenderloin short loin
-                            meatloaf swine ground round venison.
-                        </p>
-                    </section>
-
-                    <section class='tabSection' id="content4" style='display:none;'>
-                        <p>
-                            Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball
-                            tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye
-                            shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump
-                            ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket
-                            tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye
-                            tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger
-                            flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback
-                            spare ribs salami beef ribs.
-                        </p>
-                        <p>
-                            Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas
-                            filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank
-                            kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta.
-                            Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip
-                            leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
-                        </p>
-                    </section>
-                </main>
-                <div id="equipmentAddOne" class="simpleText">Ajouter un équipement</div>
-            </div>
-
-        </div>
-
-        <!-- DOCUMENTS SECTION-->
-        <div class="sectionContainer">
-            <div class="primaryInfos">
-                <i class="fas fa-file-alt simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="equipmentsMainData">
-                    <div class="mainDataTitle smallTitle">Documents</div>
-                </div>
-                <i class="fas fa-plus iconTitle openCloseIcon"></i>
-            </div>
-            <div class="allData" id="equipmentsAllData">
-
-                <!-- bandeau -->
-                <div class="elem-bandeau mb-4">
-                    <div class="elem-bandeau-leftSide">
-                        <h1 class="elem-bandeau-title">1- Base documentaire</h1>
-                    </div>
-                    <div class="elem-bandeau-rightSide">
-                        <button class="btn elem-button">Ajouter un document</button>
-                        <i class="far fa-window-minimize"></i>
-                    </div>
-                </div>
-
-                <main class="tab" id="equipment-tab1">
-                    <div class="tabHeader-elem active" onclick="openTab('content1','equipment-tab1',this)">
-                        <span id="nbEquipments">87%</span>Documents obligatoires disponibles
-                    </div>
-                    <div class="tabHeader-elem" onclick="openTab('content2','equipment-tab1',this)">
-                        <span id="nbEquipments">34</span>Documents à renouveler
-                    </div>
-                    <div class="tabHeader-elem" onclick="openTab('content3','equipment-tab1',this)">
-                        <span id="nbEquipments">240</span>Documents à valider
-                    </div>
-
-                    <section id="content1">
-                        <div id="equipmentTableWrapper">
+                        
+                        <!-- <div id="equipmentTableWrapper"> -->
                             <table id="equipmentTable" class="simpleText">
                                 <thead>
                                     <tr>
@@ -1589,334 +1739,239 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <!-- </div> -->
                         </div>
-                    </section>
-
-                    <section id="content2" style='display:none'>
-                        <p>
-                            Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball
-                            tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye
-                            shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump
-                            ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket
-                            tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye
-                            tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger
-                            flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback
-                            spare ribs salami beef ribs.
-                        </p>
-                        <p>
-                            Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas
-                            filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank
-                            kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta.
-                            Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip
-                            leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
-                        </p>
-                    </section>
-
-                    <section id="content3" style='display:none'>
-                        <p>
-                            Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone
-                            sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket
-                            meatloaf short ribs.
-                        </p>
-                        <p>
-                            Brisket meatball turkey short loin boudin leberkas meatloaf chuck andouille pork loin
-                            pastrami spare ribs pancetta rump. Frankfurter corned beef beef tenderloin short loin
-                            meatloaf swine ground round venison.
-                        </p>
-                    </section>
-                </main>
-                <!-- bandeau -->
-                <div class="elem-bandeau my-5">
-                    <div class="elem-bandeau-leftSide">
-                        <h1 class="elem-bandeau-title">2- Pièces-jointes</h1>
+                        
                     </div>
-                    <div class="elem-bandeau-rightSide">
-                        <i class="far fa-window-minimize"></i>
-                    </div>
-                </div>
-
-                <div id="equipmentFilters" class="simpleText">
-                    <div class="inline verticalAlignMiddle">
-                        <label>Module :
-                            <select name="garantie" id="garantieSelector" class="selector">
-                                <option value="">--Choisissez une valeur--</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="inline verticalAlignMiddle">
-                        <label>Créé depuis :
-                            <select name="visite" id="visiteSelector" class="selector">
-                                <option value="">--Choisissez une valeur--</option>
-                            </select>
-                        </label>
-                    </div>
-
-                </div>
-
-                <!-- <div id="equipmentTableWrapper"> -->
-                <table id="equipmentTable" class="simpleText">
-                    <thead>
-                        <tr>
-                            <th>Thème</th>
-                            <th>Libellé</th>
-                            <th>Responsable</th>
-                            <th>Dernière mise à jour</th>
-                            <th>Version</th>
-                            <th>Scope</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Électricité</th>
-                            <th>Bail de XYZ</th>
-                            <th>Jean-Michel Dupont</th>
-                            <th>21/11/2020</th>
-                            <th>2</th>
-                            <th>Orga</th>
-                        </tr>
-                        <tr>
-                            <th>Électricité</th>
-                            <th>Bail de XYZ</th>
-                            <th>Jean-Michel Dupont</th>
-                            <th>21/11/2020</th>
-                            <th>2</th>
-                            <th>Orga</th>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- </div> -->
-            </div>
-
-        </div>
-
-        <!-- DATA COLLECTION SECTION -->
-        <div class="sectionContainer">
-            <div class="primaryInfos">
-                <i class="fas fa-sd-card simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="dataCollectionMainData">
-                    <div class="mainDataTitle smallTitle">Collecte de données</div>
-                    <div class="mainDataSubTitle simpleText">4 campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
-                        <span class="redTextColor">23% de complétion</span></div>
-                </div>
-                <i class="fas fa-plus iconTitle openCloseIcon"></i>
-            </div>
-            <div class="allData" id="dataCollectionAllData">
-            </div>
-        </div>
-
-        <!-- INCIDENTS SECTION -->
-        <div class="sectionContainer">
-            <div class="primaryInfos">
-                <i class="fas fa-exclamation-triangle simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="incidentsMainData">
-                    <div class="mainDataTitle smallTitle">Incidents</div>
-                    <div class="mainDataSubTitle simpleText">23 incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 11
-                        presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 accidents</div>
-                </div>
-                <i class="fas fa-plus iconTitle openCloseIcon"></i>
-            </div>
-            <div class="allData" id="incidentsAllData">
-            </div>
-        </div>
-
-        <!-- SCHEMA DIRECTORY SECTION -->
-        <div class="sectionContainer">
-            <div class="primaryInfos">
-                <i class="fas fa-rocket simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="schemaDirectoryMainData">
-                    <div class="mainDataTitle smallTitle">Schéma directeur</div>
-                    <div class="mainDataSubTitle simpleText">4 plans quinquénnaux &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 12
-                        actions en retard</div>
-                </div>
-                <i class="fas fa-plus iconTitle openCloseIcon"></i>
-            </div>
-            <div class="allData" id="schemaDirectoryAllData">
-            </div>
-        </div>
-
-    </div>
-</body>
-
-</html>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous">
-    </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-<script src="./horizontalTreePlugin/dist/jquery.hortree.min.js"></script>
-<script src="./horizontalTreePlugin/demo/jquery.line.js"></script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Add event when user click on openCloseIcon element :
-        handleOpenCloseContainer();
-
-        let jsonLegalDataOne = [{
-            description: "Propriété de Veolia",
-            children: [{
-                description: "Locataire n°1",
-                children: [{
-                    description: "Bale 123",
-                    children: []
-                },
-                {
-                    description: "Sous-Location n°2",
-                    children: []
-                }
-                ]
-            },
-            {
-                description: "Altran Services SA",
-                children: [{
-                    description: "Bale 123",
-                    children: []
-                },
-                {
-                    description: "Bale 99",
-                    children: []
-                }
-                ]
-            },
-            {
-                description: "Altran Services SA",
-                children: []
-            },
-            {
-                description: "Altran Services SA",
-                children: []
-            }
-            ]
-        }];
-        let jsonLegalDataTwo = [{
-            description: "FR69.P01 FR33.00001 - CMA CGM",
-            children: [{
-                description: "Altran Services SA",
-                children: []
-            },
-            {
-                description: "Altran Services SA",
-                children: []
-            }
-            ]
-        }];
-
-        // Horizontal tree creation in Legal Section :
-        createLegalHortree([{
-            horTreeId: "#legalHorTreeOne",
-            horTreeData: jsonLegalDataOne
-        }, {
-            horTreeId: "#legalHorTreeTwo",
-            horTreeData: jsonLegalDataTwo
-        }]);
-
-
-        // $('.allData').each(function () {
-        //     $(this).addClass('active');
-        // });
-    });
-
-    function handleOpenCloseContainer() {
-        let iconOpenContainer = document.querySelectorAll(".openCloseIcon");
-        iconOpenContainer.forEach(element => {
-            element.addEventListener("click", () => {
-                let nextPartContainer = element.parentNode.nextElementSibling;
-
-                if (nextPartContainer.classList.contains("active")) {
-                    nextPartContainer.classList.remove("active");
-                    element.classList.replace('fa-window-minimize', 'fa-plus');
-                } else {
-                    nextPartContainer.classList.add("active");
-                    element.classList.replace('fa-plus', 'fa-window-minimize');
-                }
-            });
-        });
-    }
-
-    function createLegalHortree(arrayHorTreeObjects) {
-        // Creation of the HorTrees
-        arrayHorTreeObjects.forEach((object) => {
-            $(object.horTreeId).hortree({
-                data: object.horTreeData
-            });
-        });
-
-        let horTreeContainers = document.getElementsByClassName("legalHorTreeContainer");
-
-        // The marginTop of the lines of the new HorTree == marginTop of lines of previous HorTree +
-        // height of previous HorTree + marginTop of previous HorTree
-        Array.from(horTreeContainers).forEach((container, index) => {
-            if (index < horTreeContainers.length - 1) {
-                let horTreeLineMarginTop = parseInt(getComputedStyle(document.querySelector("#" + container.id +
-                    " .line")).marginTop);
-                let horTreeHeight = parseInt(getComputedStyle(container).height);
-                let horTreeMarginTop = parseInt(getComputedStyle(container).marginTop);
-                let nextHorTreeLineMarginTop = horTreeLineMarginTop + horTreeHeight + horTreeMarginTop;
-
-                Array.from(document.querySelectorAll("#" + horTreeContainers[index + 1].id + " .line")).forEach(
-                    (line) => {
-                        line.style.marginTop = nextHorTreeLineMarginTop.toString() + "px";
-                    });
-            }
-        });
-
-        // Text format of the labels
-        Array.from(document.getElementsByClassName("hortree-label")).forEach((label) => {
-            label.classList.add("simpleText");
-        });
-
-        // Managing background color of the labels (depending of their section) + the tooltips only for the first section
-        $(".hortree-label").tooltip({
-            html: true,
-            title: "<div class='simpleText'>" +
-                "Surface totale Propriétaire : <strong>1 000 m²</strong><br />" +
-                "Montant d'acquisition : <strong>12 000 000 €</strong><br />" +
-                "Date d'acquisition : <strong>07/05/2001</strong></div>",
-            placement: "top",
-            container: "body"
-        })
-        Array.from(horTreeContainers).forEach((container, index) => {
-            container.querySelectorAll(".hortree-branch").forEach((branch, indexBis) => {
-                if (indexBis === 0) {
-                    branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
-                        if (index === 0)
-                            label.style.backgroundColor = "#79D6CB";
-                        else if (index === 1)
-                            label.style.backgroundColor = "#7BD679";
-                    })
-                } else if (indexBis === 1) {
-                    branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
-                        $(label).tooltip("disable");
-                        label.style.backgroundColor = "#76BA74";
-                    })
-                } else if (indexBis > 1) {
-                    branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
-                        $(label).tooltip("disable");
-                        label.style.backgroundColor = "#548852";
-                    })
-                }
-            });
-        });
-    }
-
-        const openTab = (tabId, tabMainId,elem) => {
-            // Display section
-            var section = document.querySelectorAll("#"+tabMainId + " section");
-            for (let i = 0; i < section.length; i++) {
-                section[i].style.display = "none";
-            }
+                    
+                    <!-- DATA COLLECTION SECTION -->
+                    <div class="sectionContainer">
+                        <div class="primaryInfos">
+                            <i class="fas fa-sd-card simpleTitle verticalAlignMiddle"></i>
+                            <div class="mainData" id="dataCollectionMainData">
+                                <div class="mainDataTitle smallTitle">Collecte de données</div>
+                                <div class="mainDataSubTitle simpleText">4 campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
+                                    <span class="redTextColor">23% de complétion</span></div>
+                                </div>
+                                <i class="fas fa-plus iconTitle openCloseIcon"></i>
+                            </div>
+                            <div class="allData" id="dataCollectionAllData">
+                            </div>
+                        </div>
+                        
+                        <!-- INCIDENTS SECTION -->
+                        <div class="sectionContainer">
+                            <div class="primaryInfos">
+                                <i class="fas fa-exclamation-triangle simpleTitle verticalAlignMiddle"></i>
+                                <div class="mainData" id="incidentsMainData">
+                                    <div class="mainDataTitle smallTitle">Incidents</div>
+                                    <div class="mainDataSubTitle simpleText">23 incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 11
+                                        presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 accidents</div>
+                                    </div>
+                                    <i class="fas fa-plus iconTitle openCloseIcon"></i>
+                                </div>
+                                <div class="allData" id="incidentsAllData">
+                                </div>
+                            </div>
+                            
+                            <!-- SCHEMA DIRECTORY SECTION -->
+                            <div class="sectionContainer">
+                                <div class="primaryInfos">
+                                    <i class="fas fa-rocket simpleTitle verticalAlignMiddle"></i>
+                                    <div class="mainData" id="schemaDirectoryMainData">
+                                        <div class="mainDataTitle smallTitle">Schéma directeur</div>
+                                        <div class="mainDataSubTitle simpleText">4 plans quinquénnaux &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 12
+                                            actions en retard</div>
+                                        </div>
+                                        <i class="fas fa-plus iconTitle openCloseIcon"></i>
+                                    </div>
+                                    <div class="allData" id="schemaDirectoryAllData">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </body>
+                        
+                        </html>
+                        
+                        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+                        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous">
+                    </script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+                </script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+            </script>
+            <script src="./horizontalTreePlugin/dist/jquery.hortree.min.js"></script>
+            <script src="./horizontalTreePlugin/demo/jquery.line.js"></script>
             
-            // Toggle active class on header 
-            var headerElems =  document.querySelectorAll("#"+ tabMainId + " .tabHeader-elem");
-            for(let i=0; i< headerElems.length;i++){
-                headerElems[i].classList.remove("active");
-            }
-            elem.classList.add("active");
-
-            document.querySelector( "#" + tabMainId+ " #"+tabId).style.display = "block";
-      }
-</script>
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    // Add event when user click on openCloseIcon element :
+                    handleOpenCloseContainer();
+                    
+                    let jsonLegalDataOne = [{
+                        description: "Propriété de Veolia",
+                        children: [{
+                            description: "Locataire n°1",
+                            children: [{
+                                description: "Bale 123",
+                                children: []
+                            },
+                            {
+                                description: "Sous-Location n°2",
+                                children: []
+                            }
+                            ]
+                        },
+                        {
+                            description: "Altran Services SA",
+                            children: [{
+                                description: "Bale 123",
+                                children: []
+                            },
+                            {
+                                description: "Bale 99",
+                                children: []
+                            }
+                            ]
+                        },
+                        {
+                            description: "Altran Services SA",
+                            children: []
+                        },
+                        {
+                            description: "Altran Services SA",
+                            children: []
+                        }
+                        ]
+                    }];
+                    let jsonLegalDataTwo = [{
+                        description: "FR69.P01 FR33.00001 - CMA CGM",
+                        children: [{
+                            description: "Altran Services SA",
+                            children: []
+                        },
+                        {
+                            description: "Altran Services SA",
+                            children: []
+                        }
+                        ]
+                    }];
+                    
+                    // Horizontal tree creation in Legal Section :
+                    createLegalHortree([{
+                        horTreeId: "#legalHorTreeOne",
+                        horTreeData: jsonLegalDataOne
+                    }, {
+                        horTreeId: "#legalHorTreeTwo",
+                        horTreeData: jsonLegalDataTwo
+                    }]);
+                    
+                    
+                    // $('.allData').each(function () {
+                        //     $(this).addClass('active');
+                        // });
+                    });
+                    
+                    function handleOpenCloseContainer() {
+                        let iconOpenContainer = document.querySelectorAll(".openCloseIcon");
+                        iconOpenContainer.forEach(element => {
+                            element.addEventListener("click", () => {
+                                let nextPartContainer = element.parentNode.nextElementSibling;
+                                
+                                if (nextPartContainer.classList.contains("active")) {
+                                    nextPartContainer.classList.remove("active");
+                                    element.classList.replace('fa-window-minimize', 'fa-plus');
+                                } else {
+                                    nextPartContainer.classList.add("active");
+                                    element.classList.replace('fa-plus', 'fa-window-minimize');
+                                }
+                            });
+                        });
+                    }
+                    
+                    function createLegalHortree(arrayHorTreeObjects) {
+                        // Creation of the HorTrees
+                        arrayHorTreeObjects.forEach((object) => {
+                            $(object.horTreeId).hortree({
+                                data: object.horTreeData
+                            });
+                        });
+                        
+                        let horTreeContainers = document.getElementsByClassName("legalHorTreeContainer");
+                        
+                        // The marginTop of the lines of the new HorTree == marginTop of lines of previous HorTree +
+                        // height of previous HorTree + marginTop of previous HorTree
+                        Array.from(horTreeContainers).forEach((container, index) => {
+                            if (index < horTreeContainers.length - 1) {
+                                let horTreeLineMarginTop = parseInt(getComputedStyle(document.querySelector("#" + container.id +
+                                " .line")).marginTop);
+                                let horTreeHeight = parseInt(getComputedStyle(container).height);
+                                let horTreeMarginTop = parseInt(getComputedStyle(container).marginTop);
+                                let nextHorTreeLineMarginTop = horTreeLineMarginTop + horTreeHeight + horTreeMarginTop;
+                                
+                                Array.from(document.querySelectorAll("#" + horTreeContainers[index + 1].id + " .line")).forEach(
+                                (line) => {
+                                    line.style.marginTop = nextHorTreeLineMarginTop.toString() + "px";
+                                });
+                            }
+                        });
+                        
+                        // Text format of the labels
+                        Array.from(document.getElementsByClassName("hortree-label")).forEach((label) => {
+                            label.classList.add("simpleText");
+                        });
+                        
+                        // Managing background color of the labels (depending of their section) + the tooltips only for the first section
+                        $(".hortree-label").tooltip({
+                            html: true,
+                            title: "<div class='simpleText'>" +
+                                "Surface totale Propriétaire : <strong>1 000 m²</strong><br />" +
+                                "Montant d'acquisition : <strong>12 000 000 €</strong><br />" +
+                                "Date d'acquisition : <strong>07/05/2001</strong></div>",
+                                placement: "top",
+                                container: "body"
+                            })
+                            Array.from(horTreeContainers).forEach((container, index) => {
+                                container.querySelectorAll(".hortree-branch").forEach((branch, indexBis) => {
+                                    if (indexBis === 0) {
+                                        branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
+                                            if (index === 0)
+                                            label.style.backgroundColor = "#79D6CB";
+                                            else if (index === 1)
+                                            label.style.backgroundColor = "#7BD679";
+                                        })
+                                    } else if (indexBis === 1) {
+                                        branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
+                                            $(label).tooltip("disable");
+                                            label.style.backgroundColor = "#76BA74";
+                                        })
+                                    } else if (indexBis > 1) {
+                                        branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
+                                            $(label).tooltip("disable");
+                                            label.style.backgroundColor = "#548852";
+                                        })
+                                    }
+                                });
+                            });
+                        }
+                        
+                        const openTab = (tabId, tabMainId,elem) => {
+                            // Display section
+                            var section = document.querySelectorAll("#"+tabMainId + " section");
+                            for (let i = 0; i < section.length; i++) {
+                                section[i].style.display = "none";
+                            }
+                            
+                            // Toggle active class on header 
+                            var headerElems =  document.querySelectorAll("#"+ tabMainId + " .tabHeader-elem");
+                            for(let i=0; i< headerElems.length;i++){
+                                headerElems[i].classList.remove("active");
+                            }
+                            elem.classList.add("active");
+                            
+                            document.querySelector( "#" + tabMainId+ " #"+tabId).style.display = "block";
+                        }
+                    </script>
