@@ -284,22 +284,23 @@ function monthDiff(d1, d2) {
 }
 
 function loadDataDocuments(oSite) {
-    let equipmentsAllData = document.getElementById("equipmentsAllData");
+    let documentsAllData = document.getElementById("documentsAllData");
 
     let rowFirstTable = "";
     Array.from(jsonAllDocuments).forEach( document => {
         if (document.OrganizationId == oSite.Id) {
             let createdDate = (document.CreatedDateString) ? document.CreatedDateString : "Inconnue";
             let updateOn = (document.ModifiedDateString) ? document.ModifiedDateString : createdDate;
+            var owner = (document.AuditorOwnerFullName) ? document.AuditorOwnerFullName : "Inconnu";
             let name = (document.Name) ? document.Name : "Inconnu";
             let theme = (document.ThemeLocalizedName) ? document.ThemeLocalizedName : "Inconnu";
             let version = (document.Version) ? document.Version : "Inconnue";
-            rowFirstTable += "<tr><td>"+ theme +"</td><td>"+ name +"</td><td>"+ AuditorOwnerFullName +"</td><td>"+ updateOn +"</td><td>"+ version +"</td></tr>";
+            rowFirstTable += "<tr><td>"+ theme +"</td><td>"+ name +"</td><td>"+ owner +"</td><td>"+ updateOn +"</td><td>"+ version +"</td></tr>";
         }
     });
 
     //First Table
-    equipmentsAllData.querySelector("#documentFirstTable > tbody").innerHTML = rowFirstTable;
+    documentsAllData.querySelector("#documentFirstTable > tbody").innerHTML = rowFirstTable;
     
 }
 
