@@ -723,6 +723,92 @@ body {
     margin-top: 702px;
 }
 
+.legalSubSectionTitle:not(:first-child) {
+    margin-top: 32px;
+}
+
+.legalSubSection {
+    margin-top: 20px;
+    margin-left: 53px;
+}
+
+#legalGaugeSection {
+    margin-top: 20px;
+    margin-left: 12px;
+}
+
+#legalGaugeSection > div {
+    display: inline-block;
+    vertical-align: top;
+    height: 200px;
+    width: 200px;
+    padding: 0 16px 0 16px;
+}
+
+.legalGauge:not(:first-child) {
+    border-left: 1px solid #DBDBDB;
+}
+
+.gaugeTextDisplay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    margin-top: -35px;
+    font-weight: lighter;
+}
+
+.gaugeDataText {
+    font-size: 26px;
+}
+
+.legalGaugeData {
+    display: inline-flex !important;
+    flex-direction: column;
+    justify-content: center;
+    width: 110px !important;
+    transform: translateX(-44px);
+}
+
+.legalGaugeData > div {
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.legalGaugeSquare {
+    height: 18px;
+    width: 18px;
+    margin-right: 6px;
+}
+
+#legalInternalSquare {
+    background-color: #7BD679;
+}
+
+#legalExternalSquare {
+    background-color: #7984D6;
+}
+
+#legalFactorySquare {
+    background-color: #FF5858;
+}
+
+#legalOfficeSquare {
+    background-color: #FFE22B;
+}
+
+#legalWarehouseSquare {
+    background-color: #7984D6;
+}
+
+#legalStoreSquare {
+    background-color: #7BD679;
+}
+
 /* COMPLIANCE Section Properties */
 
 #complianceMainData {

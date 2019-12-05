@@ -1,8 +1,8 @@
-<!-- Part of Razor -->
+<!-- Part of Razor A -->
 @using Newtonsoft.Json
 
 @{    
-    var organizations = VP.GetEntitiesData("Organization", "Image.Id,Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ERPTypes.TypeName,M2,UrlBentley,Lat,Long", "EntityState=Active,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
+    var organizations = VP.GetEntitiesData("Organization", "Image.Id,Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ERPTypes.TypeName,M2,UrlBentley,Lat,Long", "Level=4,EntityState=Active,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
     var contacts = VP.GetEntitiesData("OrganizationContact", "Organization.Id,Contact.FullName,Contact.Email,Contact.Job,Contact.Denomination,Contact.LastConnection,Contact.ConnectionsCounter,Contact.MobilePro,Contact.LandlinePro,Contact.AllPhone", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
     
     var equipments = VP.GetEntitiesData("Equipment", "Id,Organization.Id,Name,Theme,Reference,QRCode,Brand,EndOfGuarantee", "");
@@ -12,7 +12,7 @@
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var propertyTitles = VP.GetEntitiesData("PropertyTitle", "Id,Organization.Id,Reference,Surface,AcquisitionCost,AcquisitionDate", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var owners = VP.GetEntitiesData("Owner", "Id,Organizations.Id,Denomination", "Organizations.IsArchive=False,Organizations.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
-    var baux = VP.GetEntitiesData("Bail", "Id,Reference,Owner.Id,PropertyTitle.Id,BailParent.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
+    var baux = VP.GetEntitiesData("Bail", "Id,Reference,Owner.Id,PropertyTitle.Id,BailParent.Id,MaxCapacity,OccupiedWorkstationsNb,LesseeType,ContractType", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
 }
 
 <!-- Id,Name,Image.Id,Code,StaffCount,AddressLine1,City,PostCode,Country.Name,AuditDataWorkflowStatus,RPlusFloSurfaceSHONorCount,RMinusFloorCount,IsArchive,EntityState,SurfaceSHON,BuyingDate,VisitLate,ReserveCritTodo,M2,LastRepairDate,ActivitiesAndSector,ModifiedDate -->
@@ -177,6 +177,21 @@
                         <div id="legalLegendSquareExtern" class="legalLegendSquares"></div>Titres de propriété externes
                     </div>
                 </div>
+                <div class="legalSubSectionTitle smallTitle">2 - Occupation</div>
+                <div class="legalSubSection" id="legalGaugeSection">
+                    <div class="legalGauge" id="legalOccupationGauge"></div>
+                    <div class="legalGauge" id="legalRepartitionGauge"></div>
+                    <div class="legalGaugeData simpleText">
+                        <div class="simpleText"><div class="legalGaugeSquare" id="legalInternalSquare"></div>Interne -&nbsp<span id="legalInternalData"></span>%</div>
+                        <div class="simpleText"><div class="legalGaugeSquare" id="legalExternalSquare"></div>Externe -&nbsp<span id="legalExternalData"></span>%</div>
+                    </div>
+                    <div class="legalGauge" id="legalSurfaceTypeGauge"></div>
+                    <div class="legalGaugeData simpleText">
+                        <div class="simpleText"><div class="legalGaugeSquare" id="legalFactorySquare"></div>Usine -&nbsp<span id="legalFactoryData"></span>%</div>
+                        <div class="simpleText"><div class="legalGaugeSquare" id="legalOfficeSquare"></div>Bureau -&nbsp<span id="legalOfficeData"></span>%</div>
+                        <div class="simpleText"><div class="legalGaugeSquare" id="legalWarehouseSquare"></div>Entrepôt -&nbsp<span id="legalWarehouseData"></span>%</div>
+                        <div class="simpleText"><div class="legalGaugeSquare" id="legalStoreSquare"></div>Magasin -&nbsp<span id="legalStoreData"></span>%</div>
+                    </div>
                 <div id="legalHorTreeTitles">
                     <div class="simpleText">Titres de propriété</div>
                     <div class="simpleText">Baux</div>

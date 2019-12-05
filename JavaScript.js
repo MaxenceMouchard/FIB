@@ -4,48 +4,7 @@
 /* ------ LINE PLUGIN ------ */
 !function (t) { var e = function (t, e, s, l, a) { var n = navigator.userAgent.indexOf("MSIE") > -1; if (s < t) { var r = t; t = s, s = r, r = e, e = l, l = r } var o = document.createElement("div"); o.className = a.class; var i = Math.sqrt((t - s) * (t - s) + (e - l) * (e - l)); if (o.style.width = i + "px", o.style.borderBottom = a.stroke + "px " + a.style, o.style.borderColor = a.color, o.style.position = "absolute", o.style.zIndex = a.zindex, n) { o.style.top = l > e ? e + "px" : l + "px", o.style.left = t + "px"; var c = (s - t) / i, f = (l - e) / i; o.style.filter = "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=" + c + ", M12=" + -1 * f + ", M21=" + f + ", M22=" + c + ")" } else { var d = Math.atan((l - e) / (s - t)); o.style.top = e + .5 * i * Math.sin(d) + "px", o.style.left = t - .5 * i * (1 - Math.cos(d)) + "px", o.style.transform = o.style.MozTransform = o.style.WebkitTransform = o.style.msTransform = o.style.OTransform = "rotate(" + d + "rad)" } return o }; t.fn.line = function (s, l, a, n, r, o) { return t(this).each(function () { t.isFunction(r) ? (callback = r, r = null) : callback = o, r = t.extend({}, t.fn.line.defaults, r), t(this).append(e(s, l, a, n, r)).promise().done(function () { t.isFunction(callback) && callback.call() }) }) }, t.fn.line.defaults = { zindex: 1e4, color: "#000000", stroke: "1", style: "solid", class: "line" } }(jQuery);
 
-/* ------ CODE ------ */
-let jsonLegalDataOne = [
-    {
-        description: "Propriété de Veolia",
-        children: [
-            {
-                description: "Locataire n°1",
-                children: [
-                    {
-                        description: "Bale 123",
-                        children: []
-                    },
-                    {
-                        description: "Sous-Location n°2",
-                        children: []
-                    }
-                ]
-            },
-            {
-                description: "Altran Services SA",
-                children: [
-                    {
-                        description: "Bale 123",
-                        children: []
-                    },
-                    {
-                        description: "Bale 99",
-                        children: []
-                    }
-                ]
-            },
-            {
-                description: "Altran Services SA",
-                children: []
-            },
-            {
-                description: "Altran Services SA",
-                children: []
-            }
-        ]
-    }
-];
+/* ------ CODE ------ A */
 
 let jsonLegalDataTwo = [
     {
@@ -71,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleSiteSelectorFilter();
 
     // site pré-selectionné pour les tests : à supprimer
-    document.getElementById("siteSelector").selectedIndex = 20;
+    document.getElementById("siteSelector").selectedIndex = 9;
     $("#searchFilterButton").trigger("click");
 
     // Add event when user click on openCloseIcon element :
@@ -333,6 +292,9 @@ function loadDataPropertyTitles(oSite) {
     let nbExternalLeases = 0;
     let nbSubLeases = 0;
     
+    let maxCapacity = 0;
+    let occupiedWorkstation = 0;
+    
     document.getElementById("legalHorTreeContainers").innerHTML = "";
     console.log(jsonAllPropertyTitles);
     console.log(jsonAllContacts);
@@ -359,6 +321,8 @@ function loadDataPropertyTitles(oSite) {
                         description: jsonAllBaux[j].Reference,
                         children: subLeases
                     });
+                    maxCapacity += jsonAllBaux[j].MaxCapacity;
+                    occupiedWorkstation += jsonAllBaux[j].OccupiedWorkstationsNb;
                     nbInternalLeases += 1;
                 }
             }
@@ -408,6 +372,8 @@ function loadDataPropertyTitles(oSite) {
                         description: jsonAllBaux[j].Reference,
                         children: subLeases
                     });
+                    maxCapacity += jsonAllBaux[j].MaxCapacity;
+                    occupiedWorkstation += jsonAllBaux[j].OccupiedWorkstationsNb;
                     nbExternalLeases += 1;
                 }
             }
@@ -441,12 +407,69 @@ function loadDataPropertyTitles(oSite) {
     createLegalHortree(propertyTitles_owners);
 }
 
-function handleOpenCloseContainer() {
-    let iconOpenContainer = document.querySelectorAll(".openCloseIcon");
+    // SUB-SECTION 2 :
+    let percentageOccupation = maxCapacity > 0 ? Math.round(occupiedWorkstation / maxCapacity * 100) : 0;
+    let percentageInternalLease = (nbInternalLeases + nbExternalLeases) > 0 ? Math.round(nbInternalLeases / (nbInternalLeases + nbExternalLeases) * 100) : 0;
+    let percentageExternalLease = (nbInternalLeases + nbExternalLeases) > 0 ? Math.round(nbExternalLeases / (nbInternalLeases + nbExternalLeases) * 100) : 0;
 
-    iconOpenContainer.forEach(element => {
-        element.addEventListener("click", () => {
-            let nextPartContainer = element.parentNode.nextElementSibling;
+console.log(jsonAllBaux)
+
+    document.getElementById("legalInternalData").innerHTML = percentageInternalLease;
+    document.getElementById("legalExternalData").innerHTML = percentageExternalLease;
+    displayGauge("legalOccupationGauge", [{
+        y: percentageOccupation,
+        color: this.y < 50 ? "#FF0000" : this.y < 75 ? "#FFA500" : "#7BD679",
+        radius: 100,
+        innerRadius: 94,
+        labela: percentageOccupation + "%",
+        labelb: "d'occupation"
+    }]);
+
+    displayGauge("legalRepartitionGauge", [{
+        y: percentageInternalLease > 0 || percentageExternalLease > 0 ? 100 : 0,
+        color: "#7BD679",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Répartition<br />d'occupation"
+    }, {
+        y: percentageExternalLease,
+        color: "#7984D6",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Répartition<br />d'occupation"
+    }]);
+    
+    displayGauge("legalSurfaceTypeGauge", [{
+        y: 100,
+        color: "#7BD679",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Occupation par<br />type de surface"
+    }, {
+        y: 70,
+        color: "#7984D6",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Occupation par<br />type de surface"
+    }, {
+        y: 40,
+        color: "#FFE22B",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Occupation par<br />type de surface"
+    }, {
+        y: 15,
+        color: "#FF5858",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Occupation par<br />type de surface"
+    }]);
 
             if (nextPartContainer.classList.contains("active")) {
                 nextPartContainer.classList.remove("active");
