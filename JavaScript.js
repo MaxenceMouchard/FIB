@@ -11,6 +11,8 @@ let identityMapMarkers = [];
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log(jsonAllOrganizations)
+    console.log("ici")
+    console.log(jsonAllDocuments)
 
     // Handle the site selection
     handleSiteSelectorFilter();
@@ -60,6 +62,8 @@ function loadNewOrganization(siteId) {
     loadDataBatiment(selectedSite);
     loadDataContacts(selectedSite);
     loadDataPropertyTitles(selectedSite);
+    loadDataEquipments(selectedSite);
+    loadDataDocuments(selectedSite);
 }
 
 function loadDataBatiment(oSite) {
@@ -223,7 +227,8 @@ function loadDataEquipments(oSite) {
 
     let nbVisits = 0;
     Array.from(jsonAllEquipmentsVisit).forEach( visit => {
-        nbVisits += visit.EquipmentsId.split(',').length;
+        if (visit.OrganizationId == oSite.Id)
+            nbVisits += visit.EquipmentsId.split(',').length;
     });
 
 	if (counterEquipment > 0) {
@@ -276,6 +281,26 @@ function monthDiff(d1, d2) {
     months -= d1.getMonth() + 1;
     months += d2.getMonth();
     return months <= 0 ? 0 : months;
+}
+
+function loadDataDocuments(oSite) {
+    let equipmentsAllData = document.getElementById("equipmentsAllData");
+
+    let rowFirstTable = "";
+    Array.from(jsonAllDocuments).forEach( document => {
+        if (document.OrganizationId == oSite.Id) {
+            let createdDate = (document.CreatedDateString) ? document.CreatedDateString : "Inconnue";
+            let updateOn = (document.ModifiedDateString) ? document.ModifiedDateString : createdDate;
+            let name = (document.Name) ? document.Name : "Inconnu";
+            let theme = (document.ThemeLocalizedName) ? document.ThemeLocalizedName : "Inconnu";
+            let version = (document.Version) ? document.Version : "Inconnue";
+            rowFirstTable += "<tr><td>"+ theme +"</td><td>"+ name +"</td><td>"+ AuditorOwnerFullName +"</td><td>"+ updateOn +"</td><td>"+ version +"</td></tr>";
+        }
+    });
+
+    //First Table
+    equipmentsAllData.querySelector("#documentFirstTable > tbody").innerHTML = rowFirstTable;
+    
 }
 
 function loadDataPropertyTitles(oSite) {

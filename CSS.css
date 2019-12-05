@@ -79,7 +79,9 @@
 #tab1:checked~#content1,
 #tab2:checked~#content2,
 #tab3:checked~#content3,
-#tab4:checked~#content4 {
+#tab4:checked~#content4,
+#tab5:checked~#content5,
+#tab6:checked~#content6 {
     display: block;
 }
 
@@ -961,30 +963,30 @@ input:checked+.slider:before {
     margin-left: 36px;
 }
 
-.equipmentTableWrapper {
+.tableWrapper {
     overflow-x: auto;
 }
 
-.equipmentTable {
+.table {
     margin-top: 60px;
     width: 100%;
     min-width: 688px;
 }
 
-.equipmentTable>thead {
+.table>thead {
     font-weight: bold;
     border-bottom: 1px solid;
 }
 
-.equipmentTable>thead>tr>th {
+.table>thead>tr>th {
     padding-bottom: 10px;
 }
 
-.equipmentTable tr:nth-child(even) {
+.table tr:nth-child(even) {
     background-color: #F5F5F5;
 }
 
-.equipmentTable>tbody>tr>td {
+.table>tbody>tr>td {
     padding: 10px 0;
 }
 

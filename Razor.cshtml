@@ -11,7 +11,9 @@
     var equipments = VP.GetEntitiesData("Equipment", "Id,Organization.Id,Name,Theme,Reference,QRCode,Brand,EndOfGuarantee", activeFilter, "Organization=FilterQueryOrga");
     var equipmentsNC = VP.GetEntitiesData("ReserveOfVisit", "Organization.Id,Equipments.Id,VisitDate,IsLate,VisitObligation,UserProviderForReserve,Location,Redundant,ReserveText,CritLevel,ExpectedDate,StatusOfReserve", activeFilter, "Organization=FilterQueryOrga");
     var equipmentsActions = VP.GetEntitiesData("CActionEquipment", "Organization.Id,Equipment.Id,Name,BeginTime,EndTime,Responsible,Priority,Status", activeFilter, "Organization=FilterQueryOrga");
-	var equipmentsVisit = VP.GetEntitiesData("Visit", "Equipments.Id", activeFilter, "Organization=FilterQueryOrga");
+	var equipmentsVisit = VP.GetEntitiesData("Visit", "Organization.Id,Equipments.Id", activeFilter, "Organization=FilterQueryOrga");
+
+    var documents = VP.GetEntitiesData("CQuestionaryDocument", "Organization.Id,Theme,Name,AuditorOwner,CreatedDate,ModifiedDate,Version", activeFilter, "Organization=FilterQueryOrga");
 
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var propertyTitles = VP.GetEntitiesData("PropertyTitle", "Id,Organization.Id,Reference,Surface,AcquisitionCost,AcquisitionDate", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
@@ -313,8 +315,8 @@
                             </label> -->
                         </div>
                         
-                        <div class="equipmentTableWrapper">
-                            <table id="equipmentFirstTable" class="equipmentTable simpleText">
+                        <div class="tableWrapper">
+                            <table id="equipmentFirstTable" class="table simpleText">
                                 <thead>
                                     <tr>
                                         <th>Thème</th>
@@ -336,8 +338,8 @@
                         
                     <section id="content2">
                         <!-- TODO -->
-                        <div class="equipmentTableWrapper">
-                            <table id="equipmentSecondTable" class="equipmentTable simpleText">
+                        <div class="tableWrapper">
+                            <table id="equipmentSecondTable" class="table simpleText">
                                 <thead>
                                     <tr>
                                         <th>Equipement</th>
@@ -359,8 +361,8 @@
                     </section>
                         
                     <section id="content3">
-                        <div class="equipmentTableWrapper">
-                            <table id="equipmentThirdTable" class="equipmentTable simpleText">
+                        <div class="tableWrapper">
+                            <table id="equipmentThirdTable" class="table simpleText">
                                 <thead>
                                     <tr>
                                         <th>Equipement</th>
@@ -370,6 +372,87 @@
                                         <th>Responsable</th>
                                         <th>Priorité</th>
                                         <th>Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>                     
+                </main>
+            </div>
+        </div>
+
+        <!-- DOCUMENTS SECTION-->
+        <div class="sectionContainer">
+            <div class="primaryInfos">
+                <i class="fas fa-file-alt simpleTitle verticalAlignMiddle"></i>
+                <div class="mainData" id="documentsMainData">
+                    <div class="mainDataTitle smallTitle">Documents</div>
+                </div>
+                <i class="fas fa-plus iconTitle openCloseIcon"></i>
+            </div>
+            <div class="allData" id="documentsAllData">
+            <main class="tab">
+                    <input id="tab4" type="radio" name="tabs" checked>
+                    <label for="tab4"><span id="nbDocuments">0</span>Documents obligatoires disponibles</label>
+                        
+                    <input id="tab5" type="radio" name="tabs">
+                    <label for="tab5"><span id="nbToRenew">0</span>Documents à renouveler</label>
+                        
+                    <input id="tab6" type="radio" name="tabs">
+                    <label for="tab6"><span id="nbDocumentsActionToDo">0</span>Documents à valider</label>
+
+                    <section id="content4">  
+                        <div class="tableWrapper">
+                            <table id="documentFirstTable" class="table simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Libellé</th>
+                                        <th>Responsable</th>
+                                        <th>Dernière mise à jour</th>
+                                        <th>Version</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="content5">
+                        <!-- TODO -->
+                        <div class="tableWrapper">
+                            <table id="documentSecondTable" class="table simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Libellé</th>
+                                        <th>Responsable</th>
+                                        <th>Dernière mise à jour</th>
+                                        <th>Version</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="content6">
+                        <div class="tableWrapper">
+                            <table id="documentThirdTable" class="table simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Libellé</th>
+                                        <th>Responsable</th>
+                                        <th>Dernière mise à jour</th>
+                                        <th>Version</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -456,6 +539,8 @@ let jsonAllEquipments = JSON.parse(('@JsonConvert.SerializeObject(equipments)').
 let jsonAllEquipmentsNC = JSON.parse(('@JsonConvert.SerializeObject(equipmentsNC)').replace(/&quot;/g, '"'));
 let jsonAllEquipmentsActions = JSON.parse(('@JsonConvert.SerializeObject(equipmentsActions)').replace(/&quot;/g, '"'));
 let jsonAllEquipmentsVisit = JSON.parse(('@JsonConvert.SerializeObject(equipmentsVisit)').replace(/&quot;/g, '"'));
+
+let jsonAllDocuments = JSON.parse(('@JsonConvert.SerializeObject(documents)').replace(/&quot;/g, '"'));
 
 let jsonAllLots = JSON.parse(('@JsonConvert.SerializeObject(lots)').replace(/&quot;/g, '"'));
 let jsonAllPropertyTitles = JSON.parse(('@JsonConvert.SerializeObject(propertyTitles)').replace(/&quot;/g, '"'));
