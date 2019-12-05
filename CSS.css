@@ -1,105 +1,3 @@
-/* CSS for all tabs filter */
-.tab *,
-.tab *:before,
-.tab *:after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.tab main {
-    min-width: 320px;
-    max-width: 800px;
-    padding: 50px;
-    margin: 0 auto;
-    background: #fff;
-}
-
-.tab section {
-    display: none;
-    padding: 20px 0 0;
-    border-top: 1px solid #ddd;
-}
-
-.tab input {
-    display: none;
-}
-
-.tab span {
-    display: block;
-    text-align: left;
-    font-weight: bold;
-}
-
-.tab > label {
-    display: inline-block;
-    margin: 0 0 -1px;
-    padding: 15px 25px;
-    text-align: center;
-    color: #bbb;
-    border: 1px solid transparent;
-}
-
-/*.tab > label:before {
-    font-family: fontawesome;
-    font-weight: normal;
-    margin-right: 10px;
-}
-
-.tab > label[for*='1']:before {
-    content: '\f1cb';
-}
-
-.tab > label[for*='2']:before {
-    content: '\f17d';
-}
-
-.tab > label[for*='3']:before {
-    content: '\f16b';
-}
-
-.tab > label[for*='4']:before {
-    content: '\f1a9';
-} */
-
-.tab > label:hover {
-    color: #888;
-    cursor: pointer;
-}
-
-.tab input:checked+label {
-    color: #555;
-    border: 1px solid #ddd;
-    border-top: 5px solid #00A4BF;
-    border-bottom: 1px solid #fff;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
-
-#tab1:checked~#content1,
-#tab2:checked~#content2,
-#tab3:checked~#content3,
-#tab4:checked~#content4 {
-    display: block;
-}
-
-@media screen and (max-width: 650px) {
-    .tab > label {
-        font-size: 0;
-    }
-
-    .tab > label:before {
-        margin: 0;
-        font-size: 18px;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    .tab > label {
-        padding: 15px;
-    }
-}
-
 /* CSS for HorTree plugin (for Legal section) */
 
 .hortree-wrapper *,
@@ -189,8 +87,7 @@
     }
 
     #allIdentityInfos {
-        width: calc(100% - 275px);
-        /* width = 100% - padding - pictures size */
+        width: calc(100% - 275px); /* width = 100% - padding - pictures size */
     }
 
     #identityPicture {
@@ -209,7 +106,7 @@
         font-size: 14px;
     }
 
-    .title {
+    .simpleTitle {
         font-size: 22px;
     }
 
@@ -218,28 +115,36 @@
         margin-left: 29px;
     }
 
-    #legalHorTreeTitles> :nth-child(2) {
+    #legalHorTreeTitles > :nth-child(2) {
         margin-left: 260px;
     }
 
-    #legalHorTreeTitles> :nth-child(3) {
+    #legalHorTreeTitles > :nth-child(3) {
         margin-left: 281px;
     }
 
     #identityGoogleMap {
         height: 160px;
     }
-
+    
     #identityType {
         height: 15px;
     }
-
+    
     #identityLocation {
         height: 54px;
     }
 
     #identityLabel {
         font-size: 11px;
+    }
+
+    #legalMainData {
+        padding-left: 16px;
+    }
+    
+    #dataCollectionMainData {
+        padding-left: 23px;
     }
 }
 
@@ -251,8 +156,7 @@
     }
 
     #allIdentityInfos {
-        width: calc(100% - 325px);
-        /* width = 100% - padding - pictures size */
+        width: calc(100% - 325px); /* width = 100% - padding - pictures size */
     }
 
     #identityPicture {
@@ -280,28 +184,36 @@
         margin-left: 18px;
     }
 
-    #legalHorTreeTitles> :nth-child(2) {
+    #legalHorTreeTitles > :nth-child(2) {
         margin-left: 248px;
     }
 
-    #legalHorTreeTitles> :nth-child(3) {
+    #legalHorTreeTitles > :nth-child(3) {
         margin-left: 276px;
     }
 
     #identityGoogleMap {
         height: 200px;
     }
-
+    
     #identityType {
         height: 18px;
     }
-
+    
     #identityLocation {
         height: 93px;
     }
 
     #identityLabel {
         font-size: 13px;
+    }
+
+    #legalMainData {
+        padding-left: 14px;
+    }
+    
+    #dataCollectionMainData {
+        padding-left: 26px;
     }
 }
 
@@ -441,14 +353,14 @@ body {
     display: inline-block;
     margin-left: 22px;
     vertical-align: top;
+    max-width: 474px;
 }
 
 #identityLocation {
     margin-top: 20px;
 }
 
-#identityPostCodeLocation,
-#identityCityLocation {
+#identityPostCodeLocation, #identityCityLocation {
     display: inline-block;
 }
 
@@ -484,8 +396,8 @@ body {
 
 #identityGoogleMap {
     width: 44%;
-    display: inline-block;
     margin-top: 5px;
+    float: right;
 }
 
 /* General Sections Properties */
@@ -556,9 +468,7 @@ body {
 }
 
 /* Override */
-*,
-::after,
-::before {
+*, ::after, ::before {
     box-sizing: unset !important;
 }
 
@@ -577,8 +487,7 @@ body {
 /* CONTACT Section Properties */
 
 #contactMainData {
-    width: calc(100% - 74px);
-    /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
 }
 
 #contactAllData {
@@ -656,8 +565,7 @@ body {
 /* LEGAL Section Properties */
 
 #legalMainData {
-    width: calc(100% - 80px);
-    /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
 }
 
 #legalAllData {
@@ -667,7 +575,6 @@ body {
 #legalAllData.active {
     max-height: 1000px;
     margin-top: 20px;
-    margin-left: 53px;
     white-space: nowrap;
     overflow-x: auto;
 }
@@ -677,11 +584,11 @@ body {
     width: auto;
 }
 
-#legalLegend> :not(:first-child) {
+#legalLegend > :not(:first-child) {
     margin-left: 70px;
 }
 
-#legalLegend>div {
+#legalLegend > div {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -719,8 +626,13 @@ body {
     border-left-color: #979797 !important;
 }
 
-#legalHorTree1 .line {
-    margin-top: 702px;
+.legalSubSectionTitle {
+    width: calc(100% - 70px); /* Width = 100% - margin of container */
+    background-color: #00A4BF;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 10px 0 10px 53px;
 }
 
 .legalSubSectionTitle:not(:first-child) {
@@ -812,22 +724,19 @@ body {
 /* COMPLIANCE Section Properties */
 
 #complianceMainData {
-    width: calc(100% - 74px);
-    /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
 }
 
 /* AUDIT Section Properties */
 
 #auditMainData {
-    width: calc(100% - 74px);
-    /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
 }
 
 /* EQUIPMENTS Section Properties */
 
 #equipmentsMainData {
-    width: calc(100% - 74px);
-    /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
 }
 
 #equipmentsAllData {
@@ -841,8 +750,7 @@ body {
 
 .equipmentAllSquares {
     display: inline-block;
-    width: calc(100% - 165px);
-    /* 100% - buttonWidth*/
+    width: calc(100% - 165px); /* 100% - buttonWidth*/
     overflow-x: auto;
     white-space: nowrap;
 }
@@ -925,15 +833,15 @@ body {
     transition: .4s;
 }
 
-input:checked+.slider {
+input:checked + .slider {
     background-color: #00A4BF;
 }
 
-input:focus+.slider {
+input:focus + .slider {
     box-shadow: 0 0 1px #00A4BF;
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(12px);
@@ -951,50 +859,48 @@ input:checked+.slider:before {
     margin-left: 36px;
 }
 
-.equipmentTableWrapper {
+#equipmentTableWrapper {
     overflow-x: auto;
 }
 
-.equipmentTable {
+#equipmentTable {
     margin-top: 60px;
     width: 100%;
     min-width: 688px;
 }
 
-.equipmentTable>thead {
+#equipmentTable > thead {
     font-weight: bold;
     border-bottom: 1px solid;
 }
 
-.equipmentTable>thead>tr>th {
+#equipmentTable > thead > tr > th {
     padding-bottom: 10px;
 }
 
-.equipmentTable tr:nth-child(even) {
+#equipmentTable tr:nth-child(even) {
     background-color: #F5F5F5;
 }
 
-.equipmentTable>tbody>tr>td {
+#equipmentTable > tbody > tr > td {
     padding: 10px 0;
 }
 
 /* DATA COLLECTION Section Properties */
 
 #dataCollectionMainData {
-    width: calc(100% - 68px);
-    /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
 }
 
 /* INCIDENTS Section Properties */
 
 #incidentsMainData {
-    width: calc(100% - 77px);
-    /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+    padding-left: 17px;
 }
 
 /* SCHEMA DIRECTORY Section Properties */
 
 #schemaDirectoryMainData {
-    width: calc(100% - 74px);
-    /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
 }

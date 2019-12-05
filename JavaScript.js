@@ -4,28 +4,14 @@
 /* ------ LINE PLUGIN ------ */
 !function (t) { var e = function (t, e, s, l, a) { var n = navigator.userAgent.indexOf("MSIE") > -1; if (s < t) { var r = t; t = s, s = r, r = e, e = l, l = r } var o = document.createElement("div"); o.className = a.class; var i = Math.sqrt((t - s) * (t - s) + (e - l) * (e - l)); if (o.style.width = i + "px", o.style.borderBottom = a.stroke + "px " + a.style, o.style.borderColor = a.color, o.style.position = "absolute", o.style.zIndex = a.zindex, n) { o.style.top = l > e ? e + "px" : l + "px", o.style.left = t + "px"; var c = (s - t) / i, f = (l - e) / i; o.style.filter = "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=" + c + ", M12=" + -1 * f + ", M21=" + f + ", M22=" + c + ")" } else { var d = Math.atan((l - e) / (s - t)); o.style.top = e + .5 * i * Math.sin(d) + "px", o.style.left = t - .5 * i * (1 - Math.cos(d)) + "px", o.style.transform = o.style.MozTransform = o.style.WebkitTransform = o.style.msTransform = o.style.OTransform = "rotate(" + d + "rad)" } return o }; t.fn.line = function (s, l, a, n, r, o) { return t(this).each(function () { t.isFunction(r) ? (callback = r, r = null) : callback = o, r = t.extend({}, t.fn.line.defaults, r), t(this).append(e(s, l, a, n, r)).promise().done(function () { t.isFunction(callback) && callback.call() }) }) }, t.fn.line.defaults = { zindex: 1e4, color: "#000000", stroke: "1", style: "solid", class: "line" } }(jQuery);
 
-/* ------ CODE ------ A */
-
-let jsonLegalDataTwo = [
-    {
-        description: "FR69.P01 FR33.00001 - CMA CGM",
-        children: [
-            {
-                description: "Altran Services SA",
-                children: []
-            },
-            {
-                description: "Altran Services SA",
-                children: []
-            }
-        ]
-    }
-];
+/* ------ CODE ------ */
 
 let identityMap = initFIBGoogleMap();
 let identityMapMarkers = [];
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log(jsonAllOrganizations)
+
     // Handle the site selection
     handleSiteSelectorFilter();
 
@@ -74,7 +60,6 @@ function loadNewOrganization(siteId) {
     loadDataBatiment(selectedSite);
     loadDataContacts(selectedSite);
     loadDataPropertyTitles(selectedSite);
-    loadDataEquipments(selectedSite);
 }
 
 function loadDataBatiment(oSite) {
@@ -113,7 +98,7 @@ function loadDataBatiment(oSite) {
 }
 
 function placeMarkerOnFIBGoogleMap(oSite) {
-    for (var i = 0; i < identityMapMarkers.length; i++) {
+    for (let i = 0; i < identityMapMarkers.length; i++) {
         identityMapMarkers[i].setMap(null);
     }
 
@@ -170,118 +155,11 @@ function loadDataContacts(oSite) {
     if (counter === 0)
         contactsReferenced.innerHTML = `<div style="font-weight: normal; padding-left: 50px;">Aucun contact n'est référencé</div>`;
     else 
-        document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = counter + ' contacts référencés';
-}
-
-function loadDataEquipments(oSite) {
-    let equipmentsAllData = document.getElementById("equipmentsAllData");
-
-    //Data on tab title
-    let counterEquipment = 0;
-    let counterTotalNcToLate = 0;
-    let counterTotalActionToDo = 0;
-    let counterFollowingPourcent = 0;
-
-    //Row forEach table (for each tab)
-    let rowFirstTable = "";
-    let rowSecondTable = "";
-    let rowThirdTable = "";
-
-    Array.from(jsonAllEquipments).forEach( equipment => {
-        if (equipment.OrganizationId == oSite.Id) {
-            counterEquipment++;
-
-            //First Table
-            let counterNcToUp = 0;
-            let counterActualAction = 0;
-            let visitDateString = "Inconnu";
-            let visiteDateEN = new Date(); 
-            
-            Array.from(jsonAllEquipmentsNC).forEach( NC => {
-                if (NC.OrganizationId == oSite.Id && NC.EquipmentsId == equipment.Id) {
-                    if (NC.StatusOfReserveLocalizedName == "A lever") {
-                        counterNcToUp++;
-                    }
-                    if (visitDateString === "Inconnu" || visitDateString < NC.VisitDateString) {
-                        visitDateString = NC.VisitDateString;
-                        visiteDateEN = NC.VisitDate;
-                    }
-                    if (NC.IsLate) {
-                        counterTotalNcToLate++;
-                    }
-
-                    rowSecondTable += "<tr><td>"+ equipment.Name +"</td><td>"+ NC.VisitObligation +"</td><td>"+ NC.UserProviderForReserveFullName +"</td><td>"+ NC.Location +"</td><td>"+ NC.RedundantString +"</td><td>"+ NC.ReserveText +"</td><td>"+ NC.CritLevelLocalizedName +"</td><td>"+ NC.ExpectedDateString +"</td><td>"+ NC.StatusOfReserveLocalizedName +"</td></tr>";
-                }
-            });
-
-            Array.from(jsonAllEquipmentsActions).forEach( action => {
-                if (action.OrganizationId == oSite.Id && action.EquipmentsId == equipment.Id) {
-                    if (action.StatusLocalizedName == "En cours") {
-                        counterActualAction++;
-                    }
-                    if (action.StatusLocalizedName == "A faire") {
-                        counterTotalActionToDo++;
-                        rowThirdTable += "<tr><td>"+ equipment.Name +"</td><td>"+ action.Name +"</td><td>"+ action.BeginTimeString +"</td><td>"+ action.EndTimeString +"</td><td>"+ action.ResponsibleFullName +"</td><td>"+ action.PriorityName +"</td><td>"+ action.StatusLocalizedName +"</td></tr>";
-                    }
-                }
-            });
-
-            let enOfGuarantee = monthDiff(new Date(), new Date(equipment.EndOfGuarantee));
-            let nextVisiteDate = monthDiff(new Date(), new Date(visiteDateEN));
-            rowFirstTable += "<tr data-endOfGuarantee='"+ enOfGuarantee +"' data-nextVisiteDate='"+ nextVisiteDate +"'><td>"+ equipment.ThemeLocalizedName +"</td><td>"+ equipment.Reference +"</td><td>"+ equipment.QRCode +"</td><td>"+ equipment.Brand +"</td><td>"+ equipment.EndOfGuaranteeString +"</td><td>"+ counterNcToUp +"</td><td>"+ visitDateString +"</td><td>"+ counterActualAction +"</td></tr>";
-
-        };
-    });
-
-    
-    //First Table
-    equipmentsAllData.querySelector("#equipmentFirstTable > tbody").innerHTML = rowFirstTable;
-    //Second Table
-    equipmentsAllData.querySelector("#equipmentSecondTable > tbody").innerHTML = rowSecondTable;
-    //Third Table
-    equipmentsAllData.querySelector("#equipmentThirdTable > tbody").innerHTML = rowThirdTable;
-
-    //First tab
-    equipmentsAllData.querySelector("#nbEquipments").innerHTML = counterEquipment;
-    //SecondTab
-    equipmentsAllData.querySelector("#nbNcToLate").innerHTML = counterTotalNcToLate;
-    //Third Tab
-    equipmentsAllData.querySelector("#nbActionToDo").innerHTML = counterTotalActionToDo;
-
-    //SubTitle
-    document.querySelector("#equipmentsMainData .mainDataSubTitle").innerHTML = counterFollowingPourcent + '% suivi';
-}
-
-function filterDataEquipments() {
-    let garantieSelector = document.getElementById("garantieSelector");
-    let visiteSelector = document.getElementById("visiteSelector");
-
-    let selectedGarantieValue = parseInt(garantieSelector.options[garantieSelector.selectedIndex].value);
-    let selectedVisiteValue = parseInt(visiteSelector.options[visiteSelector.selectedIndex].value);
-
-    let allRow = document.querySelectorAll("#equipmentFirstTable > tbody tr");
-
-    allRow.forEach( row => {
-        let endOfGarantie = parseInt(row.getAttribute("data-endOfGuarantee"));
-        let visiteDate = parseInt(row.getAttribute("data-nextVisiteDate"));
-
-        if(selectedGarantieValue <= endOfGarantie && selectedVisiteValue <= visiteDate) {
-            row.style.display = "table-row";
-        } else {
-            row.style.display = "none";
-        }
-    });
-}
-
-function monthDiff(d1, d2) {
-    var months;
-    months = (d2.getFullYear() - d1.getFullYear()) * 12;
-    months -= d1.getMonth() + 1;
-    months += d2.getMonth();
-    return months <= 0 ? 0 : months;
+        document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = (counter > 1) ? counter + ' contacts référencés' : counter + ' contact référencé';
 }
 
 function loadDataPropertyTitles(oSite) {
+    // SUB-SECTION 1:
     let propertyTitles_owners = [];
     let leases = [];
     let subLeases = [];
@@ -296,11 +174,6 @@ function loadDataPropertyTitles(oSite) {
     let occupiedWorkstation = 0;
     
     document.getElementById("legalHorTreeContainers").innerHTML = "";
-    console.log(jsonAllPropertyTitles);
-    console.log(jsonAllContacts);
-    console.log(jsonAllEquipments);
-    console.log(jsonAllEquipmentsNC);
-    console.log(jsonAllEquipmentsActions);
 
     // Titres de propriété (type Interne)
     for (let i = 0; i < jsonAllPropertyTitles.length; i += 1) {
@@ -402,10 +275,8 @@ function loadDataPropertyTitles(oSite) {
     if (indexId === 1)
         document.getElementById("legalHorTreeContainers").innerHTML = "<div class='simpleText' style='margin-top:18px;text-align:center;'>Aucune titre de propriété n'est référencé</div>"
 
-    
     // Horizontal tree creation in Legal Section :
     createLegalHortree(propertyTitles_owners);
-}
 
     // SUB-SECTION 2 :
     let percentageOccupation = maxCapacity > 0 ? Math.round(occupiedWorkstation / maxCapacity * 100) : 0;
@@ -471,14 +342,9 @@ console.log(jsonAllBaux)
         labelb: "Occupation par<br />type de surface"
     }]);
 
-            if (nextPartContainer.classList.contains("active")) {
-                nextPartContainer.classList.remove("active");
-                element.classList.replace('fa-window-minimize', 'fa-plus');
-            } else {
-                nextPartContainer.classList.add("active");
-                element.classList.replace('fa-plus', 'fa-window-minimize');
-            }
-        });
+    Array.from(document.getElementsByClassName("gaugeDataText")).forEach((text) => {
+        if (text.innerHTML)
+            text.style.margin = 0;
     });
 }
 
@@ -502,16 +368,16 @@ function createLegalHortree(arrayHorTreeObjects) {
     Array.from(horTreeContainers).forEach((container) => {
         container.querySelectorAll(".hortree-branch").forEach((branch, branchIndex) => {
             if (branchIndex === 0) {
-                branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
+                branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label, labelIndex) => {
                     // Tooltip with data for the Property Titles :
-                    if (container.id[0] == "P") {
+                    if (container.id[0] == "P" && labelIndex === 0) {
                         $(label).tooltip({
                             html: true,
                             title: "<div class='simpleText'>" +
                                 "Surface totale Propriétaire : <strong>" + container.dataset.surface + "</strong><br />" +
                                 "Montant d'acquisition : <strong>" + container.dataset.cost + "</strong><br />" +
                                 "Date d'acquisition : <strong>" + container.dataset.date + "</strong></div>",
-                            placement: "top",
+                            boundary: 'viewport',
                             container: "body"
                         })
                         label.style.backgroundColor = "#7BD679";
@@ -550,5 +416,84 @@ function createLegalHortree(arrayHorTreeObjects) {
                 line.style.marginTop = nextHorTreeLineMarginTop.toString() + "px";
             });
         }
+    });
+}
+
+function displayGauge(divId, dataArray) {
+    Highcharts.chart(divId, {
+        chart: {
+            type: "solidgauge",
+        },
+        title: {
+            text: '',
+            style: {
+                fontSize: "12px"
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        pane: {
+            name: "",
+            startAngle: 0,
+            endAngle: 360,
+            background: [{
+                outerRadius: "100%",
+                innerRadius: "98%",
+            }]
+        },
+        tooltip: {
+            enabled: false
+        },
+        yAxis: {
+            min: 0,
+            max: 100,
+            lineWidth: 0,
+            tickPositions: [],
+        },
+        plotOptions: {
+            solidgauge: {
+                dataLabels: {
+                    enabled: true,
+                    borderWidth: 0,
+                    align: "center",
+                    x: 0,
+                    y: 0
+                },
+                linecap: "round",
+                stickyTracking: false,
+                rounded: true
+            }
+        },
+        series: [{
+            name: "",
+            data: dataArray,
+            dataLabels: {
+                useHTML: true,
+                format:
+                  	"<div class='gaugeTextDisplay'>" +
+                  		"<p class='gaugeDataText'>{point.labela}</p>" +
+                  		"<p>{point.labelb}</p>" +
+                  	"</div>"
+            },
+        }]
+    });
+}
+
+function handleOpenCloseContainer() {
+    let iconOpenContainer = document.querySelectorAll(".openCloseIcon");
+
+    iconOpenContainer.forEach(element => {
+        element.addEventListener("click", () => {
+            let nextPartContainer = element.parentNode.nextElementSibling;
+
+            if (nextPartContainer.classList.contains("active")) {
+                nextPartContainer.classList.remove("active");
+                element.classList.replace('fa-window-minimize', 'fa-plus');
+            } else {
+                nextPartContainer.classList.add("active");
+                element.classList.replace('fa-plus', 'fa-window-minimize');
+            }
+        });
     });
 }
