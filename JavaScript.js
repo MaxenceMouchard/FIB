@@ -286,22 +286,51 @@ function monthDiff(d1, d2) {
 function loadDataDocuments(oSite) {
     let documentsAllData = document.getElementById("documentsAllData");
 
+    let counterRequiredDocumentsAvailable = 0;
+    let counterRenewableDocumens = 0;
+    let counterDocumentToValidate = 0;
+
     let rowFirstTable = "";
+    let rowSecondTable = "";
+    let rowThirdTable = "";
     Array.from(jsonAllDocuments).forEach( document => {
         if (document.OrganizationId == oSite.Id) {
+            counterRequiredDocumentsAvailable++;
             let createdDate = (document.CreatedDateString) ? document.CreatedDateString : "Inconnue";
             let updateOn = (document.ModifiedDateString) ? document.ModifiedDateString : createdDate;
             var owner = (document.AuditorOwnerFullName) ? document.AuditorOwnerFullName : "Inconnu";
             let name = (document.Name) ? document.Name : "Inconnu";
             let theme = (document.ThemeLocalizedName) ? document.ThemeLocalizedName : "Inconnu";
             let version = (document.Version) ? document.Version : "Inconnue";
+            let expirationDate = (document.ExpirationDateString) ? new Date(document.ExpirationDateString) : new Date();
+
+            if (expirationDate < new Date()) {
+                counterRenewableDocumens++;
+                rowSecondTable += "<tr><td>"+ theme +"</td><td>"+ name +"</td><td>"+ owner +"</td><td>"+ updateOn +"</td><td>"+ version +"</td></tr>";
+            }
+            if (document.FormWorkflowStatusLocalizedName === "Brouillon") {
+                counterDocumentToValidate++;
+                rowThirdTable += "<tr><td>"+ theme +"</td><td>"+ name +"</td><td>"+ owner +"</td><td>"+ updateOn +"</td><td>"+ version +"</td></tr>";
+            }
             rowFirstTable += "<tr><td>"+ theme +"</td><td>"+ name +"</td><td>"+ owner +"</td><td>"+ updateOn +"</td><td>"+ version +"</td></tr>";
         }
     });
 
     //First Table
     documentsAllData.querySelector("#documentFirstTable > tbody").innerHTML = rowFirstTable;
-    
+
+    //Second Table
+    documentsAllData.querySelector("#documentSecondTable > tbody").innerHTML = rowSecondTable;
+
+    //Third Table
+    documentsAllData.querySelector("#documentThirdTable > tbody").innerHTML = rowThirdTable;
+
+    //First Tab
+    documentsAllData.querySelector("#nbDocuments").innerHTML = counterRequiredDocumentsAvailable;
+    //Second Tab
+    documentsAllData.querySelector("#nbToRenew").innerHTML = counterRenewableDocumens;
+    //Third Tab
+    documentsAllData.querySelector("#nbToValidate").innerHTML = counterDocumentToValidate;
 }
 
 function loadDataPropertyTitles(oSite) {

@@ -600,7 +600,7 @@ body {
 }
 
 #contactAllData.active {
-    max-height: 400px;
+    max-height: 100%;
     margin: 20px 49px 20px 49px;
 }
 
@@ -677,7 +677,7 @@ body {
 }
 
 #legalAllData.active {
-    max-height: 1000px;
+    max-height: 100%;
     margin-top: 20px;
     white-space: nowrap;
     overflow-x: auto;
@@ -849,7 +849,7 @@ body {
 
 #equipmentsAllData.active {
     padding: 25px 45px 25px 45px;
-    max-height: 1000px;
+    max-height: 100%;
 }
 
 .equipmentAllSquares {
@@ -970,7 +970,7 @@ input:checked+.slider:before {
 
 #documentsAllData.active {
     padding: 25px 45px 25px 45px;
-    max-height: 1000px;
+    max-height: 100%;
 }
 
 #documentsAllData {

@@ -13,7 +13,7 @@
     var equipmentsActions = VP.GetEntitiesData("CActionEquipment", "Organization.Id,Equipment.Id,Name,BeginTime,EndTime,Responsible,Priority,Status", activeFilter, "Organization=FilterQueryOrga");
 	var equipmentsVisit = VP.GetEntitiesData("Visit", "Organization.Id,Equipments.Id", activeFilter, "Organization=FilterQueryOrga");
 
-    var documents = VP.GetEntitiesData("CQuestionaryDocument", "Organization.Id,Theme,Name,AuditorOwner,CreatedDate,ModifiedDate,Version", activeFilter, "Organization=FilterQueryOrga");
+    var documents = VP.GetEntitiesData("CQuestionaryDocument", "Organization.Id,Theme,Name,AuditorOwner,CreatedDate,ModifiedDate,Version,ExpirationDate,FormWorkflowStatus", activeFilter, "Organization=FilterQueryOrga");
 
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var propertyTitles = VP.GetEntitiesData("PropertyTitle", "Id,Organization.Id,Reference,Surface,AcquisitionCost,AcquisitionDate", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
