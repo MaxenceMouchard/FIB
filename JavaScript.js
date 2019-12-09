@@ -10,9 +10,12 @@ let identityMap = initFIBGoogleMap();
 let identityMapMarkers = [];
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("organization =>")
     console.log(jsonAllOrganizations)
-    console.log("ici")
+    console.log("document =>")
     console.log(jsonAllDocuments)
+    console.log("attachment =>")
+    console.log(jsonAllAttachedDocuments)
 
     // Handle the site selection
     handleSiteSelectorFilter();
@@ -168,6 +171,7 @@ function loadDataEquipments(oSite) {
 
     //Data on subTitle
     let counterFollowingPourcent = 0;
+    let nbVisitedEquipment = 0;
 
     //Data on tab title
     let counterEquipment = 0;
@@ -186,7 +190,7 @@ function loadDataEquipments(oSite) {
             //First Table
             let counterNcToUp = 0;
             let counterActualAction = 0;
-            let visitDateString = "Inconnu";
+            let visitDateString = "-";
             let visiteDateEN = new Date();
             
             Array.from(jsonAllEquipmentsNC).forEach( NC => {
@@ -196,7 +200,7 @@ function loadDataEquipments(oSite) {
                     }
                     if (NC.VisitDateString !== "" && NC.visitDateString !== null && visiteDateEN <= new Date(NC.VisitDate)) {
                         visitDateString = NC.VisitDateString;
-                        visiteDateEN = NC.VisitDate;
+                        visiteDateEN = new Date(NC.VisitDate);
                     }
                     if (NC.IsLate) {
                         counterTotalNcToLate++;
@@ -207,7 +211,15 @@ function loadDataEquipments(oSite) {
             });
 
             Array.from(jsonAllEquipmentsActions).forEach( action => {
-                if (action.OrganizationId == oSite.Id && action.EquipmentsId == equipment.Id) {
+                console.log("Name =>");
+                console.log(action.Name);
+                console.log("Action EquipId =>");
+                console.log(action);
+                console.log("EquipId =>");
+                console.log(equipment.Id);
+                console.log("EquipName =>");
+                console.log(equipment.Name)
+                if (action.OrganizationId == oSite.Id && action.EquipmentId == equipment.Id) {
                     if (action.StatusLocalizedName == "En cours") {
                         counterActualAction++;
                     }
@@ -218,21 +230,30 @@ function loadDataEquipments(oSite) {
                 }
             });
 
-            let enOfGuarantee = monthDiff(new Date(), new Date(equipment.EndOfGuarantee));
-            let nextVisiteDate = monthDiff(new Date(), new Date(visiteDateEN));
-            rowFirstTable += "<tr data-endOfGuarantee='"+ enOfGuarantee +"' data-nextVisiteDate='"+ nextVisiteDate +"'><td>"+ equipment.ThemeLocalizedName +"</td><td>"+ equipment.Reference +"</td><td>"+ equipment.QRCode +"</td><td>"+ equipment.Brand +"</td><td>"+ equipment.EndOfGuaranteeString +"</td><td>"+ counterNcToUp +"</td><td>"+ visitDateString +"</td><td>"+ counterActualAction +"</td></tr>";
+            let endOfGuarantee = (equipment.EndOfGuarantee) ? new Date(equipment.EndOfGuarantee) : new Date();
+            let monthBeforeEnd = monthDiff(new Date(), endOfGuarantee);
+            let nextVisiteDate = monthDiff(new Date(), visiteDateEN);
+            rowFirstTable += "<tr data-endOfGuarantee='"+ monthBeforeEnd +"' data-nextVisiteDate='"+ nextVisiteDate +"'><td>"+ equipment.ThemeLocalizedName +"</td><td>"+ equipment.Reference +"</td><td>"+ equipment.QRCode +"</td><td>"+ equipment.Brand +"</td><td>"+ equipment.EndOfGuaranteeString +"</td><td>"+ counterNcToUp +"</td><td>"+ visitDateString +"</td><td>"+ counterActualAction +"</td></tr>";
 
+            let isVisitedEquipment = false;
+            for (var i=0; i<jsonAllEquipmentsVisit.length; i++) {
+                if (jsonAllEquipmentsVisit[i].OrganizationId == oSite.Id) {
+                    let aVisitId = jsonAllEquipmentsVisit[i].EquipmentsId.split(',');
+                    if (aVisitId.includes(equipment.Id)) {
+                        isVisitedEquipment = true;
+                        break;
+                    }
+                }
+            };
+
+            if (isVisitedEquipment) {
+                nbVisitedEquipment++;
+            }
         };
     });
 
-    let nbVisits = 0;
-    Array.from(jsonAllEquipmentsVisit).forEach( visit => {
-        if (visit.OrganizationId == oSite.Id)
-            nbVisits += visit.EquipmentsId.split(',').length;
-    });
-
 	if (counterEquipment > 0) {
-		counterFollowingPourcent = Math.round(nbVisits * 100 / counterEquipment);
+		counterFollowingPourcent = Math.round(nbVisitedEquipment * 100 / counterEquipment);
 	}
 
     
@@ -316,6 +337,30 @@ function loadDataDocuments(oSite) {
         }
     });
 
+    let rowAttachmentTable = "";
+    var moduleFilter = document.getElementById("moduleSelector");
+    moduleFilter.options.length = 1;
+    Array.from(jsonAllAttachedDocuments).forEach( attachment => {
+        if(attachment.OrganizationId == oSite.Id) {
+            let entity = (attachment.EntityName) ? attachment.EntityName : "-";
+            let name = (attachment.ThemeLocalizedName) ? attachment.ThemeLocalizedName : "-";
+            let description = (attachment.Description) ? attachment.Description : "-";
+            let createdBy = (attachment.CreatedUserFullName) ? attachment.CreatedUserFullName : "-";
+
+            //Add module into selector filter
+            if(moduleFilter.querySelectorAll("option[value='"+ entity +"'").length === 0) {
+                var option = document.createElement("option");
+                option.text = entity;
+                option.value = entity;
+                moduleFilter.add(option);
+            }
+
+            let createdSince = (attachment.CreatedDate) ? new Date(attachment.CreatedDate) : new Date();
+            let monthSinceCreation = monthDiff(createdSince, new Date());
+            rowAttachmentTable += "<tr data-entity='"+ entity +"' data-createdSince='"+ monthSinceCreation +"'><td>"+ entity +"</td><td>"+ name +"</td><td>"+ description +"</td><td>"+ createdBy +"</td></tr>";
+        }
+    });
+
     //First Table
     documentsAllData.querySelector("#documentFirstTable > tbody").innerHTML = rowFirstTable;
 
@@ -325,12 +370,37 @@ function loadDataDocuments(oSite) {
     //Third Table
     documentsAllData.querySelector("#documentThirdTable > tbody").innerHTML = rowThirdTable;
 
+    //Attachment Table
+    documentsAllData.querySelector("#attachedDocumentsTable > tbody").innerHTML = rowAttachmentTable;
+
     //First Tab
     documentsAllData.querySelector("#nbDocuments").innerHTML = counterRequiredDocumentsAvailable;
     //Second Tab
     documentsAllData.querySelector("#nbToRenew").innerHTML = counterRenewableDocumens;
     //Third Tab
     documentsAllData.querySelector("#nbToValidate").innerHTML = counterDocumentToValidate;
+
+}
+
+function filterDataAttachedDocuments() {
+    let moduleSelector = document.getElementById("moduleSelector");
+    let createdSinceSelector = document.getElementById("createdSinceSelector");
+
+    let selectedModuleValue = moduleSelector.options[moduleSelector.selectedIndex].value;
+    let selectedCreatedSinceValue = parseInt(createdSinceSelector.options[createdSinceSelector.selectedIndex].value);
+
+    let allRow = document.querySelectorAll("#attachedDocumentsTable > tbody tr");
+
+    allRow.forEach( row => {
+        let entity = row.getAttribute("data-entity");
+        let createdSince = parseInt(row.getAttribute("data-createdSince"));
+
+        if((selectedModuleValue == entity || selectedModuleValue === "all") && selectedCreatedSinceValue <= createdSince) {
+            row.style.display = "table-row";
+        } else {
+            row.style.display = "none";
+        }
+    });
 }
 
 function loadDataPropertyTitles(oSite) {

@@ -14,6 +14,12 @@
 	var equipmentsVisit = VP.GetEntitiesData("Visit", "Organization.Id,Equipments.Id", activeFilter, "Organization=FilterQueryOrga");
 
     var documents = VP.GetEntitiesData("CQuestionaryDocument", "Organization.Id,Theme,Name,AuditorOwner,CreatedDate,ModifiedDate,Version,ExpirationDate,FormWorkflowStatus", activeFilter, "Organization=FilterQueryOrga");
+    var attachedDocumentsResult = VP.GetEntitiesData("BaseDocument", "Organization.Id,Theme,EntityName,Description,CreatedUser,CreatedDate", activeFilter, "Organization=FilterQueryOrga");
+    List<dynamic> attachedDocuments = new List<dynamic>(){}; 
+    foreach (var x in attachedDocumentsResult) {
+        var module = Html.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, x.EntityName);
+        attachedDocuments.add(new dynamic { OrganizationId: x.OrganizationId, ThemeLocalizedName: x.ThemeLocalizedName, EntityName: module, Description: x.Description, CreatedUserFullName: x.CreatedUserFullName, CreatedDate: x.CreatedDate });
+    };
 
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var propertyTitles = VP.GetEntitiesData("PropertyTitle", "Id,Organization.Id,Reference,Surface,AcquisitionCost,AcquisitionDate", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
@@ -394,7 +400,7 @@
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
             <div class="allData" id="documentsAllData">
-            <main class="tab">
+                <main class="tab">
                     <input id="tab4" type="radio" name="tabs2" checked>
                     <label for="tab4"><span id="nbDocuments">0</span>Documents obligatoires disponibles</label>
                         
@@ -402,7 +408,7 @@
                     <label for="tab5"><span id="nbToRenew">0</span>Documents à renouveler</label>
                         
                     <input id="tab6" type="radio" name="tabs2">
-                    <label for="tab6"><span id="nbDocumentsActionToDo">0</span>Documents à valider</label>
+                    <label for="tab6"><span id="nbToValidate">0</span>Documents à valider</label>
 
                     <section id="content4">  
                         <div class="tableWrapper">
@@ -462,6 +468,42 @@
                         </div>
                     </section>                     
                 </main>
+
+                <div id="equipmentFilters" class="simpleText">
+                    <div class="inline verticalAlignMiddle">
+                        <label>Module
+                            <select name="module" id="moduleSelector" class="selector" onChange="filterDataAttachedDocuments()">
+                                <option value="all">Tous</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="inline verticalAlignMiddle">
+                        <label>Créé depuis
+                            <select name="createdSince" id="createdSinceSelector" class="selector" onChange="filterDataAttachedDocuments()">
+                                <option value="0">--Choisissez une valeur--</option>
+                                <option value="1">1 mois</option>
+                                <option value="3">3 mois</option>
+                                <option value="6">6 mois</option>
+                                <option value="12">1 an</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="tableWrapper">
+                    <table id="attachedDocumentsTable" class="tableFib simpleText">
+                        <thead>
+                            <tr>
+                                <th>Module</th>
+                                <th>Nom</th>
+                                <th>Description</th>
+                                <th>Créé par</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -541,6 +583,7 @@ let jsonAllEquipmentsActions = JSON.parse(('@JsonConvert.SerializeObject(equipme
 let jsonAllEquipmentsVisit = JSON.parse(('@JsonConvert.SerializeObject(equipmentsVisit)').replace(/&quot;/g, '"'));
 
 let jsonAllDocuments = JSON.parse(('@JsonConvert.SerializeObject(documents)').replace(/&quot;/g, '"'));
+let jsonAllAttachedDocuments = JSON.parse(('@JsonConvert.SerializeObject(attachedDocuments)').replace(/&quot;/g, '"'));
 
 let jsonAllLots = JSON.parse(('@JsonConvert.SerializeObject(lots)').replace(/&quot;/g, '"'));
 let jsonAllPropertyTitles = JSON.parse(('@JsonConvert.SerializeObject(propertyTitles)').replace(/&quot;/g, '"'));
