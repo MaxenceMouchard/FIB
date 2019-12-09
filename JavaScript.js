@@ -228,14 +228,6 @@ function loadDataEquipments(oSite) {
             });
 
             Array.from(jsonAllEquipmentsActions).forEach( action => {
-                console.log("Name =>");
-                console.log(action.Name);
-                console.log("Action EquipId =>");
-                console.log(action);
-                console.log("EquipId =>");
-                console.log(equipment.Id);
-                console.log("EquipName =>");
-                console.log(equipment.Name)
                 if (action.OrganizationId == oSite.Id && action.EquipmentId == equipment.Id) {
                     if (action.StatusLocalizedName == "En cours") {
                         counterActualAction++;

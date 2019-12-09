@@ -999,7 +999,7 @@ input:checked+.slider:before {
 
 /* Documents Section */
 #documentsMainData {
-    width: calc(100% - 68px); /* 100% - (padding + inconSize) */
+    width: calc(100% - 74px); /* 100% - (padding + inconSize) */
 }
 
 #documentsAllData.active {
