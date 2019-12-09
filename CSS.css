@@ -640,7 +640,7 @@ body {
 }
 
 #contactAllData.active {
-    max-height: 2000px;
+    max-height: 1700px;
     overflow-y: auto;
     margin: 20px 49px 20px 49px;
 }
@@ -718,7 +718,7 @@ body {
 }
 
 #legalAllData.active {
-    max-height: 2000px;
+    max-height: 1700px;
     overflow-y: auto;
     margin-top: 20px;
     white-space: nowrap;
@@ -887,7 +887,7 @@ body {
 
 #auditsAllData.active {
     padding: 25px 45px 25px 45px;
-    max-height: 2000px;
+    max-height: 1700px;
     overflow-y: auto;
 }
 
@@ -903,7 +903,7 @@ body {
 
 #equipmentsAllData.active {
     padding: 25px 45px 25px 45px;
-    max-height: 2000px;
+    max-height: 1700px;
     overflow-y: auto;
 }
 
@@ -1025,7 +1025,7 @@ input:checked+.slider:before {
 
 #documentsAllData.active {
     padding: 25px 45px 25px 45px;
-    max-height: 2000px;
+    max-height: 1700px;
     overflow-y: auto;
 }
 
