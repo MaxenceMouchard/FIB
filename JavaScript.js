@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle the site selection
     handleSiteSelectorFilter();
 
-    // site pré-selectionné pour les tests : à supprimer
-    document.getElementById("siteSelector").selectedIndex = 9;
+    // Pre-selected site with the id of the site selected in the left filters :
+    document.getElementById("siteSelector").value = firstOrgaId;
     $("#searchFilterButton").trigger("click");
 
     // Add event when user click on openCloseIcon element :
@@ -91,17 +91,34 @@ function loadDataBatiment(oSite) {
     document.getElementById("identityCountryLocation").innerHTML = oSite.CountryName;
 
     // Main summary data of building :
-    document.getElementById("identityLabel").innerHTML = (oSite.ERPTypesTypeName) ? oSite.ERPTypesTypeName : "Inconnu";
+    document.getElementById("identityLabel").innerHTML = (oSite.ERPTypesTypeName) ? oSite.ERPTypesTypeName : "-";
     let nbOrgaLots = 0;
     for (let i = 0; i < jsonAllLots.length; i += 1) {
         if (oSite.Id == jsonAllLots[i].OrganizationId)
             nbOrgaLots += 1;
     }
     document.getElementById("identityFloorsNumberData").innerHTML = nbOrgaLots;
-    document.getElementById("identityTotalSurfaceData").innerHTML = (oSite.M2) ? oSite.M2 + "m²" : "0m²";
+    document.getElementById("identityTotalSurfaceData").innerHTML = (oSite.M2) ? oSite.M2.toLocaleString() + "m²" : "0m²";
+    document.getElementById("identityLink3D").addEventListener("click", () => {
+        let redirectWindow = window.open(oSite.UrlBentley, "_blank");
+        redirectWindow.location;
+    });
 
     // Add localisation marker on Google Map :
     placeMarkerOnFIBGoogleMap(oSite);
+
+    // Get image of site :
+    $.ajax({
+        url: "https://demo.vpwhite.com/VPSoftSaas" + "/conf/Home/GetUrlOfFile",
+        type: 'POST',            
+        data: { id : oSite.ImageId },
+        success: function (data) {
+            $("#identityPicture").prop("src", data.Url);
+        },
+        error: function (xhr, txt, err) {
+            swal("Error :" + txt);
+        }
+    });
 }
 
 function placeMarkerOnFIBGoogleMap(oSite) {
@@ -129,12 +146,12 @@ function loadDataContacts(oSite) {
             let separator = (counter > 0) ? '<hr class="contactSeparator"/>' : '';
             let contactFullName = (item.ContactFullName) ? item.ContactFullName : '';
             let contactInitial = (contactFullName).split(/\s/).reduce((response,word)=> response += word.slice(0,1), '');
-            let contactJob = (item.ContactJob) ? item.ContactJob : 'Inconnu';
-            let contactMobilePro = (item.ContactMobilePro) ? item.ContactMobilePro : 'Inconnu';
-            let contactLandlinePro = (item.ContactLandlinePro) ? item.ContactLandlinePro : 'Inconnu';
-            let contactEmail = (item.ContactEmail) ? item.ContactEmail : 'Inconnu';
-            let contactLastConnection = (item.ContactLastConnection) ? new Date(item.ContactLastConnection).toLocaleDateString() : 'Inconnu';
-            let contactConnectionsCounter = (item.ContactConnectionsCounter) ? item.ContactConnectionsCounter : 'Inconnu';
+            let contactJob = (item.ContactJob) ? item.ContactJob : '-';
+            let contactMobilePro = (item.ContactMobilePro) ? item.ContactMobilePro : '-';
+            let contactLandlinePro = (item.ContactLandlinePro) ? item.ContactLandlinePro : '-';
+            let contactEmail = (item.ContactEmail) ? item.ContactEmail : '-';
+            let contactLastConnection = (item.ContactLastConnection) ? new Date(item.ContactLastConnection).toLocaleDateString() : '-';
+            let contactConnectionsCounter = (item.ContactConnectionsCounter) ? item.ContactConnectionsCounter : '-';
             contactsReferencedBody +=
             separator + '<div class="contactRow">' +
                 '<div class="squareContact">' +
@@ -297,7 +314,7 @@ function filterDataEquipments() {
 }
 
 function monthDiff(d1, d2) {
-    var months;
+    let months;
     months = (d2.getFullYear() - d1.getFullYear()) * 12;
     months -= d1.getMonth() + 1;
     months += d2.getMonth();
@@ -317,12 +334,12 @@ function loadDataDocuments(oSite) {
     Array.from(jsonAllDocuments).forEach( document => {
         if (document.OrganizationId == oSite.Id) {
             counterRequiredDocumentsAvailable++;
-            let createdDate = (document.CreatedDateString) ? document.CreatedDateString : "Inconnue";
+            let createdDate = (document.CreatedDateString) ? document.CreatedDateString : "-";
             let updateOn = (document.ModifiedDateString) ? document.ModifiedDateString : createdDate;
-            var owner = (document.AuditorOwnerFullName) ? document.AuditorOwnerFullName : "Inconnu";
-            let name = (document.Name) ? document.Name : "Inconnu";
-            let theme = (document.ThemeLocalizedName) ? document.ThemeLocalizedName : "Inconnu";
-            let version = (document.Version) ? document.Version : "Inconnue";
+            let owner = (document.AuditorOwnerFullName) ? document.AuditorOwnerFullName : "-";
+            let name = (document.Name) ? document.Name : "-";
+            let theme = (document.ThemeLocalizedName) ? document.ThemeLocalizedName : "-";
+            let version = (document.Version) ? document.Version : "-";
             let expirationDate = (document.ExpirationDateString) ? new Date(document.ExpirationDateString) : new Date();
 
             if (expirationDate < new Date()) {
@@ -404,7 +421,7 @@ function filterDataAttachedDocuments() {
 }
 
 function loadDataPropertyTitles(oSite) {
-    // SUB-SECTION 1:
+    // LEGAL SUB-SECTION 1:
     let propertyTitles_owners = [];
     let leases = [];
     let subLeases = [];
@@ -415,18 +432,14 @@ function loadDataPropertyTitles(oSite) {
     let nbExternalLeases = 0;
     let nbSubLeases = 0;
     
-    let maxCapacity = 0;
-    let occupiedWorkstation = 0;
-    
     document.getElementById("legalHorTreeContainers").innerHTML = "";
-
     // Titres de propriété (type Interne)
     for (let i = 0; i < jsonAllPropertyTitles.length; i += 1) {
         if (oSite.Id == jsonAllPropertyTitles[i].OrganizationId) {
             for (let j = 0; j < jsonAllBaux.length; j += 1) {
-                if (jsonAllBaux[j].PropertyTitleId == jsonAllPropertyTitles[i].Id) {
+                if (jsonAllBaux[j].PropertyTitleId == jsonAllPropertyTitles[i].Id && jsonAllBaux[j].OrganizationId == oSite.Id) {
                     for (let k = 0; k < jsonAllBaux.length; k += 1) {
-                        if (jsonAllBaux[k].BailParentId == jsonAllBaux[j].Id) {
+                        if (jsonAllBaux[k].BailParentId == jsonAllBaux[j].Id && jsonAllBaux[k].OrganizationId == oSite.Id) {
                             subLeases.push({
                                 description: jsonAllBaux[k].Reference,
                                 children: []
@@ -439,10 +452,9 @@ function loadDataPropertyTitles(oSite) {
                         description: jsonAllBaux[j].Reference,
                         children: subLeases
                     });
-                    maxCapacity += jsonAllBaux[j].MaxCapacity;
-                    occupiedWorkstation += jsonAllBaux[j].OccupiedWorkstationsNb;
                     nbInternalLeases += 1;
                 }
+                subLeases = [];
             }
 
             // L'ID commence par 'P' pour les Property Titles
@@ -456,9 +468,9 @@ function loadDataPropertyTitles(oSite) {
                 ]
             });
             // Les data attributes serviront pour le tooltip :
-            let surface = (jsonAllPropertyTitles[i].Surface) ? Math.round(jsonAllPropertyTitles[i].Surface.replace(",", ".")).toLocaleString() : "Inconnue";
-            let cost = (jsonAllPropertyTitles[i].AcquisitionCost) ? Math.round(jsonAllPropertyTitles[i].AcquisitionCost.replace(",", ".")).toLocaleString() : "Inconnu";
-            let date = (jsonAllPropertyTitles[i].AcquisitionDate) ? new Date(jsonAllPropertyTitles[i].AcquisitionDate).toLocaleDateString() : "Inconnue";
+            let surface = (jsonAllPropertyTitles[i].Surface) ? Math.round(jsonAllPropertyTitles[i].Surface.replace(",", ".")).toLocaleString() : "-";
+            let cost = (jsonAllPropertyTitles[i].AcquisitionCost) ? Math.round(jsonAllPropertyTitles[i].AcquisitionCost.replace(",", ".")).toLocaleString() : "-";
+            let date = (jsonAllPropertyTitles[i].AcquisitionDate) ? new Date(jsonAllPropertyTitles[i].AcquisitionDate).toLocaleDateString() : "-";
             
             document.getElementById("legalHorTreeContainers").innerHTML += "<div class='legalHorTreeContainer' id='P_legalHorTree" +
             indexId + "' data-surface='" + surface + " m²' data-cost='" + cost + " €' data-date='" + date + "'></div>";
@@ -475,9 +487,9 @@ function loadDataPropertyTitles(oSite) {
     for (let i = 0; i < jsonAllOwners.length; i += 1) {
         if (oSite.Id == jsonAllOwners[i].OrganizationsId) {
             for (let j = 0; j < jsonAllBaux.length; j += 1) {
-                if (jsonAllBaux[j].OwnerId == jsonAllOwners[i].Id) {
+                if (jsonAllBaux[j].OwnerId == jsonAllOwners[i].Id && jsonAllBaux[j].OrganizationId == oSite.Id) {
                     for (let k = 0; k < jsonAllBaux.length; k += 1) {
-                        if (jsonAllBaux[k].BailParentId == jsonAllBaux[j].Id) {
+                        if (jsonAllBaux[k].BailParentId == jsonAllBaux[j].Id && jsonAllBaux[k].OrganizationId == oSite.Id) {
                             subLeases.push({
                                 description: jsonAllBaux[k].Reference,
                                 children: []
@@ -490,10 +502,9 @@ function loadDataPropertyTitles(oSite) {
                         description: jsonAllBaux[j].Reference,
                         children: subLeases
                     });
-                    maxCapacity += jsonAllBaux[j].MaxCapacity;
-                    occupiedWorkstation += jsonAllBaux[j].OccupiedWorkstationsNb;
                     nbExternalLeases += 1;
                 }
+                subLeases = [];
             }
 
             // L'ID commence par 'O' pour les Owners
@@ -522,75 +533,7 @@ function loadDataPropertyTitles(oSite) {
 
     // Horizontal tree creation in Legal Section :
     createLegalHortree(propertyTitles_owners);
-
-    // SUB-SECTION 2 :
-    let percentageOccupation = maxCapacity > 0 ? Math.round(occupiedWorkstation / maxCapacity * 100) : 0;
-    let percentageInternalLease = (nbInternalLeases + nbExternalLeases) > 0 ? Math.round(nbInternalLeases / (nbInternalLeases + nbExternalLeases) * 100) : 0;
-    let percentageExternalLease = (nbInternalLeases + nbExternalLeases) > 0 ? Math.round(nbExternalLeases / (nbInternalLeases + nbExternalLeases) * 100) : 0;
-
-console.log(jsonAllBaux)
-
-    document.getElementById("legalInternalData").innerHTML = percentageInternalLease;
-    document.getElementById("legalExternalData").innerHTML = percentageExternalLease;
-    displayGauge("legalOccupationGauge", [{
-        y: percentageOccupation,
-        color: this.y < 50 ? "#FF0000" : this.y < 75 ? "#FFA500" : "#7BD679",
-        radius: 100,
-        innerRadius: 94,
-        labela: percentageOccupation + "%",
-        labelb: "d'occupation"
-    }]);
-
-    displayGauge("legalRepartitionGauge", [{
-        y: percentageInternalLease > 0 || percentageExternalLease > 0 ? 100 : 0,
-        color: "#7BD679",
-        radius: 100,
-        innerRadius: 94,
-        labela: "",
-        labelb: "Répartition<br />d'occupation"
-    }, {
-        y: percentageExternalLease,
-        color: "#7984D6",
-        radius: 100,
-        innerRadius: 94,
-        labela: "",
-        labelb: "Répartition<br />d'occupation"
-    }]);
-    
-    displayGauge("legalSurfaceTypeGauge", [{
-        y: 100,
-        color: "#7BD679",
-        radius: 100,
-        innerRadius: 94,
-        labela: "",
-        labelb: "Occupation par<br />type de surface"
-    }, {
-        y: 70,
-        color: "#7984D6",
-        radius: 100,
-        innerRadius: 94,
-        labela: "",
-        labelb: "Occupation par<br />type de surface"
-    }, {
-        y: 40,
-        color: "#FFE22B",
-        radius: 100,
-        innerRadius: 94,
-        labela: "",
-        labelb: "Occupation par<br />type de surface"
-    }, {
-        y: 15,
-        color: "#FF5858",
-        radius: 100,
-        innerRadius: 94,
-        labela: "",
-        labelb: "Occupation par<br />type de surface"
-    }]);
-
-    Array.from(document.getElementsByClassName("gaugeDataText")).forEach((text) => {
-        if (text.innerHTML)
-            text.style.margin = 0;
-    });
+    loadDataOccupation(oSite);
 }
 
 function createLegalHortree(arrayHorTreeObjects) {
@@ -632,9 +575,11 @@ function createLegalHortree(arrayHorTreeObjects) {
             } else if (branchIndex === 1) {
                 branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label, labelIndex) => {
                     if (labelIndex === 0 && offsetFirstLine === 0) {
-                        // The offset of the first line = the offset of the first lease :
+                        // The offset of the lines of the container = the offset of the first lease :
                         offsetFirstLine = label.getBoundingClientRect().top - 2;
-                        document.querySelector("#" + container.id + " .line").style.marginTop = offsetFirstLine;
+                        Array.from(container.getElementsByClassName("line")).forEach((line) => {
+                            line.style.marginTop = offsetFirstLine;
+                        });
                     }
                     label.style.backgroundColor = "#76BA74";
                 })
@@ -664,16 +609,196 @@ function createLegalHortree(arrayHorTreeObjects) {
     });
 }
 
+function loadDataOccupation(oSite) {
+    // LEGAL SUB-SECTION 2 :
+    // Get all surfaces objects :
+    let allSurfacesIds = [];
+    let allSurfaces = [];
+
+    for (let i = 0; i < jsonAllOccupations.length; i += 1) {
+        if (jsonAllOccupations[i].OrganizationId == oSite.Id) {
+            allSurfacesIds = allSurfacesIds.concat(jsonAllOccupations[i].SurfacesId.split(","));
+        }
+    }
+    for (let j = 0; j < jsonAllSurfaces.length; j += 1) {
+        if (allSurfacesIds.includes(jsonAllSurfaces[j].Id))
+            allSurfaces.push(jsonAllSurfaces[j])
+    }
+    
+    // Get data from the surfaces for the gauges :
+    let maxCapacity = 0;
+    let occupiedWorkstation = 0;
+    let nbInternalOccupations = 0;
+    let nbExternalOccupations = 0;
+    let allSurfaceTypes = [];
+
+    for (let k = 0; k < allSurfaces.length; k += 1) {
+        maxCapacity += allSurfaces[k].MaxCapacity;
+        occupiedWorkstation += allSurfaces[k].OccupiedWorkstationsNb;
+        if (allSurfaces[k].Type == 0)
+            nbInternalOccupations += 1;
+        else if (allSurfaces[k].Type == 1)
+            nbExternalOccupations += 1;
+        allSurfaceTypes.push(allSurfaces[k].AreaTypologyLocalizedName);
+    }
+
+    // Occupation gauge :
+    let percentageOccupation = maxCapacity > 0 ? Math.round(occupiedWorkstation / maxCapacity * 100) : 0;
+
+    displayGauge("legalOccupationGauge", [{
+        y: percentageOccupation,
+        color: this.y < 50 ? "#FF0000" : this.y < 75 ? "#FFA500" : "#7BD679",
+        radius: 100,
+        innerRadius: 94,
+        labela: percentageOccupation + "%",
+        labelb: "d'occupation"
+    }]);
+
+    // Repatition gauge :
+    let percentageInternalLease = (nbInternalOccupations + nbExternalOccupations) > 0 ? Math.round(nbInternalOccupations / (nbInternalOccupations + nbExternalOccupations) * 100) : 0;
+    let percentageExternalLease = (nbInternalOccupations + nbExternalOccupations) > 0 ? Math.round(nbExternalOccupations / (nbInternalOccupations + nbExternalOccupations) * 100) : 0;
+
+    document.getElementById("legalInternalData").innerHTML = percentageInternalLease;
+    document.getElementById("legalExternalData").innerHTML = percentageExternalLease;
+    displayGauge("legalRepartitionGauge", [{
+        y: percentageInternalLease > 0 || percentageExternalLease > 0 ? 100 : 0,
+        color: "#7BD679",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Répartition<br />d'occupation"
+    }, {
+        y: percentageExternalLease,
+        color: "#7984D6",
+        radius: 100,
+        innerRadius: 94,
+        labela: "",
+        labelb: "Répartition<br />d'occupation"
+    }]);
+
+    // Surface type gauge :
+    let surfaceGaugeData = [];
+    let squareColors = ["#FC5858", "#7AD18E", "#FFAE6C", "#7AC7D1", "#887AD1", "#D17AB3", "#7AAED1", "#FFDA6C", "#333333"];
+
+    // Nb of occurence by surface type :
+    let occurencesSurfaceTypes = {};
+    for (let i = 0; i < allSurfaceTypes.length; i++)
+        occurencesSurfaceTypes[allSurfaceTypes[i]] = typeof occurencesSurfaceTypes[allSurfaceTypes[i]] == "undefined" ? 1 : occurencesSurfaceTypes[allSurfaceTypes[i]] + 1;
+    
+    document.getElementById("legalSurfaceData").innerHTML = "";
+    // If there's no data :
+    if (Object.keys(occurencesSurfaceTypes).length === 0) {
+        document.getElementById("legalSurfaceData").innerHTML += "<div class='simpleText'>Aucune donnée disponible</div>"
+    }
+
+    // Construction of gauge :
+    let totalPercentage = 0.0;
+    Object.keys(occurencesSurfaceTypes).forEach((nbOccurences, index) => {
+        let percentageSurfaceType = Math.round(occurencesSurfaceTypes[nbOccurences] / allSurfaceTypes.length * 100);
+
+        document.getElementById("legalSurfaceData").innerHTML += "<div class='simpleText'><div class='legalGaugeSquare' style='background-color:" + squareColors[index] + "'></div>" +
+        nbOccurences + " -&nbsp" + percentageSurfaceType + "%</div>";
+        
+        surfaceGaugeData.push({
+            y: 100 - totalPercentage,
+            color: squareColors[index],
+            radius: 100,
+            innerRadius: 94,
+            labela: "",
+            labelb: "Occupation par<br />type de surface"
+        });
+        totalPercentage += percentageSurfaceType;
+    });
+
+    displayGauge("legalSurfaceTypeGauge", surfaceGaugeData);
+
+    // Gauge text style :
+    Array.from(document.getElementsByClassName("gaugeDataText")).forEach((text) => {
+        if (text.innerHTML)
+            text.style.margin = 0;
+    });
+
+    // Fill occupation table :
+    let minYear = new Date().getFullYear();
+    allSurfaces.forEach((surface) => {
+        if (surface.OccupationYear < minYear)
+            minYear = surface.OccupationYear;
+    });
+
+    // Fill filters :
+    let yearSelector = document.getElementById("legalYearSelector");
+    yearSelector.options.length = 0;
+    yearSelector.classList.add("simpleText");
+    for (let year = new Date().getFullYear(); year >= minYear; year -= 1) {
+        let newYearOption = document.createElement("option");
+        newYearOption.innerHTML = "Année : " + year;
+        newYearOption.value = year;
+        yearSelector.add(newYearOption);
+    }
+
+    $("#legalYearSelector").change(function () {
+        let filteredSurfaces = [];
+
+        allSurfaces.forEach((surface) => {
+            if (surface.OccupationYear == yearSelector.value)
+                filteredSurfaces.push(surface);
+        });
+        
+        let legalTable = "";
+        filteredSurfaces.forEach((surface) => {
+            legalTable += "<tr>";
+
+            legalTable += surface.Type == 0 ? "<td>Interne</td>" : surface.Type == 1 ? "<td>Externe</td>" : "<td>-</td>";
+            legalTable += (surface.RenterName) ? "<td>" + surface.RenterName + "</td>" : "<td>-</td>";
+            legalTable += (surface.LegalAxeName) ? "<td>" + surface.LegalAxeName + "</td>" : "<td>-</td>";
+            legalTable += (surface.AreaTypologyLocalizedName) ? "<td>" + surface.AreaTypologyLocalizedName + "</td>" : "<td>-</td>";
+            legalTable += (surface.FloorLocalizedName) ? "<td>" + surface.FloorLocalizedName + "</td>" : "<td>-</td>";
+            legalTable += (surface.NetArea) ? "<td>" + Math.round(parseInt(surface.NetArea)).toLocaleString() + "</td>" : "<td>-</td>";
+            legalTable += (surface.Headcount) ? "<td>" + surface.Headcount.toLocaleString() + "</td>" : "<td>-</td>";
+            legalTable += (surface.MaxCapacity) ? "<td>" + surface.MaxCapacity.toLocaleString() + "</td>" : "<td>-</td>";
+            legalTable += (surface.OccupiedWorkstationsNb) ? "<td>" + surface.OccupiedWorkstationsNb.toLocaleString() + "</td>" : "<td>-</td>";
+            legalTable += (surface.InstalledDesksNb) ? "<td>" + surface.InstalledDesksNb.toLocaleString() + "</td>" : "<td>-</td>";
+
+            legalTable += "</tr>";
+        });
+        document.querySelector("#legalTable > tbody").innerHTML = legalTable;
+    });
+    $("#legalYearSelector").trigger("change");
+
+    let occupationChartData = [];
+    // Removing duplicates from allSurfaceTypes array :
+    allSurfaceTypes.filter((item, index) => allSurfaceTypes.indexOf(item) === index).forEach((surfaceType) => {
+        let occupationBySurfaceTypeByYear = [];
+
+        allSurfaces.forEach((surface) => {
+            if (surface.AreaTypologyLocalizedName == surfaceType) {
+                occupationBySurfaceTypeByYear[surface.OccupationYear - minYear] = (occupationBySurfaceTypeByYear[surface.OccupationYear - minYear]) ?
+                occupationBySurfaceTypeByYear[surface.OccupationYear - minYear] + surface.OccupiedWorkstationsNb : surface.OccupiedWorkstationsNb;
+            }
+        });
+        occupationChartData.push({
+            name: decodeHtml(surfaceType),
+            data: occupationBySurfaceTypeByYear
+        });
+    });
+    (occupationChartData.length) ? displayChart("legalOccupationChart", occupationChartData, minYear) :
+    document.getElementById("legalOccupationChart").innerHTML = "<div class='simpleText' style='width:100%;margin-left:90px;'>Aucune donnéee disponible</div>";
+}
+
+function decodeHtml(htmlText) {
+    let txt = document.createElement("textarea");
+
+    txt.innerHTML = htmlText;
+    return txt.value;
+}
+
 function displayGauge(divId, dataArray) {
     Highcharts.chart(divId, {
         chart: {
             type: "solidgauge",
         },
         title: {
-            text: '',
-            style: {
-                fontSize: "12px"
-            }
+            text: ""
         },
         credits: {
             enabled: false
@@ -722,6 +847,46 @@ function displayGauge(divId, dataArray) {
                   	"</div>"
             },
         }]
+    });
+}
+
+function displayChart(divId, dataArray, minYear) {
+    Highcharts.chart(divId, {
+        title: {
+            text: ""
+        },
+    
+        yAxis: {
+            title: ""
+        },
+
+        xAxis: {
+            allowDecimals: false
+        },
+        
+        legend: {
+            layout: "horizontal",
+            verticalAlign: "bottom"
+        },
+    
+        plotOptions: {
+            series: {
+                pointStart: minYear,
+                marker: {
+                    enabled: false
+                }
+            }
+        },
+        
+        exporting: {
+                enabled: false
+        },
+
+        credits: {
+            enabled: false
+        },
+
+        series: dataArray
     });
 }
 
