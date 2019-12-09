@@ -23,7 +23,7 @@
     List<dynamic> attachedDocuments = new List<dynamic>(){}; 
     foreach (var x in attachedDocumentsResult) {
         var module = Html.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, x.EntityName);
-        attachedDocuments.add(new dynamic { OrganizationId: x.OrganizationId, ThemeLocalizedName: x.ThemeLocalizedName, EntityName: module, Description: x.Description, CreatedUserFullName: x.CreatedUserFullName, CreatedDate: x.CreatedDate });
+        attachedDocuments.Add(new dynamic { OrganizationId = x.OrganizationId, ThemeLocalizedName = x.ThemeLocalizedName, EntityName = module, Description = x.Description, CreatedUserFullName = x.CreatedUserFullName, CreatedDate = x.CreatedDate });
     };
 
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
