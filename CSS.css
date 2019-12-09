@@ -81,7 +81,15 @@
 #tab3:checked~#content3,
 #tab4:checked~#content4,
 #tab5:checked~#content5,
-#tab6:checked~#content6 {
+#tab6:checked~#content6,
+#tabQuestionaryAuditsPending:checked~#contentTabQuestionaryAuditsPending,
+#tabQuestionaryAuditsRevision:checked~#contentTabQuestionaryAuditsRevision,
+#tabActionAuditsToDo:checked~#contentTabActionAuditsToDo,
+#tabActionAuditsActual:checked~#contentTabActionAuditsActual,
+#tabActionAuditsRealised:checked~#contentTabActionAuditsRealised,
+#tabNCAuditsToUp:checked~#contentTabNCAuditsToUp,
+#tabNCAuditsActual:checked~#contentTabNCAuditsActual,
+#tabNCAuditsUped:checked~#contentTabNCAuditsUpped {
     display: block;
 }
 
@@ -539,10 +547,10 @@ body {
 .active {
     visibility: hidden;
     opacity: 0;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    transition: all 0.5s;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s;
 }
 
 .active {
@@ -632,7 +640,8 @@ body {
 }
 
 #contactAllData.active {
-    max-height: 100%;
+    max-height: 2000px;
+    overflow-y: auto;
     margin: 20px 49px 20px 49px;
 }
 
@@ -709,7 +718,8 @@ body {
 }
 
 #legalAllData.active {
-    max-height: 100%;
+    max-height: 2000px;
+    overflow-y: auto;
     margin-top: 20px;
     white-space: nowrap;
     overflow-x: auto;
@@ -871,6 +881,16 @@ body {
     width: calc(100% - 74px); /* 100% - (padding + inconSize) */
 }
 
+#auditsAllData {
+    max-height: 0px;
+}
+
+#auditsAllData.active {
+    padding: 25px 45px 25px 45px;
+    max-height: 2000px;
+    overflow-y: auto;
+}
+
 /* EQUIPMENTS Section Properties */
 
 #equipmentsMainData {
@@ -883,7 +903,8 @@ body {
 
 #equipmentsAllData.active {
     padding: 25px 45px 25px 45px;
-    max-height: 100%;
+    max-height: 2000px;
+    overflow-y: auto;
 }
 
 .equipmentAllSquares {
@@ -1004,7 +1025,8 @@ input:checked+.slider:before {
 
 #documentsAllData.active {
     padding: 25px 45px 25px 45px;
-    max-height: 100%;
+    max-height: 2000px;
+    overflow-y: auto;
 }
 
 #documentsAllData {
