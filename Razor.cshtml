@@ -17,7 +17,7 @@
     var attachedDocumentsResult = VP.GetEntitiesData("BaseDocument", "Organization.Id,Theme,EntityName,Description,CreatedUser,CreatedDate", activeFilter, "Organization=FilterQueryOrga");
     List<dynamic> attachedDocuments = new List<dynamic>(){}; 
     foreach (var x in attachedDocumentsResult) {
-        var module = Html.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, x.EntityName);
+        var module = ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, x.EntityName);
         attachedDocuments.Add(new dynamic { OrganizationId = x.OrganizationId, ThemeLocalizedName = x.ThemeLocalizedName, EntityName = module, Description = x.Description, CreatedUserFullName = x.CreatedUserFullName, CreatedDate = x.CreatedDate });
     };
 
