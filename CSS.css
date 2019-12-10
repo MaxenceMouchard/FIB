@@ -683,6 +683,11 @@ body {
     display: inline-block;
     vertical-align: middle;
     padding-left: 10px;
+    width: 160px;
+}
+
+#contactsIntervenant .contactNameAndFunction {
+    padding-left: 8px;
 }
 
 .contactFunction {
@@ -695,6 +700,14 @@ body {
     vertical-align: middle;
     font-weight: normal;
     padding-left: 80px;
+}
+
+.contactPhonesNumbers {
+    width: 150px;
+}
+
+.contactEmail {
+    width: 275px;
 }
 
 .contactLog {
