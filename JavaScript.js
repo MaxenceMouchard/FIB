@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleSiteSelectorFilter();
 
     // Pre-selected site with the id of the site selected in the left filters :
-    document.getElementById("siteSelector").value = firstOrgaId;
+    document.getElementById("siteSelector").selectedIndex = 9;//firstOrgaId;
     $("#searchFilterButton").trigger("click");
 
     // Add event when user click on openCloseIcon element :
@@ -59,6 +59,7 @@ function loadNewOrganization(siteId) {
     loadDataContacts(selectedSite);
     loadDataPropertyTitles(selectedSite);
     loadDataCompliance(selectedSite);
+    loadDataAudits(selectedSite);
     loadDataEquipments(selectedSite);
     loadDataDocuments(selectedSite);
 }
@@ -179,6 +180,139 @@ function loadDataContacts(oSite) {
 
     contactsReferenced.innerHTML = contactsReferencedBody;
     document.querySelector("#contactMainData .mainDataSubTitle").innerHTML = counter + ' contacts référencés';
+}
+
+function loadDataAudits(oSite) {
+    let auditsAllData = document.getElementById("auditsAllData");
+
+    let rowAuditsQuestionaryPending = "";
+    let rowAuditsQuestionaryRevision = "";
+    let counterAuditsQuestionaryPending = 0;
+    let counterAuditsQuestionaryRevision = 0;
+    let totalScoring = 0.00;
+    let totalProgress = 0;
+    Array.from(jsonAllAudits).forEach( audit => {
+        if (audit.OrganizationId === oSite.Id) {
+            let theme = (audit.ThemeLocalizedName) ? audit.ThemeLocalizedName : '-';
+            let name = (audit.Name) ? audit.Name : '-';
+            let startDate = (audit.StartDateString) ? audit.StartDateString : '-';
+            let endDate = (audit.EndDateString) ? audit.EndDateString : '-';
+            let scoring = (audit.Scoring) ? audit.Scoring : '-';
+            let progress = (audit.QuestionsProgressionPercentage) ? audit.QuestionsProgressionPercentage + '%' : '-';
+
+            if (audit.FormWorkflowStatusLocalizedName === "En attente") {
+                if (scoring !== '-') {
+                    totalScoring += parseFloat(scoring.replace(",","."));
+                }
+                if(progress !== '-') {
+                    totalProgress += parseInt(progress);
+                }
+                counterAuditsQuestionaryPending++;
+                rowAuditsQuestionaryPending += "<tr><td>"+ theme +"</td><td>"+ name +"</td><td>"+ startDate +"</td><td>"+ endDate +"</td><td>"+ scoring +"</td><td>"+ progress +"</td></td>";
+            }
+            else if (audit.FormWorkflowStatusLocalizedName === "En revision") {
+                if (scoring !== '-') {
+                    totalScoring += parseFloat(scoring.replace(",","."));
+                }
+                if(progress !== '-') {
+                    totalProgress += parseInt(progress);
+                }
+                counterAuditsQuestionaryRevision++;
+                rowAuditsQuestionaryRevision += "<tr><td>"+ theme +"</td><td>"+ name +"</td><td>"+ startDate +"</td><td>"+ endDate +"</td><td>"+ scoring +"</td><td>"+ progress +"</td></td>";
+            }
+        }
+    });
+    //Questionary Audit Tables
+    auditsAllData.querySelector("#auditQuestionaryPendingTable > tbody").innerHTML = rowAuditsQuestionaryPending;
+    auditsAllData.querySelector("#auditQuestionaryRevisionTable > tbody").innerHTML = rowAuditsQuestionaryRevision;
+    auditsAllData.querySelector("#nbQuestionaryAuditsPending").innerHTML = counterAuditsQuestionaryPending;
+    auditsAllData.querySelector("#nbQuestionaryAuditsRevision").innerHTML = counterAuditsQuestionaryRevision;
+    //Audit SubTitle
+    console.log((totalScoring/(counterAuditsQuestionaryPending + counterAuditsQuestionaryRevision)).toFixed(2));
+    console.log("total");
+    console.log(totalScoring);
+    console.log("countpending");
+    console.log(counterAuditsQuestionaryPending);
+    console.log("countRevision");
+    console.log(counterAuditsQuestionaryRevision);
+    document.querySelector("#auditMainData .mainDataSubTitle").innerHTML = (totalScoring/(counterAuditsQuestionaryPending + counterAuditsQuestionaryRevision)).toFixed(2) +' de scoring moyen &nbsp;&nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;&nbsp;'+ Math.round(totalProgress/(counterAuditsQuestionaryPending + counterAuditsQuestionaryRevision)) +'% de progres moyen';
+
+
+    let rowAuditsActionToDo = "";
+    let rowAuditsActionActual = "";
+    let rowAuditsActionRealised = "";
+    let counterAuditsActionsToDo = 0;
+    let counterAuditsActionsActual = 0;
+    let counterAuditsActionsRealised = 0;
+    Array.from(jsonAllAuditsActions).forEach( action => {
+        if (action.OrganizationId === oSite.Id) {
+            let audit = (action.QuestionaryName) ? action.QuestionaryName : '-';
+            let section = (action.SectionLocalizedName) ? action.SectionLocalizedName : '-';
+            let question = (action.FormQuestionLocalizedLabel) ? action.FormQuestionLocalizedLabel : '-';
+            let actionName = (action.Name) ? action.Name : '-';
+            let priority = (action.PriorityName) ? action.PriorityName : '-';
+            let endDate = (action.EndTimeString) ? action.EndTimeString : '-';
+            let responsible = (action.ResponsibleFullName) ? action.ResponsibleFullName : '-';
+            if (action.StatusLocalizedName === "A faire") {
+                counterAuditsActionsToDo++;
+                rowAuditsActionToDo += "<tr><td>"+ audit + "</td><td>"+ section +"</td><td>"+ question +"</td><td>"+ actionName +"</td><td>"+ priority +"</td><td>"+ endDate +"</td><td>"+ responsible +"</td></tr>";
+            }
+            else if (action.StatusLocalizedName === "En cours") {
+                counterAuditsActionsActual++;
+                rowAuditsActionActual += "<tr><td>"+ audit + "</td><td>"+ section +"</td><td>"+ question +"</td><td>"+ actionName +"</td><td>"+ priority +"</td><td>"+ endDate +"</td><td>"+ responsible +"</td></tr>";
+            }
+            else if(action.StatusLocalizedName === "Réalisée" || action.StatusLocalizedName === "R&#233;alis&#233;e") {
+                counterAuditsActionsRealised++;
+                rowAuditsActionRealised += "<tr><td>"+ audit + "</td><td>"+ section +"</td><td>"+ question +"</td><td>"+ actionName +"</td><td>"+ priority +"</td><td>"+ endDate +"</td><td>"+ responsible +"</td></tr>";
+            }
+        }
+    });
+    //Action Audit Tables
+    auditsAllData.querySelector("#auditActionToDoTable > tbody").innerHTML = rowAuditsActionToDo;
+    auditsAllData.querySelector("#auditActionActualTable > tbody").innerHTML = rowAuditsActionActual;
+    auditsAllData.querySelector("#auditActionRealisedTable > tbody").innerHTML = rowAuditsActionRealised;
+    auditsAllData.querySelector("#nbActionAuditsToDo").innerHTML = counterAuditsActionsToDo;
+    auditsAllData.querySelector("#nbActionAuditsActual").innerHTML = counterAuditsActionsActual;
+    auditsAllData.querySelector("#nbActionAuditsRealised").innerHTML = counterAuditsActionsRealised;
+
+    let rowAuditNCToUp = "";
+    let rowAuditActualNC = "";
+    let rowAuditUpedNC = "";
+    let counterAuditsNCToUp = 0;
+    let counterAuditsNCActual = 0;
+    let counterAuditsNCUped = 0;
+    Array.from(jsonAllAuditsNC).forEach( NC => {
+        if (NC.OrganizationId === oSite.Id) {
+            let theme = (NC.ThemeLocalizedName) ? NC.ThemeLocalizedName : '-';
+            let audit = (NC.QuestionaryName) ? NC.QuestionaryName : '-';
+            let question = (NC.FormQuestionLocalizedLabel) ? NC.FormQuestionLocalizedLabel : '-';
+            let details = (NC.ReserveText) ? NC.ReserveText : '-';
+            let criticity = (NC.CritLevelLocalizedName) ? NC.CritLevelLocalizedName : '-';
+            let toUpBefore = (NC.ExpectedDateString) ? NC.ExpectedDateString : '-';
+            let responsible = (NC.ResponsibleFullName) ? NC.ResponsibleFullName : '-';
+
+            if (NC.StatusOfReserveLocalizedName === "A lever") {
+                counterAuditsNCToUp++;
+                rowAuditNCToUp += "<tr><td>"+ theme +"</td><td>"+ audit +"</td><td>"+ question + "</td><td>"+ details +"</td><td>"+ criticity +"</td><td>"+ toUpBefore +"</td><td>"+ responsible +"</td></tr>";
+            }
+            else if (NC.StatusOfReserveLocalizedName === "En cours") {
+                counterAuditsNCActual++;
+                rowAuditActualNC += "<tr><td>"+ theme +"</td><td>"+ audit +"</td><td>"+ question + "</td><td>"+ details +"</td><td>"+ criticity +"</td><td>"+ toUpBefore +"</td><td>"+ responsible +"</td></tr>";
+            }
+            else if (NC.StatusOfReserveLocalizedName === "Levée" || NC.StatusOfReserveLocalizedName === "Lev&#233;e") {
+                counterAuditsNCUped++;
+                let uppedDate = (NC.ValidationDateString) ? NC.ValidationDateString : '-';
+                rowAuditUpedNC += "<tr><td>"+ theme +"</td><td>"+ audit +"</td><td>"+ question + "</td><td>"+ details +"</td><td>"+ criticity +"</td><td>"+ uppedDate +"</td><td>"+ responsible +"</td></tr>";
+            }
+        }
+    });
+    //NC Audit Tables
+    auditsAllData.querySelector("#auditNCToUpTable > tbody").innerHTML = rowAuditNCToUp;
+    auditsAllData.querySelector("#auditNCActual > tbody").innerHTML = rowAuditActualNC;
+    auditsAllData.querySelector("#auditNCUped > tbody").innerHTML = rowAuditUpedNC;
+    auditsAllData.querySelector("#nbNCAuditsToUp").innerHTML = counterAuditsNCToUp;
+    auditsAllData.querySelector("#nbNCAuditsActual").innerHTML = counterAuditsNCActual;
+    auditsAllData.querySelector("#nbNCAuditsUped").innerHTML = counterAuditsNCUped;
 }
 
 function loadDataEquipments(oSite) {
@@ -350,15 +484,15 @@ function loadDataDocuments(oSite) {
     Array.from(jsonAllAttachedDocuments).forEach( attachment => {
         if(attachment.OrganizationId == oSite.Id) {
             let entity = (attachment.EntityName) ? attachment.EntityName : "-";
-            let name = (attachment.ThemeLocalizedName) ? attachment.ThemeLocalizedName : "-";
+            let name = (attachment.Name) ? attachment.Name : "-";
             let description = (attachment.Description) ? attachment.Description : "-";
             let createdBy = (attachment.CreatedUserFullName) ? attachment.CreatedUserFullName : "-";
 
             //Add module into selector filter
             if(moduleFilter.querySelectorAll("option[value='"+ entity +"'").length === 0) {
                 var option = document.createElement("option");
-                option.text = entity;
-                option.value = entity;
+                option.text = decodeHtml(entity);
+                option.value =  decodeHtml(entity);
                 moduleFilter.add(option);
             }
 
@@ -386,6 +520,9 @@ function loadDataDocuments(oSite) {
     documentsAllData.querySelector("#nbToRenew").innerHTML = counterRenewableDocumens;
     //Third Tab
     documentsAllData.querySelector("#nbToValidate").innerHTML = counterDocumentToValidate;
+
+    //SubTitle
+    document.querySelector("#documentsMainData .mainDataSubTitle").innerHTML = '';
 
 }
 

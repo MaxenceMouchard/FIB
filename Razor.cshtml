@@ -4,8 +4,8 @@
 
 @{
     // Id de la première orga (celle sélectionnée dans les filtres de gauche pour accéder à l'espace du site) :
-    OrganizationBase firstOrga = SessionService.GetObject(SoNG.Infrastructure.Consts.CURRENT_ORGANIZATION_SKEY) as OrganizationBase;
-    string firstOrgaId = firstOrga.Id.ToString();
+    <!-- OrganizationBase firstOrga = SessionService.GetObject(SoNG.Infrastructure.Consts.CURRENT_ORGANIZATION_SKEY) as OrganizationBase;
+    string firstOrgaId = firstOrga.Id.ToString(); -->
 
     // appBaseURL :
 	var appBaseURL = UriHelper.GetAppBaseUri();
@@ -16,17 +16,21 @@
     var organizations = VP.GetEntitiesData("Organization", "Id,Image.Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ERPTypes.TypeName,M2,UrlBentley,Lat,Long", "Level=4,EntityState=Active,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
     var contacts = VP.GetEntitiesData("OrganizationContact", "Organization.Id,Contact.FullName,Contact.Email,Contact.Job,Contact.Denomination,Contact.LastConnection,Contact.ConnectionsCounter,Contact.MobilePro,Contact.LandlinePro,Contact.AllPhone", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
     
+    var audits = VP.GetEntitiesData("CQuestionaryAudit", "Organization.Id,Theme,Name,StartDate,EndDate,Scoring,QuestionsProgressionPercentage,FormWorkflowStatus", activeFilter, "Organization=FilterQueryOrga");
+    var auditsActions = VP.GetEntitiesData("CActionAudit", "Organization.Id,Questionary,Section,FormQuestion,Name,Priority,EndTime,Responsible,Status", activeFilter, "Organization=FilterQueryOrga");
+    var auditsNC = VP.GetEntitiesData("ReserveOfAudit", "Organization.Id,Theme,Questionary,FormQuestion,ReserveText,CritLevel,ExpectedDate,ValidationDate,StatusOfReserve", activeFilter, "Organization=FilterQueryOrga");
+
     var equipments = VP.GetEntitiesData("Equipment", "Id,Organization.Id,Name,Theme,Reference,QRCode,Brand,EndOfGuarantee", activeFilter, "Organization=FilterQueryOrga");
     var equipmentsNC = VP.GetEntitiesData("ReserveOfVisit", "Organization.Id,Equipments.Id,VisitDate,IsLate,VisitObligation,UserProviderForReserve,Location,Redundant,ReserveText,CritLevel,ExpectedDate,StatusOfReserve", activeFilter, "Organization=FilterQueryOrga");
     var equipmentsActions = VP.GetEntitiesData("CActionEquipment", "Organization.Id,Equipment.Id,Name,BeginTime,EndTime,Responsible,Priority,Status", activeFilter, "Organization=FilterQueryOrga");
 	var equipmentsVisit = VP.GetEntitiesData("Visit", "Organization.Id,Equipments.Id", activeFilter, "Organization=FilterQueryOrga");
 
     var documents = VP.GetEntitiesData("CQuestionaryDocument", "Organization.Id,Theme,Name,AuditorOwner,CreatedDate,ModifiedDate,Version,ExpirationDate,FormWorkflowStatus", activeFilter, "Organization=FilterQueryOrga");
-    var attachedDocumentsResult = VP.GetEntitiesData("BaseDocument", "Organization.Id,Theme,EntityName,Description,CreatedUser,CreatedDate", activeFilter, "Organization=FilterQueryOrga");
+    var attachedDocumentsResult = VP.GetEntitiesData("BaseDocument", "Organization.Id,Name,EntityName,Description,CreatedUser,CreatedDate", activeFilter, "Organization=FilterQueryOrga");
     List<dynamic> attachedDocuments = new List<dynamic>(){}; 
     foreach (var x in attachedDocumentsResult) {
         var module = ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, x.EntityName);
-        attachedDocuments.Add(new { OrganizationId = x.OrganizationId, ThemeLocalizedName = x.ThemeLocalizedName, EntityName = module, Description = x.Description, CreatedUserFullName = x.CreatedUserFullName, CreatedDate = x.CreatedDate });
+        attachedDocuments.Add(new { OrganizationId = x.OrganizationId, Name = x.Name, EntityName = module, Description = x.Description, CreatedUserFullName = x.CreatedUserFullName, CreatedDate = x.CreatedDate });
     };
 
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
@@ -395,12 +399,214 @@
                 <i class="fas fa-chart-area simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="auditMainData">
                     <div class="mainDataTitle smallTitle">Audit</div>
-                    <div class="mainDataSubTitle simpleText">3 audits en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 6 NC à
-                        lever</div>
+                    <div class="mainDataSubTitle simpleText">0 scoring &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 0% progression</div>
                 </div>
                 <i class="fas fa-plus openCloseIcon"></i>
             </div>
-            <div class="allData" id="auditAllData">
+            <div class="allData" id="auditsAllData">
+                <!-- QuestionaryAudits -->
+                <main class="tab">
+                    <input id="tabQuestionaryAuditsPending" type="radio" name="tabQuestionaryAudits" checked>
+                    <label for="tabQuestionaryAuditsPending"><span id="nbQuestionaryAuditsPending">0</span>En attente</label>
+                        
+                    <input id="tabQuestionaryAuditsRevision" type="radio" name="tabQuestionaryAudits">
+                    <label for="tabQuestionaryAuditsRevision"><span id="nbQuestionaryAuditsRevision">0</span>En révision</label>
+
+                    <section id="contentTabQuestionaryAuditsPending">
+                        <div class="tableWrapper">
+                            <table id="auditQuestionaryPendingTable" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Nom</th>
+                                        <th>Date de début</th>
+                                        <th>Date de fin</th>
+                                        <th>Scoring</th>
+                                        <th>Progression</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="contentTabQuestionaryAuditsRevision">
+                        <!-- TODO -->
+                        <div class="tableWrapper">
+                            <table id="auditQuestionaryRevisionTable" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Nom</th>
+                                        <th>Date de début</th>
+                                        <th>Date de fin</th>
+                                        <th>Scoring</th>
+                                        <th>Progression</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>                  
+                </main>
+                
+                <!-- Action -->
+                <main class="tab">
+                    <input id="tabActionAuditsToDo" type="radio" name="tabActionAudits" checked>
+                    <label for="tabActionAuditsToDo"><span id="nbActionAuditsToDo">0</span>A faire</label>
+                        
+                    <input id="tabActionAuditsActual" type="radio" name="tabActionAudits">
+                    <label for="tabActionAuditsActual"><span id="nbActionAuditsActual">0</span>En cours</label>
+
+                    <input id="tabActionAuditsRealised" type="radio" name="tabActionAudits">
+                    <label for="tabActionAuditsRealised"><span id="nbActionAuditsRealised">0</span>Réalisées</label>
+
+                    <section id="contentTabActionAuditsToDo">
+                        <div class="tableWrapper">
+                            <table id="auditActionToDoTable" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Audit</th>
+                                        <th>Section</th>
+                                        <th>Question</th>
+                                        <th>Nom de l'action</th>
+                                        <th>Priorité</th>
+                                        <th>Echéance</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="contentTabActionAuditsActual">
+                        <!-- TODO -->
+                        <div class="tableWrapper">
+                            <table id="auditActionActualTable" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Audit</th>
+                                        <th>Section</th>
+                                        <th>Question</th>
+                                        <th>Nom de l'action</th>
+                                        <th>Priorité</th>
+                                        <th>Echéance</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="contentTabActionAuditsRealised">
+                        <!-- TODO -->
+                        <div class="tableWrapper">
+                            <table id="auditActionRealisedTable" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Audit</th>
+                                        <th>Section</th>
+                                        <th>Question</th>
+                                        <th>Nom de l'action</th>
+                                        <th>Priorité</th>
+                                        <th>Echéance</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>        
+                </main>
+
+                <!-- NC -->
+                <main class="tab">
+                    <input id="tabNCAuditsToUp" type="radio" name="tabNCAudits" checked>
+                    <label for="tabNCAuditsToUp"><span id="nbNCAuditsToUp">0</span>A faire</label>
+                        
+                    <input id="tabNCAuditsActual" type="radio" name="tabNCAudits">
+                    <label for="tabNCAuditsActual"><span id="nbNCAuditsActual">0</span>En cours</label>
+
+                    <input id="tabNCAuditsUped" type="radio" name="tabNCAudits">
+                    <label for="tabNCAuditsUped"><span id="nbNCAuditsUped">0</span>Réalisées</label>
+
+                    <section id="contentTabNCAuditsToUp">
+                        <div class="tableWrapper">
+                            <table id="auditNCToUpTable" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Audit</th>
+                                        <th>Question</th>
+                                        <th>Détails de la NC</th>
+                                        <th>Criticité</th>
+                                        <th>A lever avant</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="contentTabNCAuditsActual">
+                        <!-- TODO -->
+                        <div class="tableWrapper">
+                            <table id="auditNCActual" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Audit</th>
+                                        <th>Question</th>
+                                        <th>Détails de la NC</th>
+                                        <th>Criticité</th>
+                                        <th>A lever avant</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="contentTabNCAuditsUpped">
+                        <!-- TODO -->
+                        <div class="tableWrapper">
+                            <table id="auditNCUped" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Audit</th>
+                                        <th>Question</th>
+                                        <th>Détails de la NC</th>
+                                        <th>Criticité</th>
+                                        <th>Levée le</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>        
+                </main>
             </div>
         </div>
 
@@ -532,6 +738,7 @@
                 <i class="fas fa-file-alt simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="documentsMainData">
                     <div class="mainDataTitle smallTitle">Documents</div>
+                    <div class="mainDataSubTitle simpleText">0% Suivi</div>
                 </div>
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>
@@ -605,7 +812,7 @@
                     </section>                     
                 </main>
 
-                <div id="equipmentFilters" class="simpleText">
+                <div id="documentsFilters" class="simpleText">
                     <div class="inline verticalAlignMiddle">
                         <label>Module
                             <select name="module" id="moduleSelector" class="selector" onChange="filterDataAttachedDocuments()">
@@ -718,6 +925,10 @@ let appBaseURL = "@appBaseURL";
 
 let jsonAllOrganizations = JSON.parse(('@JsonConvert.SerializeObject(organizations)').replace(/&quot;/g, '"'));
 let jsonAllContacts = JSON.parse(('@JsonConvert.SerializeObject(contacts)').replace(/&quot;/g, '"'));
+
+let jsonAllAudits = JSON.parse(('@JsonConvert.SerializeObject(audits)').replace(/&quot;/g, '"'));
+let jsonAllAuditsActions = JSON.parse(('@JsonConvert.SerializeObject(auditsActions)').replace(/&quot;/g, '"'));
+let jsonAllAuditsNC = JSON.parse(('@JsonConvert.SerializeObject(auditsNC)').replace(/&quot;/g, '"'));
 
 let jsonAllEquipments = JSON.parse(('@JsonConvert.SerializeObject(equipments)').replace(/&quot;/g, '"'));
 let jsonAllEquipmentsNC = JSON.parse(('@JsonConvert.SerializeObject(equipmentsNC)').replace(/&quot;/g, '"'));
