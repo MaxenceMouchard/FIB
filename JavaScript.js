@@ -341,6 +341,7 @@ function loadDataEquipments(oSite) {
             let counterActualAction = 0;
             let visitDateString = "-";
             let visiteDateEN = new Date();
+            let equipmentName = (equipment.Name) ? equipment.Name : '-';
             
             Array.from(jsonAllEquipmentsNC).forEach( NC => {
                 if (NC.OrganizationId == oSite.Id && NC.EquipmentsId == equipment.Id) {
@@ -353,9 +354,17 @@ function loadDataEquipments(oSite) {
                     }
                     if (NC.IsLate) {
                         counterTotalNcToLate++;
-                    }
+                        let NCVisitObligation = (NC.VisitObligation) ? NC.VisitObligation : '-';
+                        let NCUserProviderForReserveFullName = (NC.UserProviderForReserveFullName) ? NC.UserProviderForReserveFullName : '-';
+                        let NCLocation = (NC.Location) ? NC.Location : '-';
+                        let NCRedundantString = (NC.RedundantString) ? NC.RedundantString : '-';
+                        let NCReserveText = (NC.ReserveText) ? NC.ReserveText : '-';
+                        let NCCritLevelLocalizedName = (NC.CritLevelLocalizedName) ? NC.CritLevelLocalizedName : '-';
+                        let NCExpectedDateString = (NC.ExpectedDateString) ? NC.ExpectedDateString : '-';
+                        let NCStatusOfReserveLocalizedName = (NC.StatusOfReserveLocalizedName) ? NC.StatusOfReserveLocalizedName : '-';
 
-                    rowSecondTable += "<tr><td>"+ equipment.Name +"</td><td>"+ NC.VisitObligation +"</td><td>"+ NC.UserProviderForReserveFullName +"</td><td>"+ NC.Location +"</td><td>"+ NC.RedundantString +"</td><td>"+ NC.ReserveText +"</td><td>"+ NC.CritLevelLocalizedName +"</td><td>"+ NC.ExpectedDateString +"</td><td>"+ NC.StatusOfReserveLocalizedName +"</td></tr>";
+                        rowSecondTable += "<tr><td>"+ equipmentName +"</td><td>"+ NCVisitObligation +"</td><td>"+ NCUserProviderForReserveFullName +"</td><td>"+ NCLocation +"</td><td>"+ NCRedundantString +"</td><td>"+ NCReserveText +"</td><td>"+ NCCritLevelLocalizedName +"</td><td>"+ NCExpectedDateString +"</td><td>"+ NCStatusOfReserveLocalizedName +"</td></tr>";
+                    }
                 }
             });
 
@@ -366,7 +375,14 @@ function loadDataEquipments(oSite) {
                     }
                     if (action.StatusLocalizedName == "A faire") {
                         counterTotalActionToDo++;
-                        rowThirdTable += "<tr><td>"+ equipment.Name +"</td><td>"+ action.Name +"</td><td>"+ action.BeginTimeString +"</td><td>"+ action.EndTimeString +"</td><td>"+ action.ResponsibleFullName +"</td><td>"+ action.PriorityName +"</td><td>"+ action.StatusLocalizedName +"</td></tr>";
+                        let actionName = (action.Name) ? action.Name : '-';
+                        let actionBeginTimeString = (action.BeginTimeString) ? action.BeginTimeString : '-';
+                        let actionEndTimeString = (action.EndTimeString) ? action.EndTimeString : '-';
+                        let actionResponsibleFullName = (action.ResponsibleFullName) ? action.ResponsibleFullName : '-';
+                        let actionPriorityName = (action.PriorityName) ? action.PriorityName : '-';
+                        let actionStatusLocalizedName = (action.StatusLocalizedName) ? action.StatusLocalizedName : '-';
+
+                        rowThirdTable += "<tr><td>"+ equipmentName +"</td><td>"+ actionName +"</td><td>"+ actionBeginTimeString +"</td><td>"+ actionEndTimeString +"</td><td>"+ actionResponsibleFullName +"</td><td>"+ actionPriorityName +"</td><td>"+ actionStatusLocalizedName +"</td></tr>";
                     }
                 }
             });
@@ -374,7 +390,14 @@ function loadDataEquipments(oSite) {
             let endOfGuarantee = (equipment.EndOfGuarantee) ? new Date(equipment.EndOfGuarantee) : new Date();
             let monthBeforeEnd = monthDiff(new Date(), endOfGuarantee);
             let nextVisiteDate = monthDiff(new Date(), visiteDateEN);
-            rowFirstTable += "<tr data-endOfGuarantee='"+ monthBeforeEnd +"' data-nextVisiteDate='"+ nextVisiteDate +"'><td>"+ equipment.ThemeLocalizedName +"</td><td>"+ equipment.Reference +"</td><td>"+ equipment.QRCode +"</td><td>"+ equipment.Brand +"</td><td>"+ equipment.EndOfGuaranteeString +"</td><td>"+ counterNcToUp +"</td><td>"+ visitDateString +"</td><td>"+ counterActualAction +"</td></tr>";
+
+            let equipmentThemeLocalizedName = (equipment.ThemeLocalizedName) ? equipment.ThemeLocalizedName : '-';
+            let equipmentReference = (equipment.Reference) ? equipment.Reference : '-';
+            let equipmentQRCode = (equipment.QRCode) ? equipment.QRCode : '-';
+            let equipmentBrand = (equipment.Brand) ? equipment.Brand : '-';
+            let equipmentEndOfGuaranteeString = (equipment.EndOfGuaranteeString) ? equipment.EndOfGuaranteeString : '-';
+
+            rowFirstTable += "<tr data-endOfGuarantee='"+ monthBeforeEnd +"' data-nextVisiteDate='"+ nextVisiteDate +"'><td>"+ equipmentThemeLocalizedName +"</td><td>"+ equipmentReference +"</td><td>"+ equipmentQRCode +"</td><td>"+ equipmentBrand +"</td><td>"+ equipmentEndOfGuaranteeString +"</td><td>"+ counterNcToUp +"</td><td>"+ visitDateString +"</td><td>"+ counterActualAction +"</td></tr>";
 
             let isVisitedEquipment = false;
             for (var i=0; i<jsonAllEquipmentsVisit.length; i++) {
@@ -423,18 +446,54 @@ function filterDataEquipments() {
     let selectedGarantieValue = parseInt(garantieSelector.options[garantieSelector.selectedIndex].value);
     let selectedVisiteValue = parseInt(visiteSelector.options[visiteSelector.selectedIndex].value);
 
-    let allRow = document.querySelectorAll("#equipmentFirstTable > tbody tr");
+    let selectedSiteValue = document.getElementById("siteSelector").options[document.getElementById("siteSelector").selectedIndex].value;
+    let rowFirstTable = "";
+    Array.from(jsonAllEquipments).forEach( equipment => {
+        if (equipment.OrganizationId == selectedSiteValue) {
+            //First Table
+            let counterNcToUp = 0;
+            let counterActualAction = 0;
+            let visitDateString = "-";
+            let visiteDateEN = new Date();
+            
+            Array.from(jsonAllEquipmentsNC).forEach( NC => {
+                if (NC.OrganizationId == selectedSiteValue && NC.EquipmentsId == equipment.Id) {
+                    if (NC.StatusOfReserveLocalizedName == "A lever") {
+                        counterNcToUp++;
+                    }
+                    if (NC.VisitDateString !== "" && NC.visitDateString !== null && visiteDateEN <= new Date(NC.VisitDate)) {
+                        visitDateString = NC.VisitDateString;
+                        visiteDateEN = new Date(NC.VisitDate);
+                    }
+                }
+            });
 
-    allRow.forEach( row => {
-        let endOfGarantie = parseInt(row.getAttribute("data-endOfGuarantee"));
-        let visiteDate = parseInt(row.getAttribute("data-nextVisiteDate"));
+            Array.from(jsonAllEquipmentsActions).forEach( action => {
+                if (action.OrganizationId == selectedSiteValue && action.EquipmentId == equipment.Id) {
+                    if (action.StatusLocalizedName == "En cours") {
+                        counterActualAction++;
+                    }
+                }
+            });
 
-        if(selectedGarantieValue <= endOfGarantie && selectedVisiteValue <= visiteDate) {
-            row.style.display = "table-row";
-        } else {
-            row.style.display = "none";
+            let endOfGuarantee = (equipment.EndOfGuarantee) ? new Date(equipment.EndOfGuarantee) : new Date();
+            let monthBeforeEnd = monthDiff(new Date(), endOfGuarantee);
+            let nextVisiteDate = monthDiff(new Date(), visiteDateEN);
+
+            let theme = (equipment.ThemeLocalizedName) ? equipment.ThemeLocalizedName : '-';
+            let reference = (equipment.Reference) ? equipment.Reference : '-';
+            let QRCode = (equipment.QRCode) ? equipment.QRCode : '-';
+            let brand = (equipment.brand) ? equipment.brand : '-';
+            let endOfGuaranteeString = (equipment.EndOfGuaranteeString) ? equipment.EndOfGuaranteeString : '-';
+            
+            if (selectedGarantieValue <= monthBeforeEnd && selectedVisiteValue <= nextVisiteDate) {
+                rowFirstTable += "<tr data-endOfGuarantee='"+ monthBeforeEnd +"' data-nextVisiteDate='"+ nextVisiteDate +"'><td>"+ theme +"</td><td>"+ reference +"</td><td>"+ QRCode +"</td><td>"+ brand +"</td><td>"+ endOfGuaranteeString +"</td><td>"+ counterNcToUp +"</td><td>"+ visitDateString +"</td><td>"+ counterActualAction +"</td></tr>";
+            }
         }
     });
+
+    let equipmentsAllData = document.getElementById("equipmentsAllData");
+    equipmentsAllData.querySelector("#equipmentFirstTable > tbody").innerHTML = rowFirstTable;
 }
 
 function monthDiff(d1, d2) {
@@ -498,7 +557,7 @@ function loadDataDocuments(oSite) {
 
             let createdSince = (attachment.CreatedDate) ? new Date(attachment.CreatedDate) : new Date();
             let monthSinceCreation = monthDiff(createdSince, new Date());
-            rowAttachmentTable += "<tr data-entity='"+ entity +"' data-createdSince='"+ monthSinceCreation +"'><td>"+ entity +"</td><td>"+ name +"</td><td>"+ description +"</td><td>"+ createdBy +"</td></tr>";
+            rowAttachmentTable += "<tr onclick='downloadAttachment(`"+ attachment.Code +"`)' data-entity='"+ entity +"' data-createdSince='"+ monthSinceCreation +"'><td>"+ entity +"</td><td>"+ name +"</td><td>"+ description +"</td><td>"+ createdBy +"</td></tr>";
         }
     });
 
@@ -522,7 +581,11 @@ function loadDataDocuments(oSite) {
     documentsAllData.querySelector("#nbToValidate").innerHTML = counterDocumentToValidate;
 
     //SubTitle
-    document.querySelector("#documentsMainData .mainDataSubTitle").innerHTML = '';
+    var subTitle = document.querySelector("#documentsMainData .mainDataSubTitle");
+    subTitle.innerHTML = (counterRenewableDocumens > 0) ? counterRenewableDocumens +' documents arrivés à expiration' : counterRenewableDocumens + ' document arrivé à expiration';
+    if (counterRenewableDocumens > 0) {
+        subTitle.style.color = 'red';
+    }
 
 }
 
@@ -533,18 +596,40 @@ function filterDataAttachedDocuments() {
     let selectedModuleValue = moduleSelector.options[moduleSelector.selectedIndex].value;
     let selectedCreatedSinceValue = parseInt(createdSinceSelector.options[createdSinceSelector.selectedIndex].value);
 
-    let allRow = document.querySelectorAll("#attachedDocumentsTable > tbody tr");
+    let selectedSiteValue = document.getElementById("siteSelector").options[document.getElementById("siteSelector").selectedIndex].value;
+    let documentsAllData = document.getElementById("documentsAllData");
+    let rowAttachmentTable = "";
+    Array.from(jsonAllAttachedDocuments).forEach( attachment => {
+        if(attachment.OrganizationId == selectedSiteValue) {
+            let entity = (attachment.EntityName) ? attachment.EntityName : "-";
+            let name = (attachment.Name) ? attachment.Name : "-";
+            let description = (attachment.Description) ? attachment.Description : "-";
+            let createdBy = (attachment.CreatedUserFullName) ? attachment.CreatedUserFullName : "-";
 
-    allRow.forEach( row => {
-        let entity = row.getAttribute("data-entity");
-        let createdSince = parseInt(row.getAttribute("data-createdSince"));
+            let createdSince = (attachment.CreatedDate) ? new Date(attachment.CreatedDate) : new Date();
+            let monthSinceCreation = monthDiff(createdSince, new Date());
 
-        if((selectedModuleValue == entity || selectedModuleValue === "all") && selectedCreatedSinceValue <= createdSince) {
-            row.style.display = "table-row";
-        } else {
-            row.style.display = "none";
+            if((selectedModuleValue == entity || selectedModuleValue === "all") && selectedCreatedSinceValue <= createdSince) {
+                rowAttachmentTable += "<tr onclick='downloadAttachment(`"+ attachment.Code +"`)' data-entity='"+ entity +"' data-createdSince='"+ monthSinceCreation +"'><td>"+ entity +"</td><td>"+ name +"</td><td>"+ description +"</td><td>"+ createdBy +"</td></tr>";
+            }
         }
     });
+
+    documentsAllData.querySelector("#attachedDocumentsTable > tbody").innerHTML = rowAttachmentTable;
+}
+
+function downloadAttachment(attachmentId) {
+    ExecutefileDownload(appBaseURL + '/Api/UIService/DownloadFile', 'id=' + attachmentId, null, null, 'GET');
+    // $.ajax({
+    //     url: appBaseURL +"/API/UIService/DownloadFile?id="+ attachmentId,
+    //     type: 'get',
+    //     success: function (data) {
+    //         console.log("sucess => "+data);
+    //     },
+    //     error: function (xhr, txt, err) {
+    //         swal("Error :" + txt);
+    //     }
+    // });
 }
 
 function loadDataPropertyTitles(oSite) {

@@ -26,11 +26,11 @@
 	var equipmentsVisit = VP.GetEntitiesData("Visit", "Organization.Id,Equipments.Id", activeFilter, "Organization=FilterQueryOrga");
 
     var documents = VP.GetEntitiesData("CQuestionaryDocument", "Organization.Id,Theme,Name,AuditorOwner,CreatedDate,ModifiedDate,Version,ExpirationDate,FormWorkflowStatus", activeFilter, "Organization=FilterQueryOrga");
-    var attachedDocumentsResult = VP.GetEntitiesData("BaseDocument", "Organization.Id,Name,EntityName,Description,CreatedUser,CreatedDate", activeFilter, "Organization=FilterQueryOrga");
+    var attachedDocumentsResult = VP.GetEntitiesData("BaseDocument", "Organization.Id,Code,Name,EntityName,Description,CreatedUser,CreatedDate", activeFilter, "Organization=FilterQueryOrga");
     List<dynamic> attachedDocuments = new List<dynamic>(){}; 
     foreach (var x in attachedDocumentsResult) {
         var module = ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, x.EntityName);
-        attachedDocuments.Add(new { OrganizationId = x.OrganizationId, Name = x.Name, EntityName = module, Description = x.Description, CreatedUserFullName = x.CreatedUserFullName, CreatedDate = x.CreatedDate });
+        attachedDocuments.Add(new { OrganizationId = x.OrganizationId, Code = x.Code, Name = x.Name, EntityName = module, Description = x.Description, CreatedUserFullName = x.CreatedUserFullName, CreatedDate = x.CreatedDate });
     };
 
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
@@ -45,10 +45,6 @@
     var nonCompliances = VP.GetEntitiesData("ReserveOfVisit", "Organization.Id,ReserveStatus,IsLate,CritLevel.LocalizedName,Theme,VisitObligation,VisitDate,Designation,UserProviderForReserve,Location,Redundant,ReserveText,ExpectedDate", activeFilter, "Organization=FilterQueryOrga");
     var actionsToDo = VP.GetEntitiesData("CActionReserve", "Organization.Id,Code,Reserve,Name,Description,BeginTime,EndTime,Status", "Status.Category=0," + activeFilter, "Organization=FilterQueryOrga");
 }
-
-@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/highcharts.js"))
-@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/highcharts-more.js"))
-@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/modules/solid-gauge.js"))
 
 <!DOCTYPE html>
 <html>
@@ -918,9 +914,13 @@
 <!-- <script src="./horizontalTreePlugin/dist/jquery.hortree.min.js"></script> -->
 <!-- <script src="./horizontalTreePlugin/demo/jquery.line.js"></script> -->
 
+@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/highcharts.js"))
+@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/highcharts-more.js"))
+@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/modules/solid-gauge.js"))
+@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/global.plugin.js"))
+
 <script>
 
-let firstOrgaId = "@firstOrgaId";
 let appBaseURL = "@appBaseURL";
 
 let jsonAllOrganizations = JSON.parse(('@JsonConvert.SerializeObject(organizations)').replace(/&quot;/g, '"'));
