@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleSiteSelectorFilter();
 
     // Pre-selected site with the id of the site selected in the left filters :
-    document.getElementById("siteSelector").selectedIndex = 9;//firstOrgaId;
+    document.getElementById("siteSelector").value = firstOrgaId;
     $("#searchFilterButton").trigger("click");
 
     // Add event when user click on openCloseIcon element :
@@ -121,12 +121,15 @@ function loadDataBatiment(oSite) {
 }
 
 function placeMarkerOnFIBGoogleMap(oSite) {
+    let lat = (oSite.Lat) ? oSite.Lat : 0;
+    let long = (oSite.Long) ? oSite.Long : 0;
+
     for (let i = 0; i < identityMapMarkers.length; i++) {
         identityMapMarkers[i].setMap(null);
     }
 
     let marker = new google.maps.Marker({
-        position: new google.maps.LatLng(oSite.Lat, oSite.Long),
+        position: new google.maps.LatLng(lat, long),
         map: identityMap
     });
 
@@ -228,15 +231,10 @@ function loadDataAudits(oSite) {
     auditsAllData.querySelector("#nbQuestionaryAuditsPending").innerHTML = counterAuditsQuestionaryPending;
     auditsAllData.querySelector("#nbQuestionaryAuditsRevision").innerHTML = counterAuditsQuestionaryRevision;
     //Audit SubTitle
-    console.log((totalScoring/(counterAuditsQuestionaryPending + counterAuditsQuestionaryRevision)).toFixed(2));
-    console.log("total");
-    console.log(totalScoring);
-    console.log("countpending");
-    console.log(counterAuditsQuestionaryPending);
-    console.log("countRevision");
-    console.log(counterAuditsQuestionaryRevision);
-    document.querySelector("#auditMainData .mainDataSubTitle").innerHTML = (totalScoring/(counterAuditsQuestionaryPending + counterAuditsQuestionaryRevision)).toFixed(2) +' de scoring moyen &nbsp;&nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;&nbsp;'+ Math.round(totalProgress/(counterAuditsQuestionaryPending + counterAuditsQuestionaryRevision)) +'% de progres moyen';
-
+    if (counterAuditsQuestionaryPending + counterAuditsQuestionaryRevision !== 0)
+        document.querySelector("#auditMainData .mainDataSubTitle").innerHTML = (totalScoring/(counterAuditsQuestionaryPending + counterAuditsQuestionaryRevision)).toFixed(2) +' de scoring moyen &nbsp;&nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;&nbsp;'+ Math.round(totalProgress/(counterAuditsQuestionaryPending + counterAuditsQuestionaryRevision)) +'% de progres moyen';
+    else
+        document.querySelector("#auditMainData .mainDataSubTitle").innerHTML = '0.00 de scoring moyen &nbsp;&nbsp;&nbsp;&nbsp; / &nbsp;&nbsp;&nbsp;&nbsp; 0% de progrès moyen';
 
     let rowAuditsActionToDo = "";
     let rowAuditsActionActual = "";

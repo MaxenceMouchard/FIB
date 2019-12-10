@@ -7,14 +7,6 @@
     box-sizing: border-box;
 }
 
-.tab main {
-    min-width: 320px;
-    max-width: 800px;
-    padding: 50px;
-    margin: 0 auto;
-    background: #fff;
-}
-
 .tab section {
     display: none;
     padding: 20px 0 0;
@@ -317,10 +309,15 @@
 
 /* Some generic class or element */
 
+html {
+    height: min-content;
+}
+
 body {
     background-color: #E9EEF3 !important;
     font-family: "Open Sans" !important;
     margin: auto !important;
+    height: min-content;
 }
 
 .inline {
@@ -447,6 +444,11 @@ body {
     margin-left: 8px;
 }
 
+#identityDetailsMapContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
 #identityInfosDetails {
     display: inline-block;
     margin-left: 22px;
@@ -495,7 +497,9 @@ body {
 #identityGoogleMap {
     width: 44%;
     margin-top: 5px;
-    float: right;
+    display: inline-block;
+    min-width: 420px;
+    margin-right: 20px;
 }
 
 /* General Sections Properties */
@@ -572,13 +576,25 @@ body {
     margin-right: 60px;
 }
 
+.subSectionTitle {
+    width: calc(100% - 70px); /* Width = 100% - margin of container */
+    background-color: #00A4BF;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 10px 0 10px 53px;
+}
+
+.subSectionTitle:not(:first-child) {
+    margin-top: 52px;
+}
+
 /* Generic Table */
 .tableWrapper {
     overflow-x: auto;
 }
 
 .tableFib {
-    margin-top: 40px;
     width: 100%;
     min-width: 688px;
 }
@@ -713,7 +729,7 @@ body {
 #legalAllData.active {
     max-height: 1700px;
     overflow-y: auto;
-    margin-top: 20px;
+    padding: 20px 0px 25px 0;
     white-space: nowrap;
     overflow-x: auto;
 }
@@ -763,19 +779,6 @@ body {
     border-top-color: #979797 !important;
     border-right-color: #979797 !important;
     border-left-color: #979797 !important;
-}
-
-.legalSubSectionTitle {
-    width: calc(100% - 70px); /* Width = 100% - margin of container */
-    background-color: #00A4BF;
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
-    padding: 10px 0 10px 53px;
-}
-
-.legalSubSectionTitle:not(:first-child) {
-    margin-top: 52px;
 }
 
 .legalSubSection {
@@ -887,10 +890,6 @@ body {
     margin: 20px 49px 20px 49px;
 }
 
-#complianceAllData main {
-    /* text-align: center; */
-}
-
 /* AUDIT Section Properties */
 
 #auditMainData {
@@ -902,9 +901,13 @@ body {
 }
 
 #auditsAllData.active {
-    padding: 25px 45px 25px 45px;
+    padding: 20px 0px 25px 0;
     max-height: 1700px;
     overflow-y: auto;
+}
+
+.auditsSubSection {
+    margin: 20px 49px 0 49px;
 }
 
 /* EQUIPMENTS Section Properties */
@@ -918,7 +921,7 @@ body {
 }
 
 #equipmentsAllData.active {
-    padding: 25px 45px 25px 45px;
+    padding: 20px 45px 25px 45px;
     max-height: 1700px;
     overflow-y: auto;
 }
@@ -958,7 +961,8 @@ body {
 }
 
 #equipmentFilters {
-    padding-top: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     overflow-x: auto;
     white-space: nowrap;
 }
@@ -1033,7 +1037,7 @@ input:checked+.slider:before {
 }
 
 #documentsAllData.active {
-    padding: 25px 45px 25px 45px;
+    padding: 20px 0px 25px 0;
     max-height: 1700px;
     overflow-y: auto;
 }
@@ -1044,6 +1048,10 @@ input:checked+.slider:before {
 
 #documentsFilters {
     margin-top: 35px;
+}
+
+.documentsSubSection {
+    margin: 20px 49px 0 49px;
 }
 
 /* DATA COLLECTION Section Properties */
