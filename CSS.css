@@ -40,28 +40,6 @@
     border: 1px solid transparent;
 }
 
-/*.tab > label:before {
-    font-family: fontawesome;
-    font-weight: normal;
-    margin-right: 10px;
-}
-
-.tab > label[for*='1']:before {
-    content: '\f1cb';
-}
-
-.tab > label[for*='2']:before {
-    content: '\f17d';
-}
-
-.tab > label[for*='3']:before {
-    content: '\f16b';
-}
-
-.tab > label[for*='4']:before {
-    content: '\f1a9';
-} */
-
 .tab > label:hover {
     color: #888;
     cursor: pointer;
@@ -82,6 +60,14 @@
 #tab4:checked~#content4,
 #tab5:checked~#content5,
 #tab6:checked~#content6 {
+    display: block;
+}
+
+#tabActiveObligations:checked~#contentActiveObligations,
+#tabLateVisits:checked~#contentLateVisits,
+#tabNonCompliancesToDo:checked~#contentNonCompliancesToDo,
+#tabNonCompliancesLate:checked~#contentNonCompliancesLate,
+#tabActionsToDo:checked~#contentActionsToDo {
     display: block;
 }
 
@@ -571,6 +557,13 @@ body {
     transform: scale(1.1);
 }
 
+.selector {
+    height: 30px;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 60px;
+}
+
 /* Generic Table */
 .tableWrapper {
     overflow-x: auto;
@@ -588,7 +581,7 @@ body {
 }
 
 .tableFib>thead>tr>th {
-    padding-bottom: 10px;
+    padding: 10px;
 }
 
 .tableFib tr:nth-child(even) {
@@ -596,7 +589,7 @@ body {
 }
 
 .tableFib>tbody>tr>td {
-    padding: 10px 0;
+    padding: 10px;
 }
 
 /* Override */
@@ -840,8 +833,18 @@ body {
     background-color: #7984D6;
 }
 
+#legalTableWrapper {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
 #legalTable {
-    margin-top: 0;
+    margin-top: 4px;
+    margin-bottom: 20px;
+}
+
+#legalTable th {
+    padding-bottom: 0;
 }
 
 #legalOccupationChartContainer {
@@ -863,6 +866,19 @@ body {
 
 #complianceMainData {
     width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+}
+
+#complianceAllData {
+    max-height: 0px;
+}
+
+#complianceAllData.active {
+    max-height: 100%;
+    margin: 20px 49px 20px 49px;
+}
+
+#complianceAllData main {
+    /* text-align: center; */
 }
 
 /* AUDIT Section Properties */
@@ -924,13 +940,6 @@ body {
     padding-top: 60px;
     overflow-x: auto;
     white-space: nowrap;
-}
-
-#equipmentFilters .selector {
-    height: 30px;
-    border-radius: 5px;
-    margin-left: 10px;
-    margin-right: 60px;
 }
 
 .equipmentSwitchFilter {

@@ -10,13 +10,6 @@ let identityMap = initFIBGoogleMap();
 let identityMapMarkers = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("organization =>")
-    console.log(jsonAllOrganizations)
-    console.log("document =>")
-    console.log(jsonAllDocuments)
-    console.log("attachment =>")
-    console.log(jsonAllAttachedDocuments)
-
     // Handle the site selection
     handleSiteSelectorFilter();
 
@@ -65,6 +58,7 @@ function loadNewOrganization(siteId) {
     loadDataBatiment(selectedSite);
     loadDataContacts(selectedSite);
     loadDataPropertyTitles(selectedSite);
+    loadDataCompliance(selectedSite);
     loadDataEquipments(selectedSite);
     loadDataDocuments(selectedSite);
 }
@@ -99,17 +93,21 @@ function loadDataBatiment(oSite) {
     }
     document.getElementById("identityFloorsNumberData").innerHTML = nbOrgaLots;
     document.getElementById("identityTotalSurfaceData").innerHTML = (oSite.M2) ? oSite.M2.toLocaleString() + "m²" : "0m²";
-    document.getElementById("identityLink3D").addEventListener("click", () => {
-        let redirectWindow = window.open(oSite.UrlBentley, "_blank");
-        redirectWindow.location;
-    });
+    if (oSite.UrlBentley) {
+        document.getElementById("identityLink3D").style.display = "inline-block";
+        document.getElementById("identityLink3D").addEventListener("click", () => {
+            let redirectWindow = window.open(oSite.UrlBentley, "_blank");
+            redirectWindow.location;
+        });
+    } else
+        document.getElementById("identityLink3D").style.display = "none";
 
     // Add localisation marker on Google Map :
     placeMarkerOnFIBGoogleMap(oSite);
 
     // Get image of site :
     $.ajax({
-        url: "https://demo.vpwhite.com/VPSoftSaas" + "/conf/Home/GetUrlOfFile",
+        url: appBaseURL + "/conf/Home/GetUrlOfFile",
         type: 'POST',            
         data: { id : oSite.ImageId },
         success: function (data) {
@@ -880,6 +878,143 @@ function displayChart(divId, dataArray, minYear) {
 
         series: dataArray
     });
+}
+
+function loadDataCompliance(oSite) {
+    let nbActiveObligations = 0;
+    let nbObligations = 0;
+    let nbFollowedObligations = 0;
+    let nbLateVisits = 0;
+    let nbNonCompliancesToDo = 0;
+    let nbCriticalNonCompliancesToDo = 0;
+    let nbNonCompliancesLate = 0;
+    let nbActionsToDo = 0;
+
+    // OBLIGATIONS ACtIVES :
+    let tableActiveObligations = "";
+
+    for (let i = 0; i < jsonObligations.length; i += 1) {
+        if (jsonObligations[i].OrganizationId == oSite.Id) {
+            nbObligations += 1;
+            if (jsonObligations[i].CountVisit > 0)
+                nbFollowedObligations += 1;
+            if (jsonObligations[i].Active = "Yes") {
+                nbActiveObligations += 1;
+
+                tableActiveObligations += "<tr>";
+                tableActiveObligations += (jsonObligations[i].ThemeLocalizedName) ? "<td>" + jsonObligations[i].ThemeLocalizedName + "</td>" : "<td>-</td>";
+                tableActiveObligations += (jsonObligations[i].Obligation) ? "<td>" + jsonObligations[i].Obligation + "</td>" : "<td>-</td>";
+                tableActiveObligations += (jsonObligations[i].UserProviderForVisitFullName) ? "<td>" + jsonObligations[i].UserProviderForVisitFullName + "</td>" : "<td>-</td>";
+                tableActiveObligations += (jsonObligations[i].UserProviderForReserveFullName) ? "<td>" + jsonObligations[i].UserProviderForReserveFullName + "</td>" : "<td>-</td>";
+                tableActiveObligations += (jsonObligations[i].PeriodicityLocalizedName) ? "<td>" + jsonObligations[i].PeriodicityLocalizedName + "</td>" : "<td>-</td>";
+                tableActiveObligations += (jsonObligations[i].GravityLocalizedName) ? "<td>" + jsonObligations[i].GravityLocalizedName + "</td>" : "<td>-</td>";
+                tableActiveObligations += "</tr>";
+            }
+        }
+    }
+    document.querySelector("#tableActiveObligations > tbody").innerHTML = tableActiveObligations;
+    document.getElementById("nbActiveObligations").innerHTML = nbActiveObligations;
+
+    // Calcul du pourcentage des obligations suivies pour le subtitle de la section :
+    document.getElementById("complianceFollowedObligations").innerHTML = (nbObligations > 0) ? Math.round(nbFollowedObligations * 100 / nbObligations) + "% d'obligations suivies" : "0% d'obligations suivies";
+
+    // VISITES EN RETARD :
+    let tableLateVisits = "";
+
+    for (let i = 0; i < jsonLateVisits.length; i += 1) {
+        if (jsonLateVisits[i].OrganizationId == oSite.Id) {
+            nbLateVisits += 1;
+
+            tableLateVisits += "<tr>";
+            tableLateVisits += (jsonLateVisits[i].ThemeLocalizedName) ? "<td>" + jsonLateVisits[i].ThemeLocalizedName + "</td>" : "<td>-</td>";
+            tableLateVisits += (jsonLateVisits[i].Location) ? "<td>" + jsonLateVisits[i].Location + "</td>" : "<td>-</td>";
+            tableLateVisits += (jsonLateVisits[i].ProvisionalDateString) ? "<td>" + jsonLateVisits[i].ProvisionalDateString + "</td>" : "<td>-</td>";
+            tableLateVisits += (jsonLateVisits[i].UserProviderForVisitFullName) ? "<td>" + jsonLateVisits[i].UserProviderForVisitFullName + "</td>" : "<td>-</td>";
+            tableLateVisits += "</tr>";
+        }
+    }
+    document.querySelector("#tableLateVisits > tbody").innerHTML = tableLateVisits;
+    document.getElementById("nbLateVisits").innerHTML = nbLateVisits;
+
+    // Pour le subtitle de la section :
+    document.getElementById("complianceLateVisits").innerHTML = (nbLateVisits > 1) ? nbLateVisits + " visites en retard" : nbLateVisits + " visite en retard";
+    if (nbLateVisits > 0) {
+        document.getElementById("complianceLateVisits").style.color = "red";
+    }
+
+    // NON-CONFORMITES A LEVER && NON-CONFORMITES EN RETARD :
+    let tableNonCompliancesToDo = "";
+    let tableNonCompliancesLate = "";
+
+    for (let i = 0; i < jsonNonCompliances.length; i += 1) {
+        if (jsonNonCompliances[i].OrganizationId == oSite.Id && jsonNonCompliances[i].ReserveStatus == 0) {
+            nbNonCompliancesToDo += 1;
+
+            tableNonCompliancesToDo += "<tr>";
+            tableNonCompliancesToDo += (jsonNonCompliances[i].ThemeLocalizedName) ? "<td>" + jsonNonCompliances[i].ThemeLocalizedName + "</td>" : "<td>-</td>";
+            tableNonCompliancesToDo += (jsonNonCompliances[i].VisitObligation) ? "<td>" + jsonNonCompliances[i].VisitObligation + "</td>" : "<td>-</td>";
+            tableNonCompliancesToDo += (jsonNonCompliances[i].VisitDateString) ? "<td>" + jsonNonCompliances[i].VisitDateString + "</td>" : "<td>-</td>";
+            tableNonCompliancesToDo += (jsonNonCompliances[i].Designation) ? "<td>" + jsonNonCompliances[i].Designation + "</td>" : "<td>-</td>";
+            tableNonCompliancesToDo += (jsonNonCompliances[i].UserProviderForReserveFullName) ? "<td>" + jsonNonCompliances[i].UserProviderForReserveFullName + "</td>" : "<td>-</td>";
+            tableNonCompliancesToDo += (jsonNonCompliances[i].Location) ? "<td>" + jsonNonCompliances[i].Location + "</td>" : "<td>-</td>";
+            tableNonCompliancesToDo += (jsonNonCompliances[i].RedundantString) ? "<td>" + jsonNonCompliances[i].RedundantString + "</td>" : "<td>-</td>";
+            tableNonCompliancesToDo += (jsonNonCompliances[i].ReserveText) ? "<td>" + jsonNonCompliances[i].ReserveText + "</td>" : "<td>-</td>";
+            tableNonCompliancesToDo += (jsonNonCompliances[i].CritLevelLocalizedName) ? "<td>" + jsonNonCompliances[i].CritLevelLocalizedName + "</td>" : "<td>-</td>";
+            tableNonCompliancesToDo += (jsonNonCompliances[i].ExpectedDateString) ? "<td>" + jsonNonCompliances[i].ExpectedDateString + "</td>" : "<td>-</td>";
+            tableNonCompliancesToDo += "</tr>";
+
+            if (jsonNonCompliances[i].CritLevelLocalizedName == "Critique")
+            nbCriticalNonCompliancesToDo += 1;
+        }
+        if (jsonNonCompliances[i].OrganizationId == oSite.Id && jsonNonCompliances[i].IsLate == true) {
+            nbNonCompliancesLate += 1;
+
+            tableNonCompliancesLate += "<tr>";
+            tableNonCompliancesLate += (jsonNonCompliances[i].ThemeLocalizedName) ? "<td>" + jsonNonCompliances[i].ThemeLocalizedName + "</td>" : "<td>-</td>";
+            tableNonCompliancesLate += (jsonNonCompliances[i].VisitObligation) ? "<td>" + jsonNonCompliances[i].VisitObligation + "</td>" : "<td>-</td>";
+            tableNonCompliancesLate += (jsonNonCompliances[i].VisitDateString) ? "<td>" + jsonNonCompliances[i].VisitDateString + "</td>" : "<td>-</td>";
+            tableNonCompliancesLate += (jsonNonCompliances[i].Designation) ? "<td>" + jsonNonCompliances[i].Designation + "</td>" : "<td>-</td>";
+            tableNonCompliancesLate += (jsonNonCompliances[i].UserProviderForReserveFullName) ? "<td>" + jsonNonCompliances[i].UserProviderForReserveFullName + "</td>" : "<td>-</td>";
+            tableNonCompliancesLate += (jsonNonCompliances[i].Location) ? "<td>" + jsonNonCompliances[i].Location + "</td>" : "<td>-</td>";
+            tableNonCompliancesLate += (jsonNonCompliances[i].RedundantString) ? "<td>" + jsonNonCompliances[i].RedundantString + "</td>" : "<td>-</td>";
+            tableNonCompliancesLate += (jsonNonCompliances[i].ReserveText) ? "<td>" + jsonNonCompliances[i].ReserveText + "</td>" : "<td>-</td>";
+            tableNonCompliancesLate += (jsonNonCompliances[i].CritLevelLocalizedName) ? "<td>" + jsonNonCompliances[i].CritLevelLocalizedName + "</td>" : "<td>-</td>";
+            tableNonCompliancesLate += (jsonNonCompliances[i].ExpectedDateString) ? "<td>" + jsonNonCompliances[i].ExpectedDateString + "</td>" : "<td>-</td>";
+            tableNonCompliancesLate += "</tr>";
+
+        }
+    }
+    document.querySelector("#tableNonCompliancesToDo > tbody").innerHTML = tableNonCompliancesToDo;
+    document.querySelector("#tableNonCompliancesLate > tbody").innerHTML = tableNonCompliancesLate;
+    document.getElementById("nbNonCompliancesToDo").innerHTML = nbNonCompliancesToDo;
+    document.getElementById("nbNonCompliancesLate").innerHTML = nbNonCompliancesLate;
+
+    // Pour le subtitle de la section :
+    document.getElementById("complianceNonCompliancesToDo").innerHTML = (nbCriticalNonCompliancesToDo) ? nbCriticalNonCompliancesToDo + " NC critiques à lever" : nbCriticalNonCompliancesToDo + " NC critique à lever";
+    if (nbCriticalNonCompliancesToDo > 0) {
+        document.getElementById("complianceNonCompliancesToDo").style.color = "red";
+    }
+
+    // ACTIONS A FAIRE :
+    let tableActionsToDo = "";
+
+    for (let i = 0; i < jsonActionsToDo.length; i += 1) {
+        if (jsonActionsToDo[i].OrganizationId == oSite.Id) {
+            nbActionsToDo += 1;
+
+            tableActionsToDo += "<tr>";
+            tableActionsToDo += (jsonActionsToDo[i].Code) ? "<td>" + jsonActionsToDo[i].Code + "</td>" : "<td>-</td>";
+            tableActionsToDo += (jsonActionsToDo[i].ReserveUniqueName) ? "<td>" + jsonActionsToDo[i].ReserveUniqueName + "</td>" : "<td>-</td>";
+            tableActionsToDo += (jsonActionsToDo[i].Name) ? "<td>" + jsonActionsToDo[i].Name + "</td>" : "<td>-</td>";
+            tableActionsToDo += (jsonActionsToDo[i].Description) ? "<td>" + jsonActionsToDo[i].Description + "</td>" : "<td>-</td>";
+            tableActionsToDo += (jsonActionsToDo[i].BeginTimeString) ? "<td>" + jsonActionsToDo[i].BeginTimeString + "</td>" : "<td>-</td>";
+            tableActionsToDo += (jsonActionsToDo[i].EndTimeString) ? "<td>" + jsonActionsToDo[i].EndTimeString + "</td>" : "<td>-</td>";
+            tableActionsToDo += (jsonActionsToDo[i].StatusLocalizedName) ? "<td>" + jsonActionsToDo[i].StatusLocalizedName + "</td>" : "<td>-</td>";
+            tableActionsToDo += "</tr>";
+        }
+    }
+    document.querySelector("#tableActionsToDo > tbody").innerHTML = tableActionsToDo;
+    document.getElementById("nbActionsToDo").innerHTML = nbActionsToDo;
 }
 
 function handleOpenCloseContainer() {

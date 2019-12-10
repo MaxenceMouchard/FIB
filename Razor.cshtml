@@ -7,6 +7,9 @@
     OrganizationBase firstOrga = SessionService.GetObject(SoNG.Infrastructure.Consts.CURRENT_ORGANIZATION_SKEY) as OrganizationBase;
     string firstOrgaId = firstOrga.Id.ToString();
 
+    // appBaseURL :
+	var appBaseURL = UriHelper.GetAppBaseUri();
+
     //Filtres obligatoires (données actives, non archivées) :
 	var activeFilter = "Organization.IsArchive=False,Organization.Entitystate=Active,Theme.EntityState=Active,EntityState=Active";
 
@@ -32,6 +35,11 @@
     var baux = VP.GetEntitiesData("Bail", "Id,Organization.Id,Reference,Owner.Id,PropertyTitle.Id,BailParent.Id,MaxCapacity,OccupiedWorkstationsNb,isOwner,LegalAxe,Floors,NetArea,Headcount,InstalledDesksNb", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var occupations = VP.GetEntitiesData("Occupation", "Id,Organization.Id,Surfaces.Id,Bail.Reference", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
     var surfaces = VP.GetEntitiesData("Surface", "Occupation.Year,Id,Name,AreaTypology.LocalizedName,Floor.LocalizedName,Type,Renter.Name,LegalAxe,NetArea,Headcount,MaxCapacity,OccupiedWorkstationsNb,InstalledDesksNb", "EntityState=Active", "Organization=FilterQueryOrga");
+
+    var obligations = VP.GetEntitiesData("MasterVisit", "Organization.Id,CountVisit,Active,Theme,Obligation,UserProviderForVisit,UserProviderForReserve,Periodicity,Gravity", activeFilter, "Organization=FilterQueryOrga");
+    var lateVisits = VP.GetEntitiesData("Visit", "Organization.Id,Theme,Location,ProvisionalDate,UserProviderForVisit", "IsLate=True," + activeFilter, "Organization=FilterQueryOrga");
+    var nonCompliances = VP.GetEntitiesData("ReserveOfVisit", "Organization.Id,ReserveStatus,IsLate,CritLevel.LocalizedName,Theme,VisitObligation,VisitDate,Designation,UserProviderForReserve,Location,Redundant,ReserveText,ExpectedDate", activeFilter, "Organization=FilterQueryOrga");
+    var actionsToDo = VP.GetEntitiesData("CActionReserve", "Organization.Id,Code,Reserve,Name,Description,BeginTime,EndTime,Status", "Status.Category=0," + activeFilter, "Organization=FilterQueryOrga");
 }
 
 @VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/highcharts.js"))
@@ -81,7 +89,8 @@
                         <i class="fas fa-map-marker-alt"></i>
                         <div id="identityTitle" class="smallTitle"><span class="batimentName"></span></div>
                     </div>
-                    <div id="identityExport" class="blackButton simpleText">Exporter en PDF</div>
+                    <!-- Hidden for demo -->
+                    <!-- <div id="identityExport" class="blackButton simpleText">Exporter en PDF</div> -->
                 </div>
                 <div id="identityInfosDetails">
                     <div id="identityType" class="simpleText"></div>
@@ -219,7 +228,7 @@
                 </div>
                 <select id="legalYearSelector" class="selector"></select>
                 <div id="legalTableWrapper" class="tableWrapper">
-                    <table id="legalTable" class="table simpleText">
+                    <table id="legalTable" class="tableFib simpleText">
                         <thead>
                             <tr>
                                 <th>Type</th>
@@ -252,13 +261,131 @@
                 <i class="fas fa-check simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="complianceMainData">
                     <div class="mainDataTitle smallTitle">Conformité</div>
-                    <div class="mainDataSubTitle simpleText">80 obligations suivies &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
+                    <div class="mainDataSubTitle simpleText">
+                        <span id="complianceFollowedObligations"></span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 
+                        <span id="complianceLateVisits"></span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 
+                        <span id="complianceNonCompliancesToDo"></span> 
+                    </div>
+                        <!--80 obligations suivies &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
                         <span class="redTextColor">4 visites en retard</span> &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp <span
-                            class="redTextColor">2 NC critiques à lever</span></div>
+                            class="redTextColor">2 NC critiques à lever</span></div> -->
                 </div>
                 <i class="fas fa-plus openCloseIcon"></i>
             </div>
             <div class="allData" id="complianceAllData">
+                <main class="tab">
+                    <input id="tabActiveObligations" type="radio" name="tabsCompliance" checked>
+                    <label for="tabActiveObligations"><span id="nbActiveObligations">0</span>Obligations actives</label>
+                        
+                    <input id="tabLateVisits" type="radio" name="tabsCompliance">
+                    <label for="tabLateVisits"><span id="nbLateVisits">0</span>Visites en retard</label>
+                        
+                    <input id="tabNonCompliancesToDo" type="radio" name="tabsCompliance">
+                    <label for="tabNonCompliancesToDo"><span id="nbNonCompliancesToDo">0</span>Non-conformités à lever</label>
+                        
+                    <input id="tabNonCompliancesLate" type="radio" name="tabsCompliance">
+                    <label for="tabNonCompliancesLate"><span id="nbNonCompliancesLate">0</span>Non-conformités en retard</label>
+
+                    <input id="tabActionsToDo" type="radio" name="tabsCompliance">
+                    <label for="tabActionsToDo"><span id="nbActionsToDo">0</span>Actions à faire</label>
+
+                    <section id="contentActiveObligations">
+                        <div class="tableWrapper">
+                            <table id="tableActiveObligations" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Nom de l'obligation</th>
+                                        <th>Responsable intervention</th>
+                                        <th>Responsable NC</th>
+                                        <th>Périodicité</th>
+                                        <th>Risque</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="contentLateVisits">
+                        <div class="tableWrapper">
+                            <table id="tableLateVisits" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Visite</th>
+                                        <th>Date</th>
+                                        <th>Interlocuteur visite</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="contentNonCompliancesToDo">
+                        <div class="tableWrapper">
+                            <table id="tableNonCompliancesToDo" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Obligation liée</th>
+                                        <th>Date de la visite</th>
+                                        <th>Désignation</th>
+                                        <th>Responsable NC</th>
+                                        <th>Localisation</th>
+                                        <th>Récurrent</th>
+                                        <th>Détails de la  NC</th>
+                                        <th>Criticité</th>
+                                        <th>A lever avant le</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="contentNonCompliancesLate">
+                        <div class="tableWrapper">
+                            <table id="tableNonCompliancesLate" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Thème</th>
+                                        <th>Obligation liée</th>
+                                        <th>Date de la visite</th>
+                                        <th>Désignation</th>
+                                        <th>Responsable NC</th>
+                                        <th>Localisation</th>
+                                        <th>Récurrent</th>
+                                        <th>Détails de la  NC</th>
+                                        <th>Criticité</th>
+                                        <th>A lever avant le</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </section>
+                        
+                    <section id="contentActionsToDo">
+                        <div class="tableWrapper">
+                            <table id="tableActionsToDo" class="tableFib simpleText">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Non-conformité</th>
+                                        <th>Nom</th>
+                                        <th>Description</th>
+                                        <th>Date de début</th>
+                                        <th>Echéance</th>
+                                        <th>Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </main>
             </div>
         </div>
 
@@ -516,8 +643,9 @@
             </div>
         </div>
 
+        <!-- Hidden for demo -->
         <!-- DATA COLLECTION SECTION -->
-        <div class="sectionContainer">
+        <!-- <div class="sectionContainer">
             <div class="primaryInfos">
                 <i class="fas fa-sd-card simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="dataCollectionMainData">
@@ -529,10 +657,11 @@
             </div>
             <div class="allData" id="dataCollectionAllData">
             </div>
-        </div>
+        </div> -->
 
+        <!-- Hidden for demo -->
         <!-- INCIDENTS SECTION -->
-        <div class="sectionContainer">
+        <!-- <div class="sectionContainer">
             <div class="primaryInfos">
                 <i class="fas fa-exclamation-triangle simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="incidentsMainData">
@@ -544,10 +673,11 @@
             </div>
             <div class="allData" id="incidentsAllData">
             </div>
-        </div>
+        </div> -->
 
+        <!-- Hidden for demo -->
         <!-- SCHEMA DIRECTORY SECTION -->
-        <div class="sectionContainer">
+        <!-- <div class="sectionContainer">
             <div class="primaryInfos">
                 <i class="fas fa-rocket simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="schemaDirectoryMainData">
@@ -559,7 +689,7 @@
             </div>
             <div class="allData" id="schemaDirectoryAllData">
             </div>
-        </div>
+        </div> -->
 
     </div>
 </body>
@@ -584,6 +714,7 @@
 <script>
 
 let firstOrgaId = "@firstOrgaId";
+let appBaseURL = "@appBaseURL";
 
 let jsonAllOrganizations = JSON.parse(('@JsonConvert.SerializeObject(organizations)').replace(/&quot;/g, '"'));
 let jsonAllContacts = JSON.parse(('@JsonConvert.SerializeObject(contacts)').replace(/&quot;/g, '"'));
@@ -602,6 +733,11 @@ let jsonAllOwners = JSON.parse(('@JsonConvert.SerializeObject(owners)').replace(
 let jsonAllBaux = JSON.parse(('@JsonConvert.SerializeObject(baux)').replace(/&quot;/g, '"'));
 let jsonAllOccupations = JSON.parse(('@JsonConvert.SerializeObject(occupations)').replace(/&quot;/g, '"'));
 let jsonAllSurfaces = JSON.parse(('@JsonConvert.SerializeObject(surfaces)').replace(/&quot;/g, '"'));
+
+let jsonObligations = JSON.parse(('@JsonConvert.SerializeObject(obligations)').replace(/&quot;/g, '"'));
+let jsonLateVisits = JSON.parse(('@JsonConvert.SerializeObject(lateVisits)').replace(/&quot;/g, '"'));
+let jsonNonCompliances = JSON.parse(('@JsonConvert.SerializeObject(nonCompliances)').replace(/&quot;/g, '"'));
+let jsonActionsToDo = JSON.parse(('@JsonConvert.SerializeObject(actionsToDo)').replace(/&quot;/g, '"'));
 
 function initFIBGoogleMap() {
   // La map est crée grâce à l'API de Google Maps :
