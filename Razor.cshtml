@@ -23,11 +23,11 @@
 	var equipmentsVisit = VP.GetEntitiesData("Visit", "Organization.Id,Equipments.Id", activeFilter, "Organization=FilterQueryOrga");
 
     var documents = VP.GetEntitiesData("CQuestionaryDocument", "Organization.Id,Theme,Name,AuditorOwner,CreatedDate,ModifiedDate,Version,ExpirationDate,FormWorkflowStatus", activeFilter, "Organization=FilterQueryOrga");
-    var attachedDocumentsResult = VP.GetEntitiesData("BaseDocument", "Organization.Id,Theme,EntityName,Description,CreatedUser,CreatedDate", activeFilter, "Organization=FilterQueryOrga");
+    var attachedDocumentsResult = VP.GetEntitiesData("BaseDocument", "Organization.Id,Name,EntityName,Description,CreatedUser,CreatedDate", activeFilter, "Organization=FilterQueryOrga");
     List<dynamic> attachedDocuments = new List<dynamic>(){}; 
     foreach (var x in attachedDocumentsResult) {
         var module = ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, x.EntityName);
-        attachedDocuments.Add(new { OrganizationId = x.OrganizationId, ThemeLocalizedName = x.ThemeLocalizedName, EntityName = module, Description = x.Description, CreatedUserFullName = x.CreatedUserFullName, CreatedDate = x.CreatedDate });
+        attachedDocuments.Add(new { OrganizationId = x.OrganizationId, Name = x.Name, EntityName = module, Description = x.Description, CreatedUserFullName = x.CreatedUserFullName, CreatedDate = x.CreatedDate });
     };
 
     var lots = VP.GetEntitiesData("Lot", "Organization.Id", "Organization.IsArchive=False,Organization.Entitystate=Active,EntityState=Active", "Organization=FilterQueryOrga");
@@ -611,6 +611,7 @@
                 <i class="fas fa-file-alt simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="documentsMainData">
                     <div class="mainDataTitle smallTitle">Documents</div>
+                    <div class="mainDataSubTitle simpleText">0% Suivi</div>
                 </div>
                 <i class="fas fa-plus iconTitle openCloseIcon"></i>
             </div>

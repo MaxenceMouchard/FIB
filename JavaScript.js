@@ -492,15 +492,15 @@ function loadDataDocuments(oSite) {
     Array.from(jsonAllAttachedDocuments).forEach( attachment => {
         if(attachment.OrganizationId == oSite.Id) {
             let entity = (attachment.EntityName) ? attachment.EntityName : "-";
-            let name = (attachment.ThemeLocalizedName) ? attachment.ThemeLocalizedName : "-";
+            let name = (attachment.Name) ? attachment.Name : "-";
             let description = (attachment.Description) ? attachment.Description : "-";
             let createdBy = (attachment.CreatedUserFullName) ? attachment.CreatedUserFullName : "-";
 
             //Add module into selector filter
             if(moduleFilter.querySelectorAll("option[value='"+ entity +"'").length === 0) {
                 var option = document.createElement("option");
-                option.text = entity;
-                option.value = entity;
+                option.text = decodeHtml(entity);
+                option.value =  decodeHtml(entity);
                 moduleFilter.add(option);
             }
 
@@ -528,6 +528,9 @@ function loadDataDocuments(oSite) {
     documentsAllData.querySelector("#nbToRenew").innerHTML = counterRenewableDocumens;
     //Third Tab
     documentsAllData.querySelector("#nbToValidate").innerHTML = counterDocumentToValidate;
+
+    //SubTitle
+    document.querySelector("#documentsMainData .mainDataSubTitle").innerHTML = '';
 
 }
 
