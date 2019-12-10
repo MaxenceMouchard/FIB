@@ -1046,6 +1046,11 @@ input:checked+.slider:before {
     margin-top: 35px;
 }
 
+#attachedDocumentsTable > tbody > tr:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
 /* DATA COLLECTION Section Properties */
 
 #dataCollectionMainData {

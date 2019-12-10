@@ -917,6 +917,14 @@
 @VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/highcharts.js"))
 @VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/highcharts-more.js"))
 @VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/Highcharts/code/modules/solid-gauge.js"))
+<script>
+    let exportUnderProcessText = "Download in progress";
+    let errorOccuredText = "An error has occured";  
+    let virtualPath = '@SoNGHelper.GetApplicationVirtualPath()';
+</script>
+@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/global.technique.js"))
+@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/global.functions.js"))
+@VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/jquery.fileDownload.js"))
 @VP.StringToHtml(""+System.Web.Optimization.Scripts.Render("~/Content/js/global.plugin.js"))
 
 <script>
