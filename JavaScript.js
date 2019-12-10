@@ -141,7 +141,6 @@ function loadDataContacts(oSite) {
     let contactsReferencedBody = '';
     Array.from(jsonAllContacts).forEach( (item, index) => {
         if(item.OrganizationId === oSite.Id) {
-            counter++;
             let separator = (counter > 0) ? '<hr class="contactSeparator"/>' : '';
             let contactFullName = (item.ContactFullName) ? item.ContactFullName : '';
             let contactInitial = (contactFullName).split(/\s/).reduce((response,word)=> response += word.slice(0,1), '');
@@ -172,6 +171,7 @@ function loadDataContacts(oSite) {
                     '<div>' + contactConnectionsCounter + ' connexions au total</div>' +
                 '</div>' +
             '</div>';
+            counter++;
         };
     });
 
