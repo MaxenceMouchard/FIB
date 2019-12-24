@@ -747,19 +747,17 @@ body {
     overflow-x: auto;
 }
 
-#legalLegend {
+/* #legalLegend {
     display: flex;
     width: auto;
-}
+} */
 
-#legalLegend > :not(:first-child) {
+/* #legalLegend > :not(:first-child) {
     margin-left: 70px;
-}
+} */
 
 #legalLegend > div {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
 }
 
 .legalLegendSquares {
@@ -769,12 +767,28 @@ body {
     border-radius: 5px;
 }
 
-#legalLegendSquareIntern {
-    background: #7BD679;
+#legalLegendSquareInternTitle {
+    background: #D171b3;
 }
 
-#legalLegendSquareExtern {
-    background: #79D6CB;
+#legalLegendSquareExternTitle {
+    background: #887AD1;
+}
+
+#legalLegendSquareInternBail {
+    background: #7AAED1;
+}
+
+#legalLegendSquareExternBail {
+    background: #7AC7D1;
+}
+
+#legalLegendSquareInternSubBail {
+    background: #FFAE6C;
+}
+
+#legalLegendSquareExternSubBail {
+    background: #FFDA6C;
 }
 
 #legalHorTreeTitles {

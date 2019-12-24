@@ -886,9 +886,9 @@ function createLegalHortree(arrayHorTreeObjects) {
                             boundary: 'viewport',
                             container: "body"
                         })
-                        label.style.backgroundColor = "#7BD679";
+                        label.style.backgroundColor = "#D171b3";
                     } else if (container.id[0] == "O")
-                        label.style.backgroundColor = "#79D6CB";
+                        label.style.backgroundColor = "#887AD1";
                 })
             } else if (branchIndex === 1) {
                 branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label, labelIndex) => {
@@ -899,11 +899,17 @@ function createLegalHortree(arrayHorTreeObjects) {
                             line.style.marginTop = offsetFirstLine;
                         });
                     }
-                    label.style.backgroundColor = "#76BA74";
+                    if (container.id[0] == "P")
+                        label.style.backgroundColor = "#7AAED1";
+                    if (container.id[0] == "O")
+                        label.style.backgroundColor = "#7AC7D1";
                 })
             } else if (branchIndex > 1) {
                 branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
-                    label.style.backgroundColor = "#548852";
+                    if (container.id[0] == "P")
+                        label.style.backgroundColor = "#FFAE6C";
+                    if (container.id[0] == "O")
+                        label.style.backgroundColor = "#FFDA6C";
                 })
             }
         });
