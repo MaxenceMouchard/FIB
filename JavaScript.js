@@ -62,6 +62,8 @@ function loadNewOrganization(siteId) {
     loadDataAudits(selectedSite);
     loadDataEquipments(selectedSite);
     loadDataDocuments(selectedSite);
+    loadDataCollections(selectedSite);
+    loadDataIncidents(selectedSite);
 }
 
 function loadDataBatiment(oSite) {
@@ -96,10 +98,10 @@ function loadDataBatiment(oSite) {
     document.getElementById("identityTotalSurfaceData").innerHTML = (oSite.M2) ? oSite.M2.toLocaleString() + "m²" : "0m²";
     if (oSite.UrlBentley) {
         document.getElementById("identityLink3D").style.display = "inline-block";
-        document.getElementById("identityLink3D").addEventListener("click", () => {
-            let redirectWindow = window.open(oSite.UrlBentley, "_blank");
-            redirectWindow.location;
-        });
+   //     document.getElementById("identityLink3D").addEventListener("click", () => {
+   //         let redirectWindow = window.open(oSite.UrlBentley, "_blank");
+   //         redirectWindow.location;
+    //    });
     } else
         document.getElementById("identityLink3D").style.display = "none";
 
@@ -585,6 +587,112 @@ function loadDataDocuments(oSite) {
         subTitle.style.color = 'red';
     }
 
+}
+
+function loadDataCollections(oSite) {
+    let collectionsAllData = document.getElementById("collectionsAllData");
+
+    let counterActualCampaign = 0;
+    let counterCompletion = 0;
+    let counterTotalCollections = 0;
+
+    let rowFirstTable = "";
+    Array.from(jsonAllCollections).forEach( element => {
+        if (element.OrganizationId == oSite.Id) {
+            counterTotalCollections++;
+            let theme = (element.ThemeLocalizedName) ? element.ThemeLocalizedName : "-";
+            let name = (element.Name) ? element.Name : "-";
+            let workflowStatus = (element.FormWorkflowDescription) ? element.FormWorkflowDescription : "-";
+            let beginDate = (element.StartDateString) ? element.StartDateString : "-";
+            let endDate = (element.EndDateString) ? element.EndDateString : "-";
+            let pourcentProgess = "-";
+            if (element.QuestionsProgressionPercentage !== null) {
+                pourcentProgess = element.QuestionsProgressionPercentage;
+                counterCompletion += pourcentProgess;
+            }
+            if(element.CampaignDeploymentStatus !== 3) {
+                counterActualCampaign++;
+            }
+            let actionToDo = (element.ActionTodoCount !== null) ? element.ActionTodoCount : "-";
+            rowFirstTable += "<tr><td>"+ theme +"</td><td>"+ name +"</td><td>"+ workflowStatus +"</td><td>"+ beginDate +"</td><td>"+ endDate +"</td><td>"+ pourcentProgess +"%</td><td>"+ actionToDo +"</td></tr>";
+        }
+    });
+
+    //First Table
+    collectionsAllData.querySelector("#collectionFirstTable > tbody").innerHTML = rowFirstTable;
+
+    //SubTitle
+    let subTitle = document.querySelector("#collectionsMainData .mainDataSubTitle");
+    let firstSubTitle = subTitle.querySelector("#collectionActualCampaign");
+    let secondSubTitle = subTitle.querySelector("#collectionCompletion");
+    if (counterActualCampaign > 1) {
+        firstSubTitle.innerHTML = counterActualCampaign + ' campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp';
+    }
+    else {
+        firstSubTitle.innerHTML = counterActualCampaign + ' campagne en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp';
+    }
+
+    if (counterTotalCollections > 0) {
+        let progress = (counterCompletion / counterTotalCollections);
+        secondSubTitle.innerHTML = progress +'% de complétion';
+        if (progress < 100) {
+            secondSubTitle.style.color = "red";
+        }
+    }
+}
+
+function loadDataIncidents(oSite) {
+    let incidentsAllData = document.getElementById("incidentsAllData");
+
+    let totalIncidents = 0;
+    let totalAccidents = 0;
+    let almostIncidents = 0;
+
+    let rowFirstTable = "";
+    Array.from(jsonAllIncidents).forEach( element => {
+        if (element.OrganizationId == oSite.Id) {
+            let type = (element.FormCategoriesLocalizedName) ? element.FormCategoriesLocalizedName : "-";
+            let theme = (element.ThemeLocalizedName) ? element.ThemeLocalizedName : "-";
+            if(type === "Presque Accident") {
+                almostIncidents++;
+            }
+            if (theme === "INCIDENT") {
+                totalIncidents++;
+            }
+            else if (theme === "EVENEMENT" || theme === "RECLAMATION") {
+                totalAccidents++;
+            }
+            let name = (element.Name) ? element.Name : "-";
+            let date = (element.StartDateString) ? element.StartDateString : "-";
+            let status = (element.FormWorkflowStatusLocalizedName) ? element.FormWorkflowStatusLocalizedName : "-";
+            let createdBy = (element.CreatedUserFullName) ? element.CreatedUserFullName : "-";
+
+            rowFirstTable += "<tr><td>"+ type +"</td><td>"+ name +"</td><td>"+ date +"</td><td>"+ status +"</td><td>"+ createdBy +"</td></tr>";
+        }
+    });
+
+    //First Table
+    incidentsAllData.querySelector("#incidentFirstTable > tbody").innerHTML = rowFirstTable;
+
+    //SubTitle
+    let subTitle = document.querySelector("#incidentsMainData .mainDataSubTitle");
+    if (totalIncidents > 1) {
+        subTitle.innerHTML = totalIncidents +' incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp ';
+    } else {
+        subTitle.innerHTML = totalIncidents +' incident &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp ';
+    }
+
+    if (almostIncidents > 1) {
+        subTitle.innerHTML += almostIncidents +' presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp ';
+    } else {
+        subTitle.innerHTML += almostIncidents +' presque-accident &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp ';
+    }
+
+    if (totalAccidents > 1) {
+        subTitle.innerHTML += totalAccidents +' accidents';
+    } else {
+        subTitle.innerHTML += totalAccidents +' accident';
+    }
 }
 
 function filterDataAttachedDocuments() {

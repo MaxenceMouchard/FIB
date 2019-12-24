@@ -233,7 +233,7 @@
         padding-left: 16px;
     }
     
-    #dataCollectionMainData, #documentsMainData {
+    #collectionsMainData, #documentsMainData {
         padding-left: 23px;
     }
 }
@@ -302,7 +302,7 @@
         padding-left: 14px;
     }
     
-    #dataCollectionMainData, #documentsMainData  {
+    #collectionsMainData, #documentsMainData  {
         padding-left: 26px;
     }
 }
@@ -1074,8 +1074,18 @@ input:checked+.slider:before {
 
 /* DATA COLLECTION Section Properties */
 
-#dataCollectionMainData {
+#collectionsMainData {
     width: calc(100% - 74px); /* 100% - (padding + inconSize) */
+}
+
+#collectionsAllData.active {
+    padding: 20px 44px 25px 44px;
+    max-height: 1700px;
+    overflow-y: auto;
+}
+
+#collectionsAllData {
+    max-height: 0px;
 }
 
 /* INCIDENTS Section Properties */
@@ -1083,6 +1093,16 @@ input:checked+.slider:before {
 #incidentsMainData {
     width: calc(100% - 74px); /* 100% - (padding + inconSize) */
     padding-left: 17px;
+}
+
+#incidentsAllData.active {
+    padding: 20px 44px 25px 44px;
+    max-height: 1700px;
+    overflow-y: auto;
+}
+
+#incidentsAllData {
+    max-height: 0px;
 }
 
 /* SCHEMA DIRECTORY Section Properties */

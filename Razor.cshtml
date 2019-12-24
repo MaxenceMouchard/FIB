@@ -44,6 +44,10 @@
     var lateVisits = VP.GetEntitiesData("Visit", "Organization.Id,Theme,Location,ProvisionalDate,UserProviderForVisit", "IsLate=True," + activeFilter, "Organization=FilterQueryOrga");
     var nonCompliances = VP.GetEntitiesData("ReserveOfVisit", "Organization.Id,ReserveStatus,IsLate,CritLevel.LocalizedName,Theme,VisitObligation,VisitDate,Designation,UserProviderForReserve,Location,Redundant,ReserveText,ExpectedDate", activeFilter, "Organization=FilterQueryOrga");
     var actionsToDo = VP.GetEntitiesData("CActionReserve", "Organization.Id,Code,Reserve,Name,Description,BeginTime,EndTime,Status", "Status.Category=0," + activeFilter, "Organization=FilterQueryOrga");
+
+    var collections = VP.GetEntitiesData("CQuestionaryPlanAudit", "Organization.Id,Theme,Name,FormWorkflow,StartDate,EndDate,QuestionsProgressionPercentage,ActionTodoCount,Campaign.DeploymentStatus", activeFilter, "Organization=FilterQueryOrga");
+
+    var incidents = VP.GetEntitiesData("CQuestionaryAccident" ,"Organization.Id,Theme,FormCategories,Name,StartDate,FormWorkflowStatus,CreatedUser", activeFilter, "Organization=FilterQueryOrga");
 }
 
 <!DOCTYPE html>
@@ -107,7 +111,7 @@
                             <div id="identityLabel" class="simpleTitle"></div>
                             <div id="identityFloorsNumber" class="simpleTitle"><div id="identityFloorsNumberData"></div><div class="simpleText">Lots</div></div>
                             <div id="identityTotalSurface" class="simpleTitle"><div id="identityTotalSurfaceData"></div><div class="simpleText">surface totale</div></div>
-                            <div id="identityLink3D" class="blackButton simpleText">Lien 3D</div>
+                            <div id="identityLink3D" class="blackButton simpleText"><a style="color:#FFF" href="https://cloud.pix4d.com/pro/project/399284/model?shareToken=eb741464-b93e-4dd2-8ac3-8a7621519d93">Lien 3D</a></div>
                         </div>
                     </div>
                     <div id="identityGoogleMap"></div>
@@ -863,37 +867,71 @@
             </div>
         </div>
 
-        <!-- Hidden for demo -->
         <!-- DATA COLLECTION SECTION -->
-        <!-- <div class="sectionContainer">
+        <div class="sectionContainer">
             <div class="primaryInfos">
                 <i class="fas fa-sd-card simpleTitle verticalAlignMiddle"></i>
-                <div class="mainData" id="dataCollectionMainData">
+                <div class="mainData" id="collectionsMainData">
                     <div class="mainDataTitle smallTitle">Collecte de données</div>
-                    <div class="mainDataSubTitle simpleText">4 campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp
-                        <span class="redTextColor">23% de complétion</span></div>
+                    <div class="mainDataSubTitle simpleText">
+                        <span id="collectionActualCampaign">0 campagnes en cours &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp</span>
+                        <span id="collectionCompletion">0% de complétion</span>
+                    </div>
                 </div>
                 <i class="fas fa-plus openCloseIcon"></i>
             </div>
-            <div class="allData" id="dataCollectionAllData">
-            </div>
-        </div> -->
+            <div class="allData" id="collectionsAllData">
+                <div class="tableWrapper">
+                    <table id="collectionFirstTable" class="tableFib simpleText">
+                        <thead>
+                            <tr>
+                                <th>Thème</th>
+                                <th>Nom</th>
+                                <th>Statut du workflow</th>
+                                <th>Date de début</th>
+                                <th>Date d'échéance</th>
+                                <th>Progression</th>
+                                <th>Actions à réaliser</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-        <!-- Hidden for demo -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- INCIDENTS SECTION -->
-        <!-- <div class="sectionContainer">
+        <div class="sectionContainer">
             <div class="primaryInfos">
                 <i class="fas fa-exclamation-triangle simpleTitle verticalAlignMiddle"></i>
                 <div class="mainData" id="incidentsMainData">
                     <div class="mainDataTitle smallTitle">Incidents</div>
-                    <div class="mainDataSubTitle simpleText">23 incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 11
-                        presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 4 accidents</div>
+                    <div class="mainDataSubTitle simpleText">0 incidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 0
+                        presque-accidents &nbsp&nbsp&nbsp / &nbsp&nbsp&nbsp 0 accidents</div>
                 </div>
                 <i class="fas fa-plus openCloseIcon"></i>
             </div>
             <div class="allData" id="incidentsAllData">
+                <div class="tableWrapper">
+                    <table id="incidentFirstTable" class="tableFib simpleText">
+                        <thead>
+                            <tr>
+                                <th>Type d'incident</th>
+                                <th>Nom</th>
+                                <th>Date de l'incident</th>
+                                <th>Statut</th>
+                                <th>Créé par</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div> -->
+        </div>
 
         <!-- Hidden for demo -->
         <!-- SCHEMA DIRECTORY SECTION -->
@@ -976,6 +1014,10 @@ let jsonLateVisits = JSON.parse(('@JsonConvert.SerializeObject(lateVisits)').rep
 let jsonNonCompliances = JSON.parse(('@JsonConvert.SerializeObject(nonCompliances)').replace(/&quot;/g, '"'));
 let jsonActionsToDo = JSON.parse(('@JsonConvert.SerializeObject(actionsToDo)').replace(/&quot;/g, '"'));
 
+let jsonAllCollections = JSON.parse(('@JsonConvert.SerializeObject(collections)').replace(/&quot;/g, '"'));
+
+let jsonAllIncidents = JSON.parse(('@JsonConvert.SerializeObject(incidents)').replace(/&quot;/g, '"'));
+
 function initFIBGoogleMap() {
   // La map est crée grâce à l'API de Google Maps :
   var identityGoogleMap = new google.maps.Map(document.getElementById('identityGoogleMap'), {
@@ -999,4 +1041,4 @@ function initFIBGoogleMap() {
 
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKL92_ats3EIcnsjjSjxp5UgZseR6lnIY&libraries=places&sensor=false&callback=initFIBGoogleMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCktJPJSgB6QE6xu97460iiMliLn3dJGRw&libraries=places&sensor=false&callback=initFIBGoogleMap"></script>
