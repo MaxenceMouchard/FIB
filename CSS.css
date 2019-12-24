@@ -768,26 +768,37 @@ body {
 }
 
 #legalLegendSquareInternTitle {
+    display: inline-block;
     background: #D171b3;
 }
 
 #legalLegendSquareExternTitle {
+    vertical-align: middle;
+    display: inline-block;
     background: #887AD1;
 }
 
 #legalLegendSquareInternBail {
+    vertical-align: middle;
+    display: inline-block;
     background: #7AAED1;
 }
 
 #legalLegendSquareExternBail {
+    vertical-align: middle;
+    display: inline-block;
     background: #7AC7D1;
 }
 
 #legalLegendSquareInternSubBail {
+    vertical-align: middle;
+    display: inline-block;
     background: #FFAE6C;
 }
 
 #legalLegendSquareExternSubBail {
+    vertical-align: middle;
+    display: inline-block;
     background: #FFDA6C;
 }
 
