@@ -8,8 +8,10 @@
 
 let identityMap = initFIBGoogleMap();
 let identityMapMarkers = [];
+let contactIntervenants = [];
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log(jsonAllModules);
     // Handle the site selection
     handleSiteSelectorFilter();
 
@@ -749,7 +751,8 @@ function loadDataPropertyTitles(oSite) {
     let nbInternalLeases = 0;
     let nbExternalLeases = 0;
     let nbSubLeases = 0;
-    
+    let additionalRef = "";
+
     document.getElementById("legalHorTreeContainers").innerHTML = "";
     // Titres de propriété (type Interne)
     for (let i = 0; i < jsonAllPropertyTitles.length; i += 1) {
@@ -758,16 +761,25 @@ function loadDataPropertyTitles(oSite) {
                 if (jsonAllBaux[j].PropertyTitleId == jsonAllPropertyTitles[i].Id && jsonAllBaux[j].OrganizationId == oSite.Id) {
                     for (let k = 0; k < jsonAllBaux.length; k += 1) {
                         if (jsonAllBaux[k].BailParentId == jsonAllBaux[j].Id && jsonAllBaux[k].OrganizationId == oSite.Id) {
+                            if (jsonAllBaux[k].isOwner === 1) {
+                                additionalRef = " InternalSubBailMatching";
+                            } else {
+                                additionalRef = " ExternalSubBailMatching";
+                            }
                             subLeases.push({
-                                description: jsonAllBaux[k].Reference,
+                                description: jsonAllBaux[k].Reference + additionalRef,
                                 children: []
                             });
                             nbSubLeases += 1;
                         }
                     }
-
+                    if (jsonAllBaux[j].isOwner === 1) {
+                        additionalRef = " InternalBailMatching";
+                    } else {
+                        additionalRef = " ExternalBailMatching";
+                    }
                     leases.push({
-                        description: jsonAllBaux[j].Reference,
+                        description: jsonAllBaux[j].Reference + additionalRef,
                         children: subLeases
                     });
                     nbInternalLeases += 1;
@@ -808,16 +820,26 @@ function loadDataPropertyTitles(oSite) {
                 if (jsonAllBaux[j].OwnerId == jsonAllOwners[i].Id && jsonAllBaux[j].OrganizationId == oSite.Id) {
                     for (let k = 0; k < jsonAllBaux.length; k += 1) {
                         if (jsonAllBaux[k].BailParentId == jsonAllBaux[j].Id && jsonAllBaux[k].OrganizationId == oSite.Id) {
+                            if (jsonAllBaux[k].isOwner === 1) {
+                                additionalRef = " InternalSubBailMatching";
+                            } else {
+                                additionalRef = " ExternalSubBailMatching";
+                            }
                             subLeases.push({
-                                description: jsonAllBaux[k].Reference,
+                                description: jsonAllBaux[k].Reference + additionalRef,
                                 children: []
                             });
                             nbSubLeases += 1;
                         }
                     }
 
+                    if (jsonAllBaux[j].isOwner === 1) {
+                        additionalRef = " InternalBailMatching";
+                    } else {
+                        additionalRef = " ExternalBailMatching";
+                    }
                     leases.push({
-                        description: jsonAllBaux[j].Reference,
+                        description: jsonAllBaux[j].Reference + additionalRef,
                         children: subLeases
                     });
                     nbExternalLeases += 1;
@@ -864,9 +886,28 @@ function createLegalHortree(arrayHorTreeObjects) {
 
     let horTreeContainers = document.getElementsByClassName("legalHorTreeContainer");
 
-    // Text format of the labels
+    // Text format of the labels and color
     Array.from(document.getElementsByClassName("hortree-label")).forEach((label) => {
         label.classList.add("simpleText");
+        let labelContent = label.innerHTML;
+        let matching = "";
+        if (labelContent.includes("InternalBailMatching")) {
+            label.style.backgroundColor = "#7AAED1";
+            matching = " InternalBailMatching";
+        }
+        else if (labelContent.includes("ExternalBailMatching")) {
+            label.style.backgroundColor = "#7AC7D1";
+            matching = " ExternalBailMatching";
+        }
+        else if (labelContent.includes("InternalSubBailMatching")) {
+            label.style.backgroundColor = "#FFAE6C";
+            matching = " InternalSubBailMatching";
+        }
+        else if (labelContent.includes("ExternalSubBailMatching")) {
+            label.style.backgroundColor = "#FFDA6C";
+            matching = " ExternalSubBailMatching";
+        }
+        label.innerHTML = label.innerHTML.replace(matching, "");
     });
     
     // // Managing background color of the labels (depending of their section) :
@@ -887,7 +928,7 @@ function createLegalHortree(arrayHorTreeObjects) {
                             container: "body"
                         })
                         label.style.backgroundColor = "#D171b3";
-                    } else if (container.id[0] == "O")
+                    } else if (container.id[0] == "O" && labelIndex === 0)
                         label.style.backgroundColor = "#887AD1";
                 })
             } else if (branchIndex === 1) {
@@ -899,17 +940,6 @@ function createLegalHortree(arrayHorTreeObjects) {
                             line.style.marginTop = offsetFirstLine;
                         });
                     }
-                    if (container.id[0] == "P")
-                        label.style.backgroundColor = "#7AAED1";
-                    if (container.id[0] == "O")
-                        label.style.backgroundColor = "#7AC7D1";
-                })
-            } else if (branchIndex > 1) {
-                branch.querySelectorAll(".hortree-entry > .hortree-label").forEach((label) => {
-                    if (container.id[0] == "P")
-                        label.style.backgroundColor = "#FFAE6C";
-                    if (container.id[0] == "O")
-                        label.style.backgroundColor = "#FFDA6C";
                 })
             }
         });
@@ -918,6 +948,8 @@ function createLegalHortree(arrayHorTreeObjects) {
     // The marginTop of the lines of the new HorTree == marginTop of lines of previous HorTree +
     // height of previous HorTree + marginTop of previous HorTree
     Array.from(horTreeContainers).forEach((container, index) => {
+        console.log(container);
+        console.log(jsonAllBaux);
         if (index < horTreeContainers.length - 1) {
             // Check to have the good offset :
             let offsetContainer = container.getBoundingClientRect().top - 2;
@@ -931,6 +963,8 @@ function createLegalHortree(arrayHorTreeObjects) {
             });
         }
     });
+
+
 }
 
 function loadDataOccupation(oSite) {

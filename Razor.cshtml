@@ -15,7 +15,7 @@
 
     var organizations = VP.GetEntitiesData("Organization", "Id,Image.Id,Name,Collections,AddressLine1,PostCode,City,Country.Name,ERPTypes.TypeName,M2,UrlBentley,Lat,Long", "Level=4,EntityState=Active,IsArchive=false", "Organization=FilterQueryOrga,Theme=FilterQueryTheme,Collection=FilterQueryCollection").OrderBy(obj => obj.Name).ToList();;
     var contacts = VP.GetEntitiesData("OrganizationContact", "Organization.Id,Contact.FullName,Contact.Email,Contact.Job,Contact.Denomination,Contact.LastConnection,Contact.ConnectionsCounter,Contact.MobilePro,Contact.LandlinePro,Contact.AllPhone", "Organization.IsArchive=False,Organization.Entitystate=Active", "Organization=FilterQueryOrga");
-    
+
     var audits = VP.GetEntitiesData("CQuestionaryAudit", "Organization.Id,Theme,Name,StartDate,EndDate,Scoring,QuestionsProgressionPercentage,FormWorkflowStatus", activeFilter, "Organization=FilterQueryOrga");
     var auditsActions = VP.GetEntitiesData("CActionAudit", "Organization.Id,Questionary,Section,FormQuestion,Name,Priority,EndTime,Responsible,Status", activeFilter, "Organization=FilterQueryOrga");
     var auditsNC = VP.GetEntitiesData("ReserveOfAudit", "Organization.Id,Theme,Questionary,FormQuestion,ReserveText,CritLevel,ExpectedDate,ValidationDate,StatusOfReserve", activeFilter, "Organization=FilterQueryOrga");
@@ -48,6 +48,29 @@
     var collections = VP.GetEntitiesData("CQuestionaryPlanAudit", "Organization.Id,Theme,Name,FormWorkflow,StartDate,EndDate,QuestionsProgressionPercentage,ActionTodoCount,Campaign.DeploymentStatus", activeFilter, "Organization=FilterQueryOrga");
 
     var incidents = VP.GetEntitiesData("CQuestionaryAccident" ,"Organization.Id,Theme,FormCategories,Name,StartDate,FormWorkflowStatus,CreatedUser", activeFilter, "Organization=FilterQueryOrga");
+
+    //Set all module name in good language
+    Dictionary<string, string> allModule = new Dictionary<string, string>();
+    allModule.Add("Organization", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "Organization"));
+    allModule.Add("CQuestionaryAudit", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "CQuestionaryAudit"));
+    allModule.Add("CActionAudit", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "CActionAudit"));
+    allModule.Add("ReserveOfAudit", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "ReserveOfAudit"));
+    allModule.Add("Equipment", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "Equipment"));
+    allModule.Add("ReserveOfVisit", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "ReserveOfVisit"));
+    allModule.Add("CActionEquipment", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "CActionEquipment"));
+    allModule.Add("Visit", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "Visit"));
+    allModule.Add("CQuestionaryDocument", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "CQuestionaryDocument"));
+    allModule.Add("BaseDocument", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "BaseDocument"));
+    allModule.Add("Lot", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "Lot"));
+    allModule.Add("PropertyTitle", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "PropertyTitle"));
+    allModule.Add("Owner", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "Owner"));
+    allModule.Add("Bail", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "Bail"));
+    allModule.Add("Occupation", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "Occupation"));
+    allModule.Add("Surface", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "Surface"));
+    allModule.Add("MasterVisit", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "MasterVisit"));
+    allModule.Add("CActionReserve", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "CActionReserve"));
+    allModule.Add("CQuestionaryPlanAudit", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "CQuestionaryPlanAudit"));
+    allModule.Add("CQuestionaryAccident", ResourceCultureHelper.GetResourceValue(SoCONF.Extension.Consts.ResourceTypeConfConfiguration, "CQuestionaryAccident"));
 }
 
 <!DOCTYPE html>
@@ -1035,6 +1058,8 @@ let jsonActionsToDo = JSON.parse(('@JsonConvert.SerializeObject(actionsToDo)').r
 let jsonAllCollections = JSON.parse(('@JsonConvert.SerializeObject(collections)').replace(/&quot;/g, '"'));
 
 let jsonAllIncidents = JSON.parse(('@JsonConvert.SerializeObject(incidents)').replace(/&quot;/g, '"'));
+
+let jsonAllModules = JSON.parse(('@JsonConvert.SerializeObject(allModule)').replace(/&quot;/g, '"'));
 
 function initFIBGoogleMap() {
   // La map est crée grâce à l'API de Google Maps :
